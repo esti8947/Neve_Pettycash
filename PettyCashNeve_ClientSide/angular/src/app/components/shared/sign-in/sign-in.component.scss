@@ -1,0 +1,50 @@
+@import '../../../../styles.scss';
+body{
+  background-color: rgb(247, 248, 249);
+}
+h1{
+  text-align: center;
+  margin: 2rem;
+  font-size: 40px;
+  color: $bluegray-900;
+}
+.card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  h4{
+    text-align: center;
+    font-size: 26px;
+    color: $bluegray-900;
+  }
+  // margin: 5rem;
+  // padding: 7rem;
+  // background-color: rgb(24, 83, 142);
+  // border-radius: 10px;
+}
+form{
+  width: 400px;
+  padding: 1rem;
+  div{
+    margin-bottom: 30px;
+    input
+    {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid $bluegray-900;
+      &:focus{
+        border: none;
+      }
+    }
+  }
+  ::ng-deep .p-button{
+    width: 100%;
+    margin-top: 1rem;
+    color: white;
+    font-weight: bold;
+    &:hover{
+      color: white;
+    }
+  }
+}

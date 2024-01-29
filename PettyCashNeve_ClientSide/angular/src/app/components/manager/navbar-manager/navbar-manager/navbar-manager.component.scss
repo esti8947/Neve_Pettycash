@@ -1,0 +1,44 @@
+@import '../../../../../styles.scss';
+nav {
+  display: flex;
+  background-color:$bluegray-600;
+  justify-content: space-between;
+  
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .nav-info{
+    display: flex;
+    margin-right: 20px;
+    color: #fff;
+    justify-content: space-between;
+    align-items: center;
+    p{
+      text-align: center;
+      // margin-bottom: 0;
+    }
+    i{
+      margin-left: 30px;
+    }
+  }
+  a {
+    display: block;
+    padding: 35px 25px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bolder;
+    transition: background-color 0.3s, border-bottom 0.3s;
+  }
+  li:hover{
+      background-color: $bluegray-800;
+  }
+
+  .active-link {
+    a{
+      background-color: $bluegray-800;
+    }
+  }
+}

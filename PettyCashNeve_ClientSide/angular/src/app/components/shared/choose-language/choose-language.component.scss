@@ -1,0 +1,22 @@
+@import '../../../../styles.scss';
+div{
+  display: flex;
+  align-items: center;
+}
+button{
+  border: 1px solid $bluegray-900;
+  background-color: #fff;
+  color: $bluegray-900;
+  font-weight: bold;
+  margin: 0.2rem;
+  &.custom-style{
+    border: 1px solid $bluegray-900;
+    background-color: $bluegray-900;
+    color: #fff;
+  }
+}
+h6{
+  margin: 1rem;
+  font-size: 14px;
+  color: $bluegray-600;
+}

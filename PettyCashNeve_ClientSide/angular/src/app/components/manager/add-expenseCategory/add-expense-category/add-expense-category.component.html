@@ -1,0 +1,46 @@
+<button pButton id="expenseCategoryDialog" (click)="addExpenseCategory()">new expense category</button>
+<p-toast></p-toast>
+<p-dialog id="p-dialog" [(visible)]="expenseCategoryDialog" [style]="{width:'75rem'}" [modal]="true" styleClass="p-fluid" >
+  <div id="AddExpenseDialog">
+    <div id="expenseCategoryList" *ngIf="existingExpensesCategory">
+      <div class="card flex justify-content-center">
+        <h4>existingExpensesCategory</h4>
+        <p-listbox [options]="existingExpensesCategory" [(ngModel)]="selectedExpenseCategory" optionLabel="name" [style]="{'width':'20rem'}" [listStyle]="{'max-height': '220px'}">
+          <ng-template let-expenseCategory pTemplate="item">
+            <div class="expensesCategoryList">
+              <p-confirmPopup></p-confirmPopup>
+              <div (click)="deleteExpenseCategory($event, expenseCategory)">
+                <i class="fa fa-trash"></i>  
+              </div>
+              <span class="font-bold">{{ expenseCategory.name }}</span>
+            </div>
+          </ng-template>
+        </p-listbox>
+      </div>
+    </div>
+
+    <div id="expenseCategoryform">
+      <h4>add new expense category</h4>
+        <form [formGroup]="formGroup">
+            <div class="form-group">
+                <input type="text" [placeholder]="'addExpenseCategory.expense category name' | translate" pInputText formControlName="expenseCategoryName">
+                <div>
+                    <small *ngIf="isInvalid('expenseCategoryName')" translate>addDepartment.Please enter a expense category name</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" [placeholder]="'addExpenseCategory.expense category code' | translate" pInputText formControlName="expenseCategoryCode">
+                <div>
+                    <small *ngIf="isInvalid('expenseCategoryCode')" translate>addDepartment.Please enter expense category code</small>
+                </div>
+            </div>
+            <div>
+                <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+                <button pButton type="button" (click)="saveExpenseCategory()" class="centered-button">{{'addDepartment.Add department' | translate}}</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</p-dialog>
+
+  

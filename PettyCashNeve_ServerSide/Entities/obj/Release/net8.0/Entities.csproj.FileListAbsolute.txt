@@ -1,0 +1,12 @@
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.deps.json
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.dll
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.pdb
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.AssemblyInfoInputs.cache
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.AssemblyInfo.cs
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.csproj.CoreCompileInputs.cache
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.sourcelink.json
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.dll
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\refint\Entities.dll
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.pdb
+C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\ref\Entities.dll

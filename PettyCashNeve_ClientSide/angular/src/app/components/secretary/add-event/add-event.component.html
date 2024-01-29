@@ -1,0 +1,35 @@
+<div  *ngIf="!isMonthlyCashRegister">
+  <p>Cannot add events before setting up a monthly cash register.</p>
+  <add-monthly-cash-register>add monthly cash register</add-monthly-cash-register>
+</div>
+<div id="addEventPage">
+  <p-toast></p-toast>
+  <div id="addEventForm">
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories" [placeholder]="'addEventForm.select event category'|translate" [optionLabel]="getOptionLabel()"appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+      </div>
+      <div class="form-group">
+        <input type="text" pInputText formControlName="eventName" [placeholder]="'addEventForm.event name'|translate">
+      </div>
+      <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+      <button pButton type="button" (click)="addEvent()" class="centered-button">{{'addEventForm.add event' | translate}}</button>
+    </form>
+  </div>
+  <div id="eventsList" *ngIf="existingEvents">
+    <div class="card xl:flex xl:justify-content-center">
+      <p-orderList [value]="existingEvents" [listStyle]="{ height: '25rem' }" header="existingEvents">
+          <ng-template let-event pTemplate="item">
+            <div class="eventListItems">
+              <div>
+                <span class="font-bold">{{ event.eventName }}</span>
+              </div>
+              <div>
+                <button pButton (click)="addExpenseToSelectedEvent(event)">add Expense</button>
+              </div>
+            </div>
+          </ng-template>
+      </p-orderList>
+    </div>
+  </div>
+</div>

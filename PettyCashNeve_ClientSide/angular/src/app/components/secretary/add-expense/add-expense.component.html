@@ -1,0 +1,50 @@
+<div *ngIf="!isMonthlyCashRegister">
+  <p>Cannot add expenses before setting up a monthly cash register.</p>
+  <add-monthly-cash-register>add monthly cash register</add-monthly-cash-register>
+</div>
+<div id="addExpenseForm">
+  <p-toast></p-toast>
+  <form [formGroup]="formGroup">
+    <div class="form-group" *ngIf="isEvents">
+      <p-dropdown formControlName="selectedEvent" [options]="events" [placeholder]="'addExpenseForm.Event' | translate" optionLabel="eventName" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+      <div>
+        <small *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory" [placeholder]="'addExpenseForm.Expense Category' | translate" [optionLabel]="getOptionLabel('expenseCategory')" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+      <div>
+        <small *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense category.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" [placeholder]="'addExpenseForm.Store name' | translate" pInputText formControlName="storeName">
+      <div>
+        <small *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <p-inputNumber [placeholder]="'addExpenseForm.Expense amount' | translate" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
+      <div>
+        <small *ngIf="isInvalid('expenseAmount')" translate>addExpenseForm.Please enter an expense amount.</small>
+      </div>
+      </div>
+    <div class="form-group">
+      <p-calendar [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate" [placeholder]="'addExpenseForm.Expense date' | translate" dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'80%'}"></p-calendar>
+      <div>
+        <small *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body" [placeholder]="'addExpenseForm.buyer' | translate" [optionLabel]="getOptionLabel('buyer')" [style]="{'width':'80%'}"></p-dropdown>
+    </div>
+    <div class="form-group">
+      <input type="text" [placeholder]="'addExpenseForm.Notes' | translate" pInputText formControlName="notes">
+    </div>
+    <p *ngIf="!validForm">Please fill in all required fields</p>
+    <div>
+      <button pButton type="button"   (click)="addExpense()"><i class="pi pi-check"></i>{{ 'addExpenseForm.Add' | translate }}</button>
+      <button pButton type="button" id="cancelButton" (click)="cancelExpense()"><i class="pi pi-times"></i>{{ 'addExpenseForm.Cancel' | translate }}</button>
+    </div>
+  </form>
+</div>

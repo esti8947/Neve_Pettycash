@@ -1,0 +1,43 @@
+@import '../../../../styles.scss';
+#addEventPage{
+  display: flex;
+  justify-content: space-around;
+}
+p{
+  color: $bluegray-800;
+  font-weight: bolder;
+}
+#addEventForm{
+  width: 30%;
+  margin: 2rem;
+  padding: 2rem;
+  background-color: rgb(247, 248, 249);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  height: 15rem;
+}
+#eventsList{
+  margin: 2rem;
+  padding: 2rem;
+  width: 35%;
+  .eventListItems{
+    display: flex;
+    justify-content: space-between;
+    button{
+      background-color:rgb(129,142,161);
+      border: none;
+      color: #fff;
+    }
+  }
+}
+.form-group{
+  margin-bottom: 30px;
+  input{
+    width: 100%;
+  }
+}
+.centered-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

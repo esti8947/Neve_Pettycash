@@ -1,0 +1,30 @@
+@import "../../../../styles.scss";
+#addExpenseForm {
+  width: 50%;
+  margin: 2rem;
+  background-color: rgb(247, 248, 249);
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+small{
+  color: $bluegray-700;
+}
+.form-group{
+  margin-bottom: 30px;
+  input{
+    width: 80%;
+  }
+}
+.ui-datepicker {
+  z-index: 10000;
+}
+.p-button{
+  width: 30%;
+  font-weight: bold;
+  margin: 10px;
+  text-align: center;
+}
+#cancelButton{
+  background-color: white!important;
+  color: $bluegray-600;
+}

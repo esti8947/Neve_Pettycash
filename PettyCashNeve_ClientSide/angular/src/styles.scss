@@ -1,0 +1,67 @@
+// styles.scss
+
+
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "primeng/resources/themes/mira/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+.hebrew-style {
+  direction: rtl;
+}
+
+body{
+  direction: ltr;
+  padding: 0;
+  margin: 0;
+  font-family: ploni,sans-serif!important;
+  color: rgb(40,46,56);;
+}
+a{
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+}
+h1{
+  font-size: 24px;
+}
+h2{
+  font-size: 26px;
+  font-weight: normal;
+}
+h4{
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+h3{
+  font-size: 24px;
+}
+input{
+  border-radius: 0.5rem;
+  padding: 0.7rem;
+}
+button{
+  padding: 0.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+img{
+  border-style: none;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+li{
+  list-style: none;
+}
+//variable
+$bluegray-600: rgb(85,99,118);
+$bluegray-600: rgb(85,99,118);
+$bluegray-700: rgb(70,81,97);
+$bluegray-800: rgb(55,64,76);
+$bluegray-900: rgb(40,46,56);
+$primaryColor:#6381ac;
+$secondaryColor:#d6dbeb
+
+

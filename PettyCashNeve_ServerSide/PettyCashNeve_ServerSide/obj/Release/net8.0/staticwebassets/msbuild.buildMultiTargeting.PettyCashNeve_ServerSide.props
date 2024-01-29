@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PettyCashNeve_ServerSide.props" />
+</Project>

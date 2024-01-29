@@ -1,0 +1,43 @@
+<div class="card flex justify-content-center">
+  <p-toast></p-toast>
+  <p-card>
+    <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue?.monthlyCashRegisterMonth)}}</h3>
+    <h4><span translate>monthlyCashRegister.The amount of expenses for this month is</span> &#8362;{{MonthlyRegisterValue.amountInCashRegister | number}}</h4>
+
+    <ng-container *ngIf="budgetType === 'annualBudget'">
+      <h5 [ngClass]="{
+        'orange-text': getSpentPercentage(amountWastedForCalculatingPercentages?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) <= 90,
+        'red-text': getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 90
+        }">
+        {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }}:
+        {{ getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
+      </h5>
+    </ng-container>
+    <ng-container *ngIf="budgetType === 'monthlyBudget'">
+
+    </ng-container>
+
+    <h5><span translate>monthlyCashRegister.The refund amount is</span> &#8362;{{MonthlyRegisterValue.refundAmount}}</h5>
+    <!-- <div>
+      <p translate>monthlyCashRegister.Budget ceiling</p>
+      <p translate>monthlyCashRegister.youy ar at % of the budget</p>
+    </div> -->
+    <ng-template pTemplate="footer">
+      <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.view the breakdown of expenses'|translate"></p-button>
+      <p-button *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" [label]="'monthlyCashRegister.Enter an amount into the cash register'|translate"></p-button>
+    </ng-template>
+  </p-card>
+</div>
+<p-dialog [(visible)]="insertRefundAmountDialog" [style]="{ width: '450px' }" [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">
+  <!-- <div id="addMonthlyRegisterForm"> -->
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="refundAmount" [placeholder]="'insertRefundAmount.refund amount'|translate"></p-inputNumber>
+        <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+      </div>
+      <div>
+        <button class="button" pButton type="button" (click)="insertRefundAmount()">{{ 'insertRefundAmount.insert refund amount' | translate }}</button>
+      </div>
+    </form>
+  <!-- </div> -->
+</p-dialog>

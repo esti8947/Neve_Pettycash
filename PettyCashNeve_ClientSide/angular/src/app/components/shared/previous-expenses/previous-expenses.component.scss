@@ -1,0 +1,18 @@
+@import '../../../../styles.scss';
+.previousExpenseTable {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p-table {
+      width: 100%;  // Set the table width to 100%
+  }
+}
+.selectYear{
+  margin: 3rem;
+}
+.total-row{
+  font-weight: bold;
+}

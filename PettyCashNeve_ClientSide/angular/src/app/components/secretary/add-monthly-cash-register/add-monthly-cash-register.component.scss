@@ -1,0 +1,17 @@
+@import '../../../../styles.scss';
+.button{
+  margin: 4rem;
+  font-weight: bold;
+  // color: $bluegray-800;
+}
+form{
+  .form-group{
+      margin-bottom: 30px;
+  }
+  button{
+    margin-top: 30px;
+    justify-content: center;
+    font-weight: bold;
+    // color: $bluegray-700;
+  }
+}

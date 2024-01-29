@@ -1,0 +1,35 @@
+@import'../../../../styles.scss';
+.card{
+  margin: 2rem;
+  width: 100%;
+  // padding: 50px;
+  h4{
+    color: $bluegray-800;
+  }
+  p{
+    font-weight: bold;
+  }
+  small{
+    color: $bluegray-700;
+  } 
+  ::ng-deep{
+    .p-button{
+      width: 60%;
+      color: #fff;
+      margin: 10px;  
+    }
+  }
+  .orange-text {
+    color: orange;
+  }
+  
+  .red-text {
+    color: red;
+  }
+}
+.form-group{
+  margin-bottom: 30px;
+}
+.button{
+  justify-content: center;
+}

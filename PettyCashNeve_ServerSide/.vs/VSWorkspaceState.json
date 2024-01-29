@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\BL",
+    "\\BL\\Repositories",
+    "\\BL\\Repositories\\ExpenseRepository",
+    "\\DAL",
+    "\\DAL\\Data",
+    "\\DAL\\Migrations",
+    "\\DAL\\Models",
+    "\\PettyCashNeve_ServerSide",
+    "\\PettyCashNeve_ServerSide\\Controllers"
+  ],
+  "SelectedNode": "\\PettyCashNeve_ServerSide\\Program.cs",
+  "PreviewInSolutionExplorer": false
+}

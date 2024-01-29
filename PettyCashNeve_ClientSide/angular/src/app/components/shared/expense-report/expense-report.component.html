@@ -1,0 +1,98 @@
+<div class="card">
+  <button pButton class="confirmButton" *ngIf="expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === false" (click)="confirmExpenses()" translate>expenseDtails.confirm
+  </button>
+  <p-toast></p-toast>
+  <div id="expensesReport">
+    <p-table [value]="expenses" 
+    [paginator] = "true"
+    [tableStyle]="{'min-width': '60rem'}"
+    [rows] = 20
+    [showCurrentPageReport]="true"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="width: 4rem;">
+                  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th> -->
+                <!-- <th pSortableColumn="categoryName" style="width:20%">Name <p-sortIcon field="categoryName"></p-sortIcon></th> -->
+                <th pSortableColumn="eventName" style="width:14.3%" translate>expenseDtails.Event <p-sortIcon field="eventName"></p-sortIcon></th>
+                <th pSortableColumn="expenseCategoryName" style="width:14.3%" translate>expenseDtails.Category<p-sortIcon field="expenseCategoryName"></p-sortIcon></th>
+                <th pSortableColumn="expense.storeName" style="width:14.3%" translate>expenseDtails.Store <p-sortIcon field="expense.storeName"></p-sortIcon></th>
+                <th pSortableColumn="expense.expenseAmount" style="width:14.3%" translate>expenseDtails.Amount <p-sortIcon field="expense.expenseAmount"></p-sortIcon></th>
+                <th pSortableColumn="expense.expenseDate" style="width:14.3%" translate>expenseDtails.Date<p-sortIcon field="expense.expenseDate"></p-sortIcon></th>
+                <th pSortableColumn="buyerName" style="width:14.3%" translate>expenseDtails.buyer<p-sortIcon field="buyerName"></p-sortIcon></th>
+                <th pSortableColumn="expense.notes" style="width:14.3%" translate>expenseDtails.Notes<p-sortIcon field="expense.notes"></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-expense>
+            <tr>
+                <!-- <td>
+                  <p-tableCheckbox [value]="expense"></p-tableCheckbox>
+                </td> -->
+                <!-- <td>{{expense.categoryName}}</td> -->
+                <td>{{expense.eventName !== "DefaultValue" ? expense.eventName : '' }}</td>
+                <td>{{expense.expenseCategoryName}}</td>
+                <td>{{expense.expense.storeName}}</td>
+                <td>{{expense.expense.expenseAmount}}<i class="fa-solid fa-shekel-sign fa-2xs"></i></td>
+                <td>{{expense.expense.expenseDate |  date: 'mediumDate'}}</td>
+                <td>{{expense.buyerName}}</td>
+                <td>{{expense.expense.notes}}</td>
+                <td *ngIf="(currentUser.isManager && expense.expense.
+                isApproved && !expense.expense.isLocked) || (!currentUser.isManager && !expense.expense.isApproved)">
+                  <p-confirmPopup></p-confirmPopup>
+                  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded" (click)="editExpense(expense)"></button>
+                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded" (click)="deleteExpense($event, expense)"></button>
+                </td>
+            </tr>
+        </ng-template>      
+    </p-table>
+  </div>
+</div>
+<p-dialog [(visible)]="expenseDialog" [style]="{ width: '450px' }" [header]="'expenseDtails.Expense Details' | translate" [modal]="true" styleClass="p-fluid">
+    <div *ngIf="formGroup">
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <p-dropdown formControlName="selectedEvent" [options]="events" [placeholder]="'addExpenseForm.Event' | translate" optionLabel="eventName" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+        <div>
+          <small *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory" [placeholder]="'addExpenseForm.Expense Category' | translate" [optionLabel]="getOptionLabel('expenseCategory')" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+        <div>
+          <small *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense category.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" [placeholder]="'addExpenseForm.Store name' | translate" pInputText formControlName="storeName">
+        <div>
+          <small *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-inputNumber [placeholder]="'addExpenseForm.Expense amount' | translate" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
+        <div>
+          <small *ngIf="isInvalid('expenseAmount')" translate>addExpenseForm.Please enter an expense amount.</small>
+        </div>
+        </div>
+      <div class="form-group">
+        <p-calendar  formControlName="expenseDate" [placeholder]="'addExpenseForm.Expense date' | translate" dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'80%'}"></p-calendar>
+        <div>
+          <small *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body" [placeholder]="'addExpenseForm.buyer' | translate" [optionLabel]="getOptionLabel('buyer')" [style]="{'width':'80%'}"></p-dropdown>
+      </div>
+      <div class="form-group">
+        <input type="text" [placeholder]="'addExpenseForm.Notes' | translate" pInputText formControlName="notes">
+      </div>
+      <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+      <div>
+        <button pButton type="button" (click)="updateExense()"><i class="pi pi-check"></i>{{ 'addExpenseForm.Update' | translate }}</button>
+        <button pButton type="button" id="cancelButton" (click)="hideDialog()"><i class="pi pi-times"></i>{{ 'addExpenseForm.Cancel' | translate }}</button>
+      </div>
+    </form>
+  </div>
+</p-dialog>

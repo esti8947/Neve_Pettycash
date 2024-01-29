@@ -1,0 +1,40 @@
+@import'../../../../styles.scss';
+
+#expensesReport{
+margin-top: 50px;
+}
+
+p{
+  color: $bluegray-700;
+  font-weight: bold;
+}
+small{
+  color: $bluegray-700;
+}
+.form-group{
+  margin-bottom: 30px;
+  input{
+    width: 80%;
+  }
+}
+.ui-datepicker {
+  z-index: 10000;
+}
+.p-button{
+  width: 30%;
+  font-weight: bold;
+  margin: 10px;
+  color: $bluegray-600;
+}
+#cancelButton{
+  background-color: white!important;
+}
+.confirmButton{
+  justify-content: center;
+  margin:2rem 2rem 0rem 5rem;
+  font-weight: bolder;
+  background-color: #fff;
+  color: $bluegray-600;
+  // border:solid 3px $orange-300;
+  border-radius: 25px;
+}

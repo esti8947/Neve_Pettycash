@@ -1,0 +1,37 @@
+<div class="card flex justify-content-center">
+  <p >{{getBudgetType()}}</p>
+  <p-card>
+    <ng-container *ngIf="budgetType === 'annualBudget'">
+      <h1>{{budgetInformation?.budgetType.budgetTypeName}} - ₪{{budgetInformation.annualBudget.annualBudgetCeiling | number}}</h1>
+      <h4>
+        {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
+      </h4>
+      <h5 [ngClass]="{
+        'orange-text': getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) > 80 && getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) <= 90,
+        'red-text': getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) > 90
+        }">
+        {{ 'budgetInformation.Percentage spent' | translate }}:
+        {{ getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) | number: '1.0-2' }}%
+      </h5>
+      <h4>
+        {{ 'budgetInformation.Your remaining budget' | translate }}
+        ₪{{ ((budgetInformation.annualBudget.annualBudgetCeiling ?? 0)) - (budgetInformation.totalAmount ?? 0)|number}}
+      </h4>    
+    </ng-container>
+    <ng-container *ngIf="budgetType === 'monthlyBudget'">
+      <h1>{{budgetInformation?.budgetType.budgetTypeName}} - ₪{{budgetInformation.monthlyBudget.monthlyBudgetCeiling | number}}</h1>
+      <h4>
+        {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
+      </h4>
+      <h4>
+        {{ 'budgetInformation.Your remaining budget' | translate }}
+        ₪{{ ((budgetInformation.monthlyBudget.monthlyBudgetCeiling ?? 0)) - (budgetInformation.totalAmount ?? 0) | number}}
+      </h4>
+    </ng-container>
+    <ng-container *ngIf="budgetType === 'refundBudget'">
+      <h4>
+        {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
+      </h4>
+    </ng-container>
+  </p-card>
+</div>

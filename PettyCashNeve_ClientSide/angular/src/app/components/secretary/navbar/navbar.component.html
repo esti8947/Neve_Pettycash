@@ -1,0 +1,31 @@
+<div class="card">
+  <nav>
+    <ul class="nav-list">
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-secretary/home-secretary') }">
+        <a routerLink="/navbar-secretary/home-secretary" translate>navbar.Home</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-secretary/add-event') }">
+        <a routerLink="/navbar-secretary/add-event" translate>navbar.Inserting a new activity</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-secretary/add-expense') }">
+        <a routerLink="/navbar-secretary/add-expense" translate>navbar.Inserting a new expense</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-secretary/expense-report') }">
+        <a routerLink="/navbar-secretary/expense-report" translate>navbar.Approval of the monthly report</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-secretary/previous-expenses') }">
+        <a routerLink="/navbar-secretary/previous-expenses" translate>navbar.View previous months</a>
+    </ul>
+    <div class="nav-info">  
+      <div>
+      <p>{{currentUser?.department?.departmentName }}</p>
+      <p>{{currentUser?.username}}</p>
+    </div>
+    <div>
+      <i class="fa-sharp fa-solid fa-arrow-right-from-bracket" (click)="logOut()"></i>
+    </div>
+    </div>
+    
+  </nav>
+  <router-outlet></router-outlet>
+</div>
