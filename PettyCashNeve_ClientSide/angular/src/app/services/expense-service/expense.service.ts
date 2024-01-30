@@ -22,8 +22,11 @@ export class ExpenseService {
   //   );
   // }
 
-  getExpensesOfUserByYear(year:number): Observable<any> {
-    const url = `${this.baseUrl}/GetExpensesOfUserByYear/${year}`;
+  getExpensesOfUserByYear(year:number, departmentId?: number): Observable<any> {
+    let url = `${this.baseUrl}/GetExpensesOfUserByYear/${year}`;
+    if(departmentId !== undefined && departmentId!== null){
+      url += `?departmentId=${departmentId}`
+    }
     return this.http.get<any>(url).pipe(
       catchError((error) =>{
         console.error('Error in GetExpensesOfUserByYear function', error)

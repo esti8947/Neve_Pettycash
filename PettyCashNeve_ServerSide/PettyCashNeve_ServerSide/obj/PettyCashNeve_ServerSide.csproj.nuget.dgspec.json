@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj": {}
+    "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj": {}
   },
   "projects": {
-    "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\BL.csproj": {
+    "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\BL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\BL.csproj",
+        "projectUniqueName": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\BL.csproj",
         "projectName": "BL",
-        "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\BL.csproj",
-        "packagesPath": "C:\\Users\\ester\\.nuget\\packages\\",
-        "outputPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\obj\\",
+        "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\BL.csproj",
+        "packagesPath": "C:\\Users\\egrapel\\.nuget\\packages\\",
+        "outputPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\egrapel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +28,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
+              "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
               },
-              "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj": {
-                "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj"
+              "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj": {
+                "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj"
               }
             }
           }
@@ -88,17 +88,17 @@
         }
       }
     },
-    "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
+    "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj",
+        "projectUniqueName": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\ester\\.nuget\\packages\\",
-        "outputPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\obj\\",
+        "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\egrapel\\.nuget\\packages\\",
+        "outputPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\egrapel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -185,17 +185,17 @@
         }
       }
     },
-    "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj": {
+    "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj",
+        "projectUniqueName": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj",
         "projectName": "Entities",
-        "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj",
-        "packagesPath": "C:\\Users\\ester\\.nuget\\packages\\",
-        "outputPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\Entities\\obj\\",
+        "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\Entities.csproj",
+        "packagesPath": "C:\\Users\\egrapel\\.nuget\\packages\\",
+        "outputPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\Entities\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\egrapel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -209,8 +209,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
+              "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
               }
             }
           }
@@ -258,17 +258,17 @@
         }
       }
     },
-    "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj": {
+    "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj",
+        "projectUniqueName": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj",
         "projectName": "PettyCashNeve_ServerSide",
-        "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj",
-        "packagesPath": "C:\\Users\\ester\\.nuget\\packages\\",
-        "outputPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\obj\\",
+        "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide.csproj",
+        "packagesPath": "C:\\Users\\egrapel\\.nuget\\packages\\",
+        "outputPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\PettyCashNeve_ServerSide\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ester\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\egrapel\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -282,11 +282,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\BL.csproj": {
-                "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\BL\\BL.csproj"
+              "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\BL.csproj": {
+                "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\BL\\BL.csproj"
               },
-              "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
-                "projectPath": "D:\\Neve Project\\NeveProject_PettyCash\\PettyCashNeve_Git\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
+              "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj": {
+                "projectPath": "D:\\App\\Neve_Pettycash\\PettyCashNeve_ServerSide\\DAL\\DAL.csproj"
               }
             }
           }

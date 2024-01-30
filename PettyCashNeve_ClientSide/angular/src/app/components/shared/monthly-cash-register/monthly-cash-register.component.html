@@ -1,7 +1,7 @@
 <div class="card flex justify-content-center">
   <p-toast></p-toast>
   <p-card>
-    <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue?.monthlyCashRegisterMonth)}}</h3>
+    <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue.monthlyCashRegisterMonth)}}</h3>
     <h4><span translate>monthlyCashRegister.The amount of expenses for this month is</span> &#8362;{{MonthlyRegisterValue.amountInCashRegister | number}}</h4>
 
     <ng-container *ngIf="budgetType === 'annualBudget'">

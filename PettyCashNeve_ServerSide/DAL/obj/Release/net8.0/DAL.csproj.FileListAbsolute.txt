@@ -13,3 +13,18 @@ C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.pdb
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.genruntimeconfig.cache
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\ref\DAL.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\bin\Release\net8.0\DAL.deps.json
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\bin\Release\net8.0\DAL.runtimeconfig.json
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\bin\Release\net8.0\DAL.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\bin\Release\net8.0\DAL.pdb
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.csproj.AssemblyReference.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.AssemblyInfoInputs.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.AssemblyInfo.cs
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.csproj.CoreCompileInputs.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.sourcelink.json
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\refint\DAL.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.pdb
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\DAL.genruntimeconfig.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\DAL\obj\Release\net8.0\ref\DAL.dll

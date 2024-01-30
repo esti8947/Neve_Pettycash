@@ -1,0 +1,24 @@
+# .NET Core
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+*.user
+*.vscode/
+.vs/
+*.suo
+*.cache
+*.log
+*/bin/
+*/obj/
+_project.lock.json
+.DS_Store
+launchSettings.json
+
+# Angular
+/dist/
+/node_modules/
+*.log
+npm-debug.log
+yarn-error.log

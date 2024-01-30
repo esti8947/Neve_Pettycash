@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2023-12-18T15:29:46.4094781Z;</History>
+    <_PublishTargetUrl>D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\bin\Release\net8.0\publish\</_PublishTargetUrl>
+    <History>True|2024-01-29T14:31:10.2960582Z;True|2023-12-18T17:29:46.4094781+02:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

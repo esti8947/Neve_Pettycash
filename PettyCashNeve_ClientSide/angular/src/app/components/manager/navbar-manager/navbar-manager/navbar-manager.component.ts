@@ -29,9 +29,10 @@ export class NavbarManagerComponent {
     this.loadDetails();
   }
 
-  loadDetails(){
-    this.selectedDepartment = this.departmentService.getSelectedDepartment();
-    this.currentUser = this.authService.getCurrentUser();
+  async loadDetails(){
+    this.selectedDepartment = await this.departmentService.getSelectedDepartment();
+    this.currentUser = await this.authService.getCurrentUser();
+    console.log(this.currentUser, this.selectedDepartment);
   }
   isActiveRoute(route: string): boolean {
     return this.router.isActive(route, true);

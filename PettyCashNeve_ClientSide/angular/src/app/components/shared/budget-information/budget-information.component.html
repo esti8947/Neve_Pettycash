@@ -2,7 +2,7 @@
   <p >{{getBudgetType()}}</p>
   <p-card>
     <ng-container *ngIf="budgetType === 'annualBudget'">
-      <h1>{{budgetInformation?.budgetType.budgetTypeName}} - ₪{{budgetInformation.annualBudget.annualBudgetCeiling | number}}</h1>
+      <h1>{{getBudgetTypeName()}} - ₪{{budgetInformation.annualBudget.annualBudgetCeiling | number}}</h1>
       <h4>
         {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
       </h4>
@@ -19,7 +19,7 @@
       </h4>    
     </ng-container>
     <ng-container *ngIf="budgetType === 'monthlyBudget'">
-      <h1>{{budgetInformation?.budgetType.budgetTypeName}} - ₪{{budgetInformation.monthlyBudget.monthlyBudgetCeiling | number}}</h1>
+      <h1>{{getBudgetTypeName()}} - ₪{{budgetInformation.monthlyBudget.monthlyBudgetCeiling | number}}</h1>
       <h4>
         {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
       </h4>

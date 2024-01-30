@@ -10,3 +10,19 @@ C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\refint\Entities.dll
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.pdb
 C:\Neve Project\NeveProject_PettyCash\PettyCashNeve_Git\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\ref\Entities.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.deps.json
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\Entities.pdb
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\DAL.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\bin\Release\net8.0\DAL.pdb
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.csproj.AssemblyReference.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.AssemblyInfoInputs.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.AssemblyInfo.cs
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.csproj.CoreCompileInputs.cache
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.sourcelink.json
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.csproj.CopyComplete
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\refint\Entities.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\Entities.pdb
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\Entities\obj\Release\net8.0\ref\Entities.dll

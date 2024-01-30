@@ -67,7 +67,7 @@ namespace BL.Repositories.ExpenseRepository
             try
             {
                 var expensesList = await _context.Expenses
-                  .FromSqlRaw("EXEC GetActiveExpensesByUserIdAndYear @DepartmentId, @Year",
+                  .FromSqlRaw("EXEC GetActiveExpensesByDepartmentIdAndYear @DepartmentId, @Year",
                                 new SqlParameter("@DepartmentId", departmentId),
                                 new SqlParameter("@Year", year))
                                 .ToListAsync();

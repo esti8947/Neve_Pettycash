@@ -11,7 +11,7 @@ export class DepartmentService {
   constructor(private http: HttpClient) {}
 
   saveSelectedDepartmentToLocalStorage(response:any){
-    const responseString = JSON.stringify(response.data);
+    const responseString = JSON.stringify(response);
     localStorage.setItem('selected_department', responseString)
   }
   deactivateSelectedDepartment() {

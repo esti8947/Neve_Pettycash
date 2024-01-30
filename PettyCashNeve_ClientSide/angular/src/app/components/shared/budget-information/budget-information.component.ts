@@ -57,8 +57,13 @@ export class BudgetInformationComponent implements OnInit{
 
   getBudgetType(): string {
     return this.translateService.currentLang === 'en-US' ?
-      `budget type - ${this.budgetInformation.budgetType.budgetTypeName}` :
-      `סוג תקציב - ${this.budgetInformation.budgetType.budgetTypeNameHeb}`;
+      `budget type - ${this.budgetInformation?.budgetType?.budgetTypeName}` :
+      `סוג תקציב - ${this.budgetInformation?.budgetType?.budgetTypeNameHeb}`;
+  }
+  getBudgetTypeName():string{
+    return this.translateService.currentLang === 'en-US' ?
+      this.budgetInformation.budgetType.budgetTypeName :
+      this.budgetInformation.budgetType.budgetTypeNameHeb;
   }
 
   getSpentPercentage(totalAmount: number, annualBudgetCeiling: number): number {

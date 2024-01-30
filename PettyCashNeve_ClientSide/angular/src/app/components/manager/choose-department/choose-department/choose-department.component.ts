@@ -49,6 +49,7 @@ export class ChooseDepartmentComponent implements OnInit {
       // Save the selected department in localStorage using your service
       this.departmentService.saveSelectedDepartmentToLocalStorage(selectedDepartment);
       this.authService.updateCurrentUserDepartmentId(selectedDepartment.departmentId);
+      console.log(localStorage.selected_department);
 
       // Navigate to the 'navbar-selected-department' route
       this.router.navigate(['/navbar-manager']);

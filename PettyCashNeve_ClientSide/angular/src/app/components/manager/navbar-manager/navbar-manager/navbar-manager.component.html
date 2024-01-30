@@ -1,25 +1,25 @@
 <div class="card">
-    <nav>
-      <ul class="nav-list">
-        <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/home-secretary') }">
-          <a routerLink="/navbar-manager/home-secretary" translate>navbar.Home</a>
-        </li>
-        <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/expense-report') }">
-          <a routerLink="/navbar-manager/expense-report" translate>navbar.Approval of the monthly report</a>
-        </li>
-        <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/previous-expenses') }">
-          <a routerLink="/navbar-manager/expense-report" translate>navbar.View previous months</a>
-        </li>
-      </ul>
-      <div class="nav-info">  
-        <div>
-        <p>{{selectedDepartment?.name }}</p>
+  <nav>
+    <ul class="nav-list">
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/home-secretary') }">
+        <a routerLink="/navbar-manager/home-secretary" translate>navbar.Home</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/expense-report') }">
+        <a routerLink="/navbar-manager/expense-report" translate>navbar.Approval of the monthly report</a>
+      </li>
+      <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/previous-expenses') }">
+        <a routerLink="/navbar-manager/previous-expenses" translate>navbar.View previous months</a>
+      </li>
+    </ul>
+    <div class="nav-info">
+      <div>
+        <p>{{selectedDepartment?.departmentName }}</p>
         <p>{{currentUser?.username}}</p>
       </div>
       <div>
         <i class="fa-sharp fa-solid fa-arrow-right-from-bracket" (click)="logOut()"></i>
       </div>
-      </div>
-    </nav>
-    <router-outlet></router-outlet>
-  </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>
