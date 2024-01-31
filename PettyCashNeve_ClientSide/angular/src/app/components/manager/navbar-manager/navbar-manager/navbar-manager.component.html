@@ -10,6 +10,10 @@
       <li [ngClass]="{ 'active-link': isActiveRoute('/navbar-manager/previous-expenses') }">
         <a routerLink="/navbar-manager/previous-expenses" translate>navbar.View previous months</a>
       </li>
+      <div>
+        <select ng-model="selectedName" ng-options="x for x in names">
+        </select>
+      </div>
     </ul>
     <div class="nav-info">
       <div>

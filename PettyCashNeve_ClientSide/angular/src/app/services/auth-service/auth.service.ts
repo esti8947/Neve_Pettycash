@@ -1,3 +1,4 @@
+import { API_CONFIG } from 'src/app/config/api.config';
 import { Injectable } from '@angular/core';
 import { LoginUser } from 'src/app/models/loginUser';
 import { Observable, throwError } from 'rxjs';
@@ -16,7 +17,8 @@ import { UserInfo } from 'src/app/models/userInfo';
 })
 export class AuthService {
 
-  endpoint: string = 'https://localhost:7139/api/Account';
+  private baseUrl = API_CONFIG.baseUrl;
+  endpoint: string = `${this.baseUrl}/Account`;
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   private _isManager: boolean = false;
 

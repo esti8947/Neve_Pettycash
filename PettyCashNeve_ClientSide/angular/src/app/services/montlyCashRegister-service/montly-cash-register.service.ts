@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../auth-service/auth.service';
 import { catchError, tap } from 'rxjs/operators';
+import { API_CONFIG } from 'src/app/config/api.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MontlyCashRegisterService {
-  private baseUrl =
-    'https://localhost:7139/api/MonthlyCashRegister';
+  private baseUrl = API_CONFIG.baseUrl;
+
+  private baseUrlMonthlyCashRegister = `${this.baseUrl}/MonthlyCashRegister`;
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(
@@ -17,7 +19,7 @@ export class MontlyCashRegisterService {
   ) { }
 
   getCurrentMontlyCashRegisterByUserId(departmentId?: number): Observable<any> {
-    let url = `${this.baseUrl}/getMonthlyCashRegistersByUserId`;
+    let url = `${this.baseUrlMonthlyCashRegister}/getMonthlyCashRegistersByUserId`;
     if (departmentId !== undefined && departmentId !== null) {
       url += `?departmentId=${departmentId}`;
     }
@@ -56,7 +58,7 @@ export class MontlyCashRegisterService {
   }
 
   addMonthlyRegister(newMonthlyRegister: any): Observable<boolean> {
-    const url = `${this.baseUrl}/createNewMonthlyCashRegister`;
+    const url = `${this.baseUrlMonthlyCashRegister}/createNewMonthlyCashRegister`;
     return this.http.post<any>(url, newMonthlyRegister).pipe(
       catchError((error) => {
         console.error('Error in addNewEvents function:', error);
@@ -66,7 +68,7 @@ export class MontlyCashRegisterService {
   }
 
   insertRefundAmount(refundAmount: number): Observable<boolean> {
-    const url = `${this.baseUrl}/insertRefundAmount/${refundAmount}`;
+    const url = `${this.baseUrlMonthlyCashRegister}/insertRefundAmount/${refundAmount}`;
     return this.http.get<any>(url).pipe(
       catchError((error) => {
         console.error('Error in insertRefundAmount function:', error);

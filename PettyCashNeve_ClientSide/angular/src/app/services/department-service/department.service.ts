@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { API_CONFIG } from 'src/app/config/api.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartmentService {
-  private baseUrl = 'https://localhost:7139/api/Department';
+  private baseUrl = API_CONFIG.baseUrl;
+
+  private baseUrlDepartment = `${this.baseUrl}/Department`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,7 +31,7 @@ export class DepartmentService {
   }
 
   getAllDepartments():Observable<any>{
-    const url = `${this.baseUrl}/getDepartments`;
+    const url = `${this.baseUrlDepartment}/getDepartments`;
     return this.http.get<any>(url).pipe(
       catchError((error) =>{
         console.error('Error in getAllDepartments function', error);
@@ -38,7 +41,7 @@ export class DepartmentService {
   }
 
   getDepartmentById(id: number): Observable<any> {
-    const url = `${this.baseUrl}/GetDepartmentById/${id}`;
+    const url = `${this.baseUrlDepartment}/GetDepartmentById/${id}`;
     return this.http.get(url);
   }
 }

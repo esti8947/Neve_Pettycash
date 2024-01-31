@@ -10,12 +10,13 @@ import { DepartmentService } from 'src/app/services/department-service/departmen
   styleUrls: ['./navbar-manager.component.scss']
 })
 export class NavbarManagerComponent {
-  dropdownOptions: any[] = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    // Add more options as needed
+  names: any[] = [
+    { label: 'Option 1', link: '/option1' },
+    { label: 'Option 2', link: '/option2' },
+    { label: 'Option 3', link: '/option3' },
+    { label: 'Option 4', link: '/option4' },
+    { label: 'Option 5', link: '/option5' }
   ];
-  items: MenuItem[] | undefined;
   activeItem: MenuItem | undefined;
   selectedDepartment: any;
   currentUser: any;
