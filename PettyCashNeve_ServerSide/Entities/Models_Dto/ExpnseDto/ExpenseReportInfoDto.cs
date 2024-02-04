@@ -10,7 +10,8 @@ namespace Entities.Models_Dto.ExpenseDto
     {
         public ExpenseDto? Expense { get; set; }
         public string? ExpenseCategoryName { get; set; }
-        public string? CategoryName { get; set; }    
+        public string? ExpenseCategoryNameHeb {  get; set; }
+        public string? EventCategoryName { get; set; }
         public string? EventName { get; set; }
         public string? BuyerName { get; set; }
     }

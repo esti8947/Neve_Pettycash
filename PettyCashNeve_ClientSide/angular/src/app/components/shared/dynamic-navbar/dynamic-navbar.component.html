@@ -1,0 +1,30 @@
+<div class="card">
+    <nav>
+        <ul class="nav-list">
+            <li *ngFor="let item of navbarItems" [ngClass]="{ 'active-link': isActiveRoute(item.route) }">
+                <a [routerLink]="item.route" translate>{{ item.label }}</a>
+            </li>
+            <div *ngIf="currentUser.isManager" class="dropdown">
+                <button class="dropbtn">Dropdown 
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                </div>
+              </div> 
+        </ul>
+        <div class="nav-info">
+            <div>
+                <p>{{ currentUser?.department?.departmentName }}</p>
+                <p *ngIf="currentUser?.isManager">{{ selectedDepartment?. departmentName}}</p>
+                <p>{{ currentUser?.username }}</p>
+            </div>
+            <div>
+                <i class="fa-sharp fa-solid fa-arrow-right-from-bracket" (click)="logOut()"></i>
+            </div>
+        </div>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

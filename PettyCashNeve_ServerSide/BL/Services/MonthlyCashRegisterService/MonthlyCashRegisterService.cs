@@ -39,28 +39,34 @@ namespace PettyCashNeve_ServerSide.Services.MonthlyCashRegisterService
                 foreach (var user in usersList)
                 {
                     var monthlyRegisters = await _monthlyCashRegisterRepository.GetCurrentMonthlyCashRegistersByUserIdAsync(user.Id);
-                    monthlyRegistersList.Add(monthlyRegisters);
+                    if (monthlyRegisters != null)
+                        monthlyRegistersList.Add(monthlyRegisters);
                 }
 
-                var groupedMonthlyRegisters = monthlyRegistersList
-                    .GroupBy(m => m.MonthlyCashRegisterMonth);
-
-                foreach (var group in groupedMonthlyRegisters)
+                if (monthlyRegistersList.Count > 0)
                 {
-                    decimal totalAmount = group.Sum(m => m.AmountInCashRegister);
-                    decimal totalRefundAmount = group.Sum(m => m.RefundAmount);
 
-                    var monthlyRegisterDepartment = new MonthlyCashRegisterDepartmentDto
+                    var groupedMonthlyRegisters = monthlyRegistersList
+                        .GroupBy(m => m.MonthlyCashRegisterMonth);
+
+                    foreach (var group in groupedMonthlyRegisters)
                     {
-                        DepartmentId = departmentId,
-                        MonthlyCashRegisterMonth = group.Key,
-                        MonthlyCashRegisterYear = group.First().MonthlyCashRegisterYear, // Assuming all items in the group have the same year
-                        AmountInCashRegister = totalAmount,
-                        RefundAmount = totalRefundAmount
-                    };
-                    result.Add(monthlyRegisterDepartment);
+                        decimal totalAmount = group.Sum(m => m.AmountInCashRegister);
+                        decimal totalRefundAmount = group.Sum(m => m.RefundAmount);
 
+                        var monthlyRegisterDepartment = new MonthlyCashRegisterDepartmentDto
+                        {
+                            DepartmentId = departmentId,
+                            MonthlyCashRegisterMonth = group.Key,
+                            MonthlyCashRegisterYear = group.First().MonthlyCashRegisterYear, // Assuming all items in the group have the same year
+                            AmountInCashRegister = totalAmount,
+                            RefundAmount = totalRefundAmount
+                        };
+                        result.Add(monthlyRegisterDepartment);
+
+                    }
                 }
+
 
                 serviceResponse.Success = true;
                 serviceResponse.Data = result;

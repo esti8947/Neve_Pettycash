@@ -44,7 +44,7 @@ export class AuthService {
         console.log('currentUser', res);
         this._isManager?
         this.router.navigate(['home-manager']):
-        this.router.navigate(['navbar-secretary']);
+        this.router.navigate(['navbar']);
       });
     }
 

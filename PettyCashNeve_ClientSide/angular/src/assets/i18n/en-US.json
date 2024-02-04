@@ -45,7 +45,7 @@
     "Inserting a new expense": "New Expense",
     "Inserting a new activity": "New Activity",
     "View previous months": "View Previous",
-    "Approval of the monthly report": "Monthly Approval"
+    "Expense Details": "Expense Details"
   },
   "addExpenseForm":{
     "Add expense":"Add Expense",
@@ -67,6 +67,7 @@
     "Add":"Add",
     "Cancel":"Cancel",
     "Update":"Update",
+    "Delete":"Delete",
     "Please fill in all required fields":"Please fill in all required fields"
   },
   "addEventForm":{
@@ -88,7 +89,7 @@
     "Percentage spent":"Percentage spent"
   },
   "monthlyCashRegister":{
-    "New Monthly Cash Register":"New Monthly Cash Register",
+    "The department does not have any open cash registers for the current month":"The department does not have any open cash registers for the current month",    "New Monthly Cash Register":"New Monthly Cash Register",
     "Add Monthly Cash Register":"Add Monthly Cash Register",
     "The monthly cash register for the month of":"The monthly cash register for the month of ",
     "The amount of expenses for this month is":"The amount of expenses for this month is",

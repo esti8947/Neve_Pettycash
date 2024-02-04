@@ -174,11 +174,11 @@ export class PreviousExpensesComponent implements OnInit {
     if (!isNaN(monthNumber)) {
       console.log(monthNumber);
       if (this.currentUser.isManager) {
-        this.router.navigate(['/navbar-manager/expense-report'], {
+        this.router.navigate(['/navbar/expense-report'], {
           queryParams: { selectedYear, selectedMonth: monthNumber }
         });
       } else {
-        this.router.navigate(['/navbar-secretary/expense-report'], {
+        this.router.navigate(['/navbar/expense-report'], {
           queryParams: { selectedYear, selectedMonth: monthNumber }
         });
       }

@@ -12,18 +12,22 @@ import { NavbarComponent } from './components/secretary/navbar/navbar.component'
 import { PreviousExpensesComponent } from './components/shared/previous-expenses/previous-expenses.component';
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
 import { NavbarManagerComponent } from './components/manager/navbar-manager/navbar-manager/navbar-manager.component';
-import { CloseMonthlyActivitiesComponent } from './components/secretary/close-month/close-monthly-activities/close-monthly-activities.component';
+import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 
 const routes: Routes = [
   // { path: '', component: HomeManagerComponent },
   { path: '', component: SignInComponent },
   { path: 'login', component: SignInComponent },
-  // {
-  //   path: 'user-profile/:id',
-  //   component: UserProfileComponent,
-  //   canActivate: [AuthGuard],
-  // },
   { path: 'choose-language', component: ChooseLanguageComponent },
+  { path: 'navbar', component: DynamicNavbarComponent,
+    children:[
+      { path: '', redirectTo: 'home-secretary', pathMatch: 'full' },
+      { path: 'home-secretary', component: HomeSecretaryComponent },
+      { path: 'add-event', component: AddEventComponent },
+      { path: 'add-expense', component: AddExpenseComponent },
+      { path: 'expense-report', component: ExpenseReportComponent },      
+      { path: 'previous-expenses', component: PreviousExpensesComponent},
+    ]},
   {
     path: 'navbar-secretary',
     component: NavbarComponent,
@@ -34,7 +38,6 @@ const routes: Routes = [
       { path: 'add-expense', component: AddExpenseComponent },
       { path: 'expense-report', component: ExpenseReportComponent },      
       { path: 'previous-expenses', component: PreviousExpensesComponent},
-      { path: 'close-monthly-activities', component: CloseMonthlyActivitiesComponent}
     ],
   },
   { path: 'home-manager', component:HomeManagerComponent},
@@ -45,7 +48,6 @@ const routes: Routes = [
       { path: 'home-secretary', component: HomeSecretaryComponent },
       { path: 'expense-report', component: ExpenseReportComponent },   
       { path: 'previous-expenses', component: PreviousExpensesComponent},
-      { path: 'close-monthly-activities', component: CloseMonthlyActivitiesComponent}
     ],
   }
 ];

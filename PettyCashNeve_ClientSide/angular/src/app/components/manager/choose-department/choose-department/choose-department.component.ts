@@ -52,7 +52,7 @@ export class ChooseDepartmentComponent implements OnInit {
       console.log(localStorage.selected_department);
 
       // Navigate to the 'navbar-selected-department' route
-      this.router.navigate(['/navbar-manager']);
+      this.router.navigate(['/navbar']);
     }
   }
 }

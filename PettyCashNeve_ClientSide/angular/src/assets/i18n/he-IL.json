@@ -44,7 +44,7 @@
     "Inserting a new expense": "הוצאה חדשה",
     "Inserting a new activity": "פעילות חדשה",
     "View previous months": "צפייה בחודשים קודמים",
-    "Approval of the monthly report": "אישור דוח החודשי"
+    "Expense Details": "פרטי הוצאות"
   },
   "addExpenseForm":{
     "Add expense":"הוספת הוצאה",
@@ -66,6 +66,7 @@
     "Add":"הוספת ההוצאה",
     "Cancel":"ביטול",
     "Update":"עדכן",
+    "Delete":"מחק",
     "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
   },
   "addEventForm":{
@@ -87,6 +88,7 @@
     "Percentage spent":"אחוז ההוצאות"
   },
   "monthlyCashRegister":{
+    "The department does not have any open cash registers for the current month":"אין קופות פתוחות למחלקה זו  בחודש הנוכחי",
     "New Monthly Cash Register":"קופה חודשית חדשה",
     "Add Monthly Cash Register":"הוסף קופה חודשית חדשה",
     "The monthly cash register for the month of":"הקופה החודשית לחודש",

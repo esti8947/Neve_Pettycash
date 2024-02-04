@@ -54,7 +54,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(MyAllowSpecificOrigins,
                         policy =>
                         {
-                            policy.WithOrigins("http://localhost:4200")
+                            policy.AllowAnyOrigin()
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                         });
@@ -183,7 +183,11 @@ builder.Services.AddScoped<IExpenseCategoryService,  ExpenseCategoryService>();
 builder.Services.AddScoped<IBudgetTypeRepository,  BudgetTypeRepository>();
 builder.Services.AddScoped<IBudgetTypeService, BudgetTypeService>();
 
-
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.AutomaticAuthentication = false;
+    options.AllowSynchronousIO = true;
+});
 
 var app = builder.Build();
 
@@ -196,7 +200,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 

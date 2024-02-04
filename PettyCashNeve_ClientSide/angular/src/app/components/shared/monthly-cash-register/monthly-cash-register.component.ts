@@ -143,8 +143,8 @@ export class MonthlyCashRegisterComponent implements OnInit {
 
   navigateToExpenseReport() {
     // Navigate to the desired route when the button is clicked
-    this.currentUser.isManager? this.router.navigate(['/navbar-manager/expense-report']):
-    this.router.navigate(['/navbar-secretary/expense-report']);
+    this.currentUser.isManager? this.router.navigate(['/navbar/expense-report']):
+    this.router.navigate(['/navbar/expense-report']);
   }
 
   initializeForm() {

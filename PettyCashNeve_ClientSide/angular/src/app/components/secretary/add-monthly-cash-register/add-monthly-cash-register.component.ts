@@ -88,7 +88,7 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
   
         console.log('Current Monthly Cash Register:', currentMonthlyCashRegisterResponse);
   
-        this.router.navigate(['/navbar-secretary/home-secretary']);
+        this.router.navigate(['/navbar/home-secretary']);
       } catch (error) {
         console.error('An error occurred while adding the monthly register:', error);
         this.customMessageService.showErrorMessage('An error occurred while adding the monthly register');

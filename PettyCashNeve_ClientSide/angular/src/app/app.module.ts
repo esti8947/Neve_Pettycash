@@ -33,6 +33,7 @@ import { ScrollerModule } from 'primeng/scroller';
 import { OrderListModule } from 'primeng/orderlist';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ListboxModule } from 'primeng/listbox';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { NavbarComponent } from './components/secretary/navbar/navbar.component';
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
@@ -53,11 +54,11 @@ import { AuthInterceptor } from './services/auth-service/authconfig.interceptor'
 import { PreviousExpensesComponent } from './components/shared/previous-expenses/previous-expenses.component';
 import { CustomMessageService } from './services/customMessage-service/custom-message.service';
 import { AddMonthlyCashRegisterComponent } from './components/secretary/add-monthly-cash-register/add-monthly-cash-register.component';
-import { CloseMonthlyActivitiesComponent } from './components/secretary/close-month/close-monthly-activities/close-monthly-activities.component';
 import { ChooseDepartmentComponent } from './components/manager/choose-department/choose-department/choose-department.component';
 import { AddDepartmentComponent } from './components/manager/add-department/add-department/add-department.component';
 import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
 import { NavbarManagerComponent } from './components/manager/navbar-manager/navbar-manager/navbar-manager.component';
+import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,11 +82,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserProfileComponent,
     PreviousExpensesComponent,
     AddMonthlyCashRegisterComponent,
-    CloseMonthlyActivitiesComponent,
     ChooseDepartmentComponent,
     AddDepartmentComponent,
     AddExpenseCategoryComponent,
     NavbarManagerComponent,
+    DynamicNavbarComponent,
     
   ],
   imports: [
@@ -113,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrderListModule,
     ConfirmPopupModule,
     ListboxModule,
+    TooltipModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

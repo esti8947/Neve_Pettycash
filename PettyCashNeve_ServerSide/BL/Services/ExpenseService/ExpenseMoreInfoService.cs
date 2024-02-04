@@ -65,11 +65,12 @@ namespace BL.Services.ExpenseService
 
             foreach (var expense in expenses)
             {
+                var expenseCategory = await _expenseCategory.GetExpenseCategoryByIdAsync(expense.ExpenseCategoryId);
                 var expenseMoreInfoDto = new ExpenseReportInfoDto
                 {
                     Expense = _mapper.Map<ExpenseDto>(expense),
-                    ExpenseCategoryName = await _expenseCategory.GetExpenseCategoryNameByIdAsync(expense.ExpenseCategoryId),
-                    CategoryName = await _eventCategoryRepository.GetEventCategoryNameByIdAsync(expense.EventsId),
+                    ExpenseCategoryName = expenseCategory.ExpenseCategoryName,
+                    ExpenseCategoryNameHeb = expenseCategory.ExpenseCategoryNameHeb,
                     EventName = await _eventRepository.GetEventNameById(expense.EventsId),
                     BuyerName = await _buyerRepository.GetBuyerNameByIdAsync(expense.BuyerId ?? 0),
                     // Add more properties as needed
@@ -191,6 +192,24 @@ namespace BL.Services.ExpenseService
                 serviceResponse.Data = expensesByYearAndMonth;
                 serviceResponse.Success = true;
 
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetUnlockedExpenses(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<List<ExpenseReportInfoDto>>();
+            try
+            {
+                var expenseList = await _expenseRepository.GetUnlockedExpensesOfDepartment(departmentId);
+                var unLockedExpenses = await GetExpenseMoreInfoList(expenseList);
+                serviceResponse.Data = unLockedExpenses;
+                serviceResponse.Success = true;
             }
             catch (Exception ex)
             {

@@ -113,7 +113,7 @@ export class AddEventComponent implements OnInit {
 
   addExpenseToSelectedEvent(selectedEvent:Event){
     console.log(selectedEvent);
-    this.router.navigate(['/navbar-secretary/add-expense'], 
+    this.router.navigate(['/navbar/add-expense'], 
     { queryParams: { selectedEvent:  JSON.stringify(selectedEvent)} });
   }
 }

@@ -12,25 +12,35 @@ export class ExpenseReportInfoService {
 
   private baseUrlExpenseMoreInfo = `${this.baseUrl}/ExpenseMoreInfo`
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-   getExpenseReportOfUser():Observable<any>{
-    const url =`${this.baseUrlExpenseMoreInfo}/getExpensesReportOfCurrentMonth`;
+  getExpenseReportOfUser(): Observable<any> {
+    const url = `${this.baseUrlExpenseMoreInfo}/getExpensesReportOfCurrentMonth`;
     return this.http.get<any>(url).pipe(
-      catchError((error) =>{
+      catchError((error) => {
         console.error('Error in GetExpensesReportOfUser function', error)
         return throwError(error)
       }),
     );
-   }
+  }
 
-   getExpensesReportByYearAndMonth(year:number, month:number, departmentId?:number):Observable<any>{
+  getExpensesReportByYearAndMonth(year: number, month: number, departmentId?: number): Observable<any> {
     let url = `${this.baseUrlExpenseMoreInfo}/getExpensesByYearAndMonth/${year}/${month}`;
     if (departmentId !== undefined && departmentId !== null) {
       url += `?departmentId=${departmentId}`;
     }
     return this.http.get<any>(url).pipe(
-      catchError((error) =>{
+      catchError((error) => {
+        console.error('Error in getExpensesReportByYearAndMonth function', error)
+        return throwError(error)
+      }),
+    );
+  }
+
+  GetUnLockedExpensesByDepartmentId(departmentId:number):Observable<any>{
+    const url = `${this.baseUrlExpenseMoreInfo}/getUnlockedExpenses/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) => {
         console.error('Error in getExpensesReportByYearAndMonth function', error)
         return throwError(error)
       }),

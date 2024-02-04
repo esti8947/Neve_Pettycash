@@ -311,12 +311,6 @@ namespace BL.Repositories.ExpenseRepository
         {
             try
             {
-                //var expensesList = await _context.Expenses
-                //    .FromSqlRaw("EXEC GetActiveExpensesByUserIdAndDate @Month,@Year, @UserId",
-                //            new SqlParameter("@Month", month),
-                //            new SqlParameter("@Year", year),
-                //            new SqlParameter("@UserId", userId))
-                //    .ToListAsync();
                 List<Expenses> expensesList = await GetActiveExpensesByUserIdAndDate(month, year, userId);
                 var totalAmount = expensesList.Sum(e => e.ExpenseAmount);
                 return totalAmount;
@@ -333,6 +327,21 @@ namespace BL.Repositories.ExpenseRepository
         {
             var user = await _userManager.FindByIdAsync(userId);
             return user != null && user.DepartmentId == departmentId;
+        }
+
+        public async Task<List<Expenses>> GetUnlockedExpensesOfDepartment(int departmentId)
+        {
+            try
+            {
+                var expensesList = await _context.Expenses.FromSqlRaw("EXEC GetUnLockedExpensesByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", departmentId))
+                    .ToListAsync();
+                return expensesList;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

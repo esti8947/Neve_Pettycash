@@ -14,6 +14,7 @@ namespace BL.Services.ExpenseService
         //Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetExpensesReportOfCurrentMonth(string updatedBy, int currentMonth);
         Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetExpensesByYearAndMonth(string updatedBy, int year, int month);
         Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetExpensesOfDepartmentByYearAndMonth(int departmetnId, int year, int month);
+        Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetUnlockedExpenses(int departmentId);
 
     }
 }

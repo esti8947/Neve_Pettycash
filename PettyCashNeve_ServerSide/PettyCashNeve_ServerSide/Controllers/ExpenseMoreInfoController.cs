@@ -101,5 +101,15 @@ namespace PettyCashNeve_ServerSide.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("getUnlockedExpenses/{departmentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUnlockedExpenses(int departmentId)
+        {
+            var serviceResponse = await _expenseMoreInfoService.GetUnlockedExpenses(departmentId);
+            return HandleResponse(serviceResponse);
+        }
+
+
     }
 }

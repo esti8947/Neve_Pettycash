@@ -13,6 +13,7 @@ import { CustomMessageService } from 'src/app/services/customMessage-service/cus
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 
 @Component({
   selector: 'expense-report',
@@ -20,130 +21,157 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./expense-report.component.scss'],
 })
 export class ExpenseReportComponent implements OnInit {
-  currentUser:any;
+  currentUser: any;
   expenses: any[] = [];
-  expense:any;
+  expense: any;
   selectedExpense: any;
-  expenseDialog:boolean = false;
-  submitted:boolean = false;
+  expenseDialog: boolean = false;
+  submitted: boolean = false;
   expensesCategory: ExpenseCategory[] = [];
   events: any[] = [];
   buyers: any[] = [];
   formGroup!: FormGroup;
   validForm: boolean = true;
-  monthlyRegister:any;
-  year:number | undefined;
-  month:number | undefined;
+  monthlyRegister: any;
+  year: number | undefined;
+  month: number | undefined;
 
   constructor(
-    private translateService:TranslateService,
-    private authService:AuthService,
+    private translateService: TranslateService,
+    private authService: AuthService,
     private expenseService: ExpenseService,
-    private expenseReportInfoService:ExpenseReportInfoService,
-    private customMessageService:CustomMessageService,
-    private confirmationService:ConfirmationService,
+    private expenseReportInfoService: ExpenseReportInfoService,
+    private customMessageService: CustomMessageService,
+    private confirmationService: ConfirmationService,
     private expenseCategoryService: ExpenseCategoryService,
     private buyerService: BuyerService,
-    private monthlyCashRegisterService:MontlyCashRegisterService,
+    private monthlyCashRegisterService: MontlyCashRegisterService,
     private eventService: EventService,
-    private route:ActivatedRoute,
-    private router:Router,
-   ) {}
+    private additionalActionsService:AdditionalActionsService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
-   ngOnInit() {
+  ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.route.queryParams.subscribe(params => {
-        this.year = params['selectedYear'];
-        this.month = params['selectedMonth'];
+      this.year = params['selectedYear'];
+      this.month = params['selectedMonth'];
 
-        // Check if year and month are undefined
-        if (this.year == undefined && this.month == undefined) {
-            this.monthlyRegister = this.monthlyCashRegisterService.getCurrentMothlyRegister();
-
-            // Check if monthlyRegister is an array
-            if (Array.isArray(this.monthlyRegister) && this.monthlyRegister.length > 0) {
-                // Find the object with the earliest monthlyCashRegisterMonth
-                const earliestRegister = this.monthlyRegister.reduce((earliest, current) =>
-                    earliest.monthlyCashRegisterMonth < current.monthlyCashRegisterMonth ? earliest : current);
-
-                // Update year and month accordingly
-                this.month = earliestRegister.monthlyCashRegisterMonth;
-                this.year = earliestRegister.monthlyCashRegisterYear;
-            } else if (!Array.isArray(this.monthlyRegister)) { // Check if monthlyRegister is not an array
-                // If it's a single object, use its year and month
-                this.month = this.monthlyRegister.monthlyCashRegisterMonth;
-                this.year = this.monthlyRegister.monthlyCashRegisterYear;
-            }
+      // Check if year and month are undefined
+      if (this.year == undefined && this.month == undefined) {
+        this.monthlyRegister = this.monthlyCashRegisterService.getCurrentMothlyRegister();
+        if(this.monthlyRegister.length == 0 && this.currentUser.isManager){
+          this.GetUnLockedExpensesByDepartmentId(this.currentUser.departmentId);
         }
+        // Check if monthlyRegister is an array
+        if (Array.isArray(this.monthlyRegister) && this.monthlyRegister.length > 0) {
+          // Find the object with the earliest monthlyCashRegisterMonth
+          const earliestRegister = this.monthlyRegister.reduce((earliest, current) =>
+            earliest.monthlyCashRegisterMonth < current.monthlyCashRegisterMonth ? earliest : current);
 
-        if (this.year && this.month) {
-            if (this.currentUser.isManager) {
-                const departmentId = this.currentUser.departmentId;
-                this.loadExpensesByYearAndMonth(this.year, this.month, departmentId);
-            }
-            this.loadExpensesByYearAndMonth(this.year, this.month);
+          // Update year and month accordingly
+          this.month = earliestRegister.monthlyCashRegisterMonth;
+          this.year = earliestRegister.monthlyCashRegisterYear;
+        } else if (!Array.isArray(this.monthlyRegister)) { // Check if monthlyRegister is not an array
+          // If it's a single object, use its year and month
+          this.month = this.monthlyRegister.monthlyCashRegisterMonth;
+          this.year = this.monthlyRegister.monthlyCashRegisterYear;
         }
+      }
+
+      if (this.year && this.month) {
+        if (this.currentUser.isManager) {
+          const departmentId = this.currentUser.departmentId;
+          this.loadExpensesByYearAndMonth(this.year, this.month, departmentId);
+        }
+        this.loadExpensesByYearAndMonth(this.year, this.month);
+      }
     });
-}
+  }
 
-  
 
-  loadExpensesByYearAndMonth(selectedYear: number, selectedMonth:number, departmentId?:number){
+
+  loadExpensesByYearAndMonth(selectedYear: number, selectedMonth: number, departmentId?: number) {
     this.expenseReportInfoService.getExpensesReportByYearAndMonth(selectedYear, selectedMonth, departmentId).subscribe(
+      (data) => {
+        this.expenses = data.data || [];
+        console.log("previus expenses", this.expenses);
+      },
+      (error) => {
+        console.log('An error occurred: ', error);
+      },
+    );
+  }
+  GetUnLockedExpensesByDepartmentId(departmentId:number){
+    this.expenseReportInfoService.GetUnLockedExpensesByDepartmentId(departmentId).subscribe(
       (data) =>{
         this.expenses = data.data || [];
-        console.log("previus expenses",this.expenses);
+        console.log(this.expenses);
       },
       (error) =>{
-        console.log('An error occurred: ', error);;
+        console.log('An error occurred: ', error);
       },
     );
   }
 
-  confirmExpenses(){
-    if(this.currentUser.isManager){
-      if(this.expenses && this.expenses.length > 0 && this.expenses[0]?.expense && this.expenses[0]?.expense.isApproved === false){
+  confirmExpenses() {
+    if (this.currentUser.isManager) {
+      if (this.expenses && this.expenses.length > 0 && this.expenses[0]?.expense && this.expenses[0]?.expense.isApproved === false) {
         this.customMessageService.showErrorMessage('"The  cash register cannot be closed as long as there are unapproved expenses.');
         return;
       }
-      this.router.navigate(['/navbar-manager/close-monthly-activities']);
+      this.router.navigate(['/navbar/close-monthly-activities']);
     }
-    if (this.monthlyRegister.refundAmount === 0) {
-      // If refundAmount is 0, show an error and return
-      this.customMessageService.showErrorMessage('Refund amount cannot be 0');
-      return;
+    else {
+      if (this.monthlyRegister.refundAmount === 0) {
+        // If refundAmount is 0, show an error and return
+        this.customMessageService.showErrorMessage('Refund amount cannot be 0');
+        return;
+      }
+      this.additionalActionsService.closeMonthlyActivities().subscribe(
+        (respose) => {
+          console.log(respose);
+          this.customMessageService.showSuccessMessage("expenses approved successfully")
+          this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
+          this.router.navigate(['/navbar/home-secretary']);
+        },
+        (error) => {
+          console.error('An error occurred while approve expenses: ', error);
+          this.customMessageService.showErrorMessage('An error occurred while approve expenses');
+        }
+      )
     }
-    this.router.navigate(['/navbar-secretary/close-monthly-activities']);
   }
 
-  deleteExpense(event:Event, expense:any) {
+  deleteExpense(event: Event, expense: any) {
     const expenseIdToDelete = expense.expense.expenseId;
     this.confirmationService.confirm({
-        target: event.target as EventTarget,
-        message: this.translateService.instant('messages.deleteExpenseConfirmation'),
-        icon: 'pi pi-info-circle',
-        acceptButtonStyleClass: ' p-button-sm',
-        accept: () => {
-          this.expenseService.deleteExpense(expenseIdToDelete).subscribe(
-            (data) => {
-              console.log('expense is deleted', data);
-              this.customMessageService.showSuccessMessage(this.translateService.instant('messages.expenseDeleted'));
-              this.expenses = this.expenses.filter((val) => val.expense.expenseId !== expenseIdToDelete);
-            },
-            (error) => {
-              console.error('An error occurred:', error);
-              this.customMessageService.showErrorMessage('An error occurred while deleting the expense');
-            }
-          );        
-        },
-        reject: () => {
-          this.customMessageService.showRejectedMessage('You have rejected');
-        }
+      target: event.target as EventTarget,
+      message: this.translateService.instant('messages.deleteExpenseConfirmation'),
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: ' p-button-sm',
+      accept: () => {
+        this.expenseService.deleteExpense(expenseIdToDelete).subscribe(
+          (data) => {
+            console.log('expense is deleted', data);
+            this.customMessageService.showSuccessMessage(this.translateService.instant('messages.expenseDeleted'));
+            this.expenses = this.expenses.filter((val) => val.expense.expenseId !== expenseIdToDelete);
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.customMessageService.showErrorMessage('An error occurred while deleting the expense');
+          }
+        );
+      },
+      reject: () => {
+        // this.customMessageService.showRejectedMessage('You have rejected');
+      }
     });
   }
 
 
-  async editExpense(expense:any){
+  async editExpense(expense: any) {
     console.log(expense);
     this.expense = expense;
     this.expenseDialog = true;
@@ -155,7 +183,7 @@ export class ExpenseReportComponent implements OnInit {
     const selectedExpenseCategory = this.expensesCategory ? this.expensesCategory.find(ec => ec.expenseCategoryId == expense.expense.expenseCategoryId) : null;
 
     this.formGroup.setValue({
-      selectedEvent: selectedEvent,
+      selectedEvent: selectedEvent || null,
       selectedExpenseCategory: selectedExpenseCategory,
       storeName: expense.expense.storeName,
       expenseAmount: expense.expense.expenseAmount,
@@ -170,17 +198,17 @@ export class ExpenseReportComponent implements OnInit {
     await Promise.all([this.loadEvents(), this.loadExpenseCategories(), this.loadBuyers()]);
   }
 
-  hideDialog(){
+  hideDialog() {
     this.expenseDialog = false;
     this.submitted = false;
   }
 
-  updateExense( ){
+  updateExense() {
     const expenseIdToUpdate = this.expense.expense.expenseId;
     this.validForm = !this.formGroup.invalid;
-    if(this.validForm){
+    if (this.validForm) {
       const refundMonth = this.monthlyCashRegisterService.getCurrentMothlyRegister().monthlyCashRegisterMonth;
-      const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes} = this.formGroup.value;
+      const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes } = this.formGroup.value;
 
       const updatedExpense: NewExpenseModel = {
         expenseId: expenseIdToUpdate,
@@ -197,16 +225,16 @@ export class ExpenseReportComponent implements OnInit {
         isLocked: false,
         refundMonth: refundMonth,
         updatedBy: "",
-        invoiceScan:""
+        invoiceScan: ""
       };
-  
+
       console.log("newExpenseModel", updatedExpense);
       this.expenseService.updateExpense(updatedExpense).subscribe(
-        (data) =>{
+        (data) => {
           console.log('expense is updated', data);
           this.customMessageService.showSuccessMessage('Expense is updated');
-          if(this.year && this.month)
-          this.loadExpensesByYearAndMonth(this.year, this.month);
+          if (this.year && this.month)
+            this.loadExpensesByYearAndMonth(this.year, this.month);
           this.hideDialog();
         },
         (error) => {
@@ -267,6 +295,15 @@ export class ExpenseReportComponent implements OnInit {
     const translationKey = dropdownType === 'expenseCategory' ? 'expenseCategoryName' : 'buyerName';
     return this.translateService.currentLang === 'en-US' ? translationKey : `${translationKey}Heb`;
   }
+  getExpenseCategoryName(expenseId: number): string {
+    const selectedExpense = this.expenses.find(expense => expense.expense.expenseId === expenseId);
+    if (selectedExpense && selectedExpense.expenseCategoryName) {
+      return this.translateService.currentLang === 'en-US' ? selectedExpense.expenseCategoryName
+        : selectedExpense.expenseCategoryNameHeb;
+    }
+    return '';
+  }
+
 
   isInvalid(controlName: string): boolean {
     const control: AbstractControl | null = this.formGroup.get(controlName);
@@ -276,7 +313,7 @@ export class ExpenseReportComponent implements OnInit {
   initializeForm() {
     this.formGroup = new FormGroup({
       selectedEvent: new FormControl<Event | null>(null),
-      selectedExpenseCategory: new FormControl<ExpenseCategory | null>(null,Validators.required,),
+      selectedExpenseCategory: new FormControl<ExpenseCategory | null>(null, Validators.required,),
       storeName: new FormControl<string | null>(null, Validators.required),
       expenseAmount: new FormControl<number | null>(null, Validators.required),
       expenseDate: new FormControl<Date | null>(null, Validators.required),

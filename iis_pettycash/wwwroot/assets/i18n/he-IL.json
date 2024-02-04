@@ -1,0 +1,112 @@
+{
+  "Petty cash - Neve Yerushalayim": "מערכת קופה קטנה - נווה ירושלים",
+  "Hello": "שלום",
+  "choose language": "בחר שפה",
+  "Log in": "התחבר",
+  "username": "שם משתמש",
+  "password": "סיסמא",
+  "expenseDtails":{
+    "confirm":"אשר הוצאות לחודש זה",
+    "Category":"קטגוריה",
+    "Store":"חנות",
+    "Date":"תאריך",
+    "Amount":"סכום",
+    "Event":"אירוע",
+    "buyer":"קונה",
+    "invice scan":"חשבונית",
+    "Notes":"הערות",
+    "deleteExpenseConfirmation":"האם אתה בטוח שברצונך למחוק הוצאה זו?",
+    "Expense Details":"פרטי הוצאה"
+  },
+  "globalForm":{
+    "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
+  },
+  "messages": {
+    "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
+    "expenseDeleted": "הוצאה נמחקה"
+  },
+  "MONTHS": {
+    "January": "ינואר",
+    "February": "פברואר",
+    "March": "מרץ",
+    "April": "אפריל",
+    "May": "מאי",
+    "June": "יוני",
+    "July": "יולי",
+    "August": "אוגוסט",
+    "September": "ספטמבר",
+    "October": "אוקטובר",
+    "November": "נובמבר",
+    "December": "דצמבר"
+  },
+  "navbar":{
+    "Home": "בית",
+    "Inserting a new expense": "הוצאה חדשה",
+    "Inserting a new activity": "פעילות חדשה",
+    "View previous months": "צפייה בחודשים קודמים",
+    "Expense Details": "פרטי הוצאות"
+  },
+  "addExpenseForm":{
+    "Add expense":"הוספת הוצאה",
+    "Event":"בחר פעילות",
+    "Please select an event.":"אנא בחר פעילות",
+    "Expense Category":"* בחר קטגוריה",
+    "Please select an expense category.":"אנא בחר קטגורית הוצאה.",
+    "Store name":"* שם החנות",
+    "Please enter a store name.":"אנא הכנס שם חנות",
+    "Expense date":"* תאריך הוצאה",
+    "Please enter an expense date.":"אנא הכנס תאריך הוצאה",
+    "Expense amount":"* סכום הוצאה",
+    "Please enter an expense amount.":"אנא הכנס סכום הוצאה",
+    "event Category Name":"שם פעילות",
+    "expense Category Name":"קטגורית ההוצאה",
+    "buyer":"בחר קונה", 
+    "invice scan":"",
+    "Notes":"הערות",
+    "Add":"הוספת ההוצאה",
+    "Cancel":"ביטול",
+    "Update":"עדכן",
+    "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
+  },
+  "addEventForm":{
+    "select event category":"בחר קטגוריה",
+    "event name":"שם הפעילות",
+    "add event":"הוסף פעילות"
+  },
+  "budgetInformation":{
+    "Your annual budget":"התקציב השנתי שלך",
+    "Your monthly budget":"התקציב החודשי שלך",
+    "So far you have spent":"עד כה הוצאת:",
+    "Your remaining budget":"התקציב הנותר לך:",
+    "The percentage of expenses from the annual budget":"אחוז ההוצאות מהתקציב השנתי שלך",
+    "The percentage of expenses from the monthly budget":"אחוז ההוצאות מהתקציב החודשי שלך",
+    "annual budget":"תקציב שנתי",
+    "monthly budget":"תקציב חודשי",
+    "refund budget":"תקציב החזר הוצאות",
+    "budget type":"סוג תקציב",
+    "Percentage spent":"אחוז ההוצאות"
+  },
+  "monthlyCashRegister":{
+    "The department does not have any open cash registers for the current month":"אין קופות פתוחות למחלקה זו  בחודש הנוכחי",
+    "New Monthly Cash Register":"קופה חודשית חדשה",
+    "Add Monthly Cash Register":"הוסף קופה חודשית חדשה",
+    "The monthly cash register for the month of":"הקופה החודשית לחודש",
+    "The amount of expenses for this month is":"סכום ההוצאות לחודש זה הוא",
+    "The refund amount is":"סכום החזר הוצאות ",
+    "Budget ceiling":"תקרת התקציב",
+    "youy ar at % of the budget":"אתה עומד על % מהתקציב",
+    "view the breakdown of expenses":"לצפייה בפירוט ההוצאות",
+    "Enter an amount into the cash register":"הכנס סכום לקופה",
+    "Percentage of Expenses Compared to Last Year":"אחוז ההוצאות לעומת שנה קודמת"
+  },
+  "previousExpenses":{
+    "Month": "חודש",
+    "Expenses Amount": "סכום ההוצאות",
+    "Select a Year":"בחר שנה"
+  },
+  "insertRefundAmount":{
+    "insert refund amount":"הכנס סכום החזר",
+    "refund amount":"סכום החזר"
+  }
+  
+}
