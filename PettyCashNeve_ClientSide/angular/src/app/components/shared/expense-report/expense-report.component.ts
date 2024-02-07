@@ -115,13 +115,36 @@ export class ExpenseReportComponent implements OnInit {
     );
   }
 
+  formatMonthYear(): string {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNamesHeb= ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוס', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+    if(this.month != undefined){
+      const monthName = this.translateService.currentLang === 'en-US' ? monthNames[this.month - 1] :
+      monthNamesHeb[this.month - 1];
+      return `${monthName} ${this.year}`;
+    }
+    return '';
+  }
+
   confirmExpenses() {
+    const year  = this.year || 0;
+    const month = this.month || 0;
     if (this.currentUser.isManager) {
       if (this.expenses && this.expenses.length > 0 && this.expenses[0]?.expense && this.expenses[0]?.expense.isApproved === false) {
         this.customMessageService.showErrorMessage('"The  cash register cannot be closed as long as there are unapproved expenses.');
         return;
       }
-      this.router.navigate(['/navbar/close-monthly-activities']);
+      this.expenseService.lockExpenses(month, year, this.currentUser.departmentId).subscribe(
+        (respose) => {
+          console.log(respose);
+          this.customMessageService.showSuccessMessage("expenses locked successfully")
+          this.loadExpensesByYearAndMonth(year, month);
+        },
+        (error) => {
+          console.error('An error occurred while lock expenses: ', error);
+          this.customMessageService.showErrorMessage('An error occurred while lock expenses');
+        }
+      )
     }
     else {
       if (this.monthlyRegister.refundAmount === 0) {
@@ -129,12 +152,12 @@ export class ExpenseReportComponent implements OnInit {
         this.customMessageService.showErrorMessage('Refund amount cannot be 0');
         return;
       }
-      this.additionalActionsService.closeMonthlyActivities().subscribe(
+      this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
         (respose) => {
           console.log(respose);
           this.customMessageService.showSuccessMessage("expenses approved successfully")
           this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
-          this.router.navigate(['/navbar/home-secretary']);
+          this.router.navigate(['/navbar/home-department']);
         },
         (error) => {
           console.error('An error occurred while approve expenses: ', error);
@@ -204,14 +227,14 @@ export class ExpenseReportComponent implements OnInit {
   }
 
   updateExense() {
-    const expenseIdToUpdate = this.expense.expense.expenseId;
+    const expenseToUpdate = this.expense.expense;
     this.validForm = !this.formGroup.invalid;
     if (this.validForm) {
       const refundMonth = this.monthlyCashRegisterService.getCurrentMothlyRegister().monthlyCashRegisterMonth;
       const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes } = this.formGroup.value;
 
       const updatedExpense: NewExpenseModel = {
-        expenseId: expenseIdToUpdate,
+        expenseId: expenseToUpdate.expenseId,
         buyerId: selectedBuyer?.buyerId,
         eventsId: selectedEvent?.eventId || 2,
         departmentId: this.currentUser.departmentId,
@@ -221,8 +244,8 @@ export class ExpenseReportComponent implements OnInit {
         storeName,
         notes: notes,
         isActive: true,
-        isApproved: false,
-        isLocked: false,
+        isApproved: expenseToUpdate.isApproved,
+        isLocked: expenseToUpdate.isLocked,
         refundMonth: refundMonth,
         updatedBy: "",
         invoiceScan: ""

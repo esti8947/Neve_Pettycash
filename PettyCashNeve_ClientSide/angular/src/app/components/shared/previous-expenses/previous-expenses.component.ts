@@ -103,16 +103,16 @@ export class PreviousExpensesComponent implements OnInit {
   }
 
   getMonthNumber(monthName: string): number {
-    const monthNames = [
-      'January', 'February', 'March', 'April',
-      'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December'
-    ];
 
-    const monthIndex = monthNames.indexOf(monthName);
-
-    // Adding 1 because JavaScript months are zero-based (0 for January)
-    return monthIndex !== -1 ? monthIndex + 1 : NaN;
+    const monthIndex = this.monthNames.indexOf(monthName);
+    if(monthIndex !== -1){
+      return monthIndex+1;
+    }
+    const monthIndexHeb = this.monthNamesHeb.indexOf(monthName);
+    if(monthIndexHeb !== -1){
+      return monthIndexHeb+1;
+    }
+    return NaN;
   }
 
 

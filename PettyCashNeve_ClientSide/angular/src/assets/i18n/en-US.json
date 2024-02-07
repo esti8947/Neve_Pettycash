@@ -45,7 +45,15 @@
     "Inserting a new expense": "New Expense",
     "Inserting a new activity": "New Activity",
     "View previous months": "View Previous",
-    "Expense Details": "Expense Details"
+    "Expense Details": "Expense Details",
+    "AdditionalActionsDropdown":{
+      "Additional Actions":"Additional Actions",
+      "Adding an Amount to the Budget":"Adding an Amount to the Budget",
+      "Resetting the Budget":"Resetting the Budget",
+      "Users for Current Department":"Users for Current Department",
+      "Closing the Year":"Closing the Year",
+      "Opening the Year":"Opening the Year"
+    }
   },
   "addExpenseForm":{
     "Add expense":"Add Expense",
@@ -99,6 +107,9 @@
     "view the breakdown of expenses":"view the breakdown of expenses",
     "Enter an amount into the cash register":"Enter an amount into the cash register",
     "Percentage of Expenses Compared to Last Year":"Percentage of Expenses Compared to Last Year"
+  },
+  "lockExpnenseButton":{
+    "Expense Lock for":"Expense Lock for"
   },
   "previousExpenses":{
     "Month": "Month",

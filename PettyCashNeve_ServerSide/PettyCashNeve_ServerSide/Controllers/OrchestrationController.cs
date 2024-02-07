@@ -23,8 +23,8 @@ namespace PettyCashNeve_ServerSide.Controllers
             _monthlyCashRegisterService = monthlyCashRegisterService;
         }
 
-        [HttpGet("closeMonthlyActivities")]
-        public async Task<IActionResult> CloseMonthlyActivities()
+        [HttpGet("closeMonthlyActivities/{year}/{month}")]
+        public async Task<IActionResult> CloseMonthlyActivities(int year, int month)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace PettyCashNeve_ServerSide.Controllers
                 }
 
                 var deactivateEventsResponse = await _eventService.DeactivateAllEvents();
-                var approveExpensesResponse = await _expenseService.ApproveAllExpenses();
+                var approveExpensesResponse = await _expenseService.ApproveAllExpenses(userId, year, month);
                 var deactivateMonthlyCashRegisterResponse = await _monthlyCashRegisterService.DeactivateMonthlyCashRegister(UserId);
 
                 // Check the responses and handle accordingly

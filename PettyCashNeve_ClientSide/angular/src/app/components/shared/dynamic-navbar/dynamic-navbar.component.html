@@ -5,15 +5,17 @@
                 <a [routerLink]="item.route" translate>{{ item.label }}</a>
             </li>
             <div *ngIf="currentUser.isManager" class="dropdown">
-                <button class="dropbtn">Dropdown 
-                  <i class="fa fa-caret-down"></i>
+                <button class="dropbtn" translate>navbar.AdditionalActionsDropdown.Additional Actions
+                    <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                  <a href="#">Link 1</a>
-                  <a href="#">Link 2</a>
-                  <a href="#">Link 3</a>
+                    <a translate>navbar.AdditionalActionsDropdown.Adding an Amount to the Budget</a>
+                    <a translate>navbar.AdditionalActionsDropdown.Resetting the Budget</a>
+                    <a translate>navbar.AdditionalActionsDropdown.Users for Current Department</a>
+                    <a translate>navbar.AdditionalActionsDropdown.Closing the Year</a>
+                    <a translate>navbar.AdditionalActionsDropdown.Opening the Year</a>
                 </div>
-              </div> 
+            </div>
         </ul>
         <div class="nav-info">
             <div>

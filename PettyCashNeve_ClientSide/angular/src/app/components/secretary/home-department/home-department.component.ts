@@ -4,11 +4,11 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 
 @Component({
-  selector: 'home-secretary',
-  templateUrl: './home-secretary.component.html',
-  styleUrls: ['./home-secretary.component.scss'],
+  selector: 'home-department',
+  templateUrl: './home-department.component.html',
+  styleUrls: ['./home-department.component.scss'],
 })
-export class HomeSecretaryComponent implements OnInit {
+export class HomeDepartmentComponent implements OnInit {
   monthlyRegisters: MonthlyCashRegister[] = []; 
   isMonthlyRegister: boolean = false;
   currentUser: any;

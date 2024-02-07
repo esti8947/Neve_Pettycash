@@ -35,15 +35,13 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ListboxModule } from 'primeng/listbox';
 import { TooltipModule } from 'primeng/tooltip';
 
-import { NavbarComponent } from './components/secretary/navbar/navbar.component';
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
-import { HomeSecretaryComponent } from './components/secretary/home-secretary/home-secretary.component';
+import { HomeDepartmentComponent } from './components/secretary/home-department/home-department.component';
 import { ChooseLanguageComponent } from './components/shared/choose-language/choose-language.component';
 import { ExpenseReportComponent } from './components/shared/expense-report/expense-report.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MonthlyCashRegisterComponent } from './components/shared/monthly-cash-register/monthly-cash-register.component';
 import { BudgetInformationComponent } from './components/shared/budget-information/budget-information.component';
-import { ExpensesReportPreviousMonthsComponent } from './components/shared/expenses-report-previous-months/expenses-report-previous-months.component';
 import { AddExpenseComponent } from './components/secretary/add-expense/add-expense.component';
 import { AddEventComponent } from './components/secretary/add-event/add-event.component';
 import { CreateUpdateEventCategoryComponent } from './components/secretary/create-update-event-category/create-update-event-category.component';
@@ -57,8 +55,8 @@ import { AddMonthlyCashRegisterComponent } from './components/secretary/add-mont
 import { ChooseDepartmentComponent } from './components/manager/choose-department/choose-department/choose-department.component';
 import { AddDepartmentComponent } from './components/manager/add-department/add-department/add-department.component';
 import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
-import { NavbarManagerComponent } from './components/manager/navbar-manager/navbar-manager/navbar-manager.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
+import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -68,13 +66,11 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeManagerComponent,
-    HomeSecretaryComponent,
+    HomeDepartmentComponent,
     ChooseLanguageComponent,
     ExpenseReportComponent,
-    NavbarComponent,
     MonthlyCashRegisterComponent,
     BudgetInformationComponent,
-    ExpensesReportPreviousMonthsComponent,
     AddExpenseComponent,
     AddEventComponent,
     CreateUpdateEventCategoryComponent,
@@ -85,8 +81,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChooseDepartmentComponent,
     AddDepartmentComponent,
     AddExpenseCategoryComponent,
-    NavbarManagerComponent,
     DynamicNavbarComponent,
+    LockExpensesButtonComponent,
     
   ],
   imports: [

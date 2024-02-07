@@ -14,11 +14,13 @@ namespace BL.Services.ExpenseService
         Task<ServiceResponse<List<ExpenseDto>>> GetExpensesOfUserByYear(string updatedBy, int year);
         Task<ServiceResponse<List<ExpenseDto>>> GetExpensesOfDepartmentByYear(int departmentId, int year);
         Task<ServiceResponse<List<ExpenseDto>>> GetUnapprovedExpensesByUserAsync(string updatedBy);
+        Task<ServiceResponse<List<ExpenseDto>>> GetApprovedAndUnlockedExpensesOfDepartment(int departmentId);
         Task<ServiceResponse<bool>> UpdateExpenseAsync(ExpenseDto updatedExpense);
         Task<ServiceResponse<bool>> DeleteExpenseAsync(int id);
         Task<ServiceResponse<bool>> CreateExpenseAsync(ExpenseDto expenseDto);
         Task<ServiceResponse<bool>> ApproveExpenses(List<ExpenseDto> expenses);
-        Task<ServiceResponse<bool>> ApproveAllExpenses();
+        Task<ServiceResponse<bool>> ApproveAllExpenses(string userId, int year, int month);
+        Task<ServiceResponse<bool>> LockExpenses(int month, int year, int departmentId);
         Task<ServiceResponse<List<ExpenseDto>>> GetExpensesOfDepartmentAsync(int departmentId);
         Task<ServiceResponse<decimal>> GetExpensesAmountForMonth(int month, int year, string userId);
 

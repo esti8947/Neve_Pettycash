@@ -1,16 +1,15 @@
-
 <div>
   <h1 translate>Petty cash - Neve Yerushalayim</h1>
   <p-card class="card">
     <h4 translate>Log in</h4>
-        <form [formGroup] = "signInForm">
-          <div class="form-group">
-            <input type="text" pInputText formControlName="username" [placeholder]="'username'|translate"/>
-          </div>
-          <div class="formGroup">
-            <input type="password" pInputText formControlName="password" [placeholder]="'password' | translate"/>
-          </div>
-            <p-button [label]="'Log in'|translate"  (click)="loginUser()"></p-button>
-        </form>
+    <form [formGroup]="signInForm">
+      <div class="form-group">
+        <input type="text" pInputText formControlName="username" [placeholder]="'username'|translate" />
+      </div>
+      <div class="formGroup">
+        <input type="password" pInputText formControlName="password" [placeholder]="'password' | translate" />
+      </div>
+      <p-button [label]="'Log in'|translate" (click)="loginUser()"></p-button>
+    </form>
   </p-card>
 </div>

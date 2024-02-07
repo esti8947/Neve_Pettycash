@@ -1,10 +1,12 @@
 <div class="card">
+  <p-toast></p-toast>
   <button pButton class="confirmButton"
     *ngIf="!currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === false 
     || currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
     (click)="confirmExpenses()" translate>expenseDtails.confirm
   </button>
-  <p-toast></p-toast>
+  <h4>{{formatMonthYear()}}</h4>
+
   <div id="expensesReport">
     <p-table [value]="expenses" [paginator]="true" [tableStyle]="{'min-width': '60rem'}" [rows]=20
       [showCurrentPageReport]="true">

@@ -89,6 +89,13 @@ namespace PettyCashNeve_ServerSide.Controllers
 
         }
 
+        [HttpGet("getApprovedAndUnlockedExpensesOfDepartment/{departmentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetApprovedAndUnlockedExpensesOfDepartment(int departmentId)
+        {
+            var serviceResponese = await _expenseService.GetApprovedAndUnlockedExpensesOfDepartment(departmentId);
+            return HandleResponse(serviceResponese);
+        }
         [HttpGet("getExpensesByDepartment")]
         public async Task<IActionResult> GetExpensesByDepartment()
         {
@@ -183,10 +190,24 @@ namespace PettyCashNeve_ServerSide.Controllers
             return HandleResponse(serviceResponse);
         }
 
-        [HttpGet("approveAllExpenses")]
-        public async Task<IActionResult> ApproveAllExpenses()
+        [HttpGet("approveAllExpenses/{year}/{month}")]
+        
+        public async Task<IActionResult> ApproveAllExpenses(int year, int month)
         {
-            var serviceResponse = await _expenseService.ApproveAllExpenses();
+            var userId = UserId;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("UserId is null or empty.");
+            }
+            var serviceResponse = await _expenseService.ApproveAllExpenses(userId, year, month);
+            return HandleResponse(serviceResponse);
+        }
+
+        [HttpGet("lockExpenses/{month}/{year}/{departmentId}")]
+        public async Task<IActionResult> LockExpenses(int month, int year, int departmentId)
+        {
+            var serviceResponse = await _expenseService.LockExpenses(month, year, departmentId);
             return HandleResponse(serviceResponse);
         }
 

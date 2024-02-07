@@ -95,6 +95,47 @@ namespace BL.Repositories.ExpenseRepository
                 throw;
             }
         }
+
+        public async Task<List<Expenses>> GetApprovedAndUnlockedExpensesOfDepartment(int departmentId)
+        {
+            try
+            {
+                var expensesOfDepartment = await GetExpensesOfDepartment(departmentId);
+                var approvedUnlockedExpenses = expensesOfDepartment.Where(
+                        e => e.IsApproved && !e.IsLocked).ToList();
+
+                var groupedExpenses = approvedUnlockedExpenses
+                    .GroupBy(e => new { e.ExpenseDate.Year, e.ExpenseDate.Month })
+                    .Select(group => group.ToList())
+                    .ToList();
+
+                // Check if all expenses within each group are approved and unlocked
+                var filteredGroups = groupedExpenses
+                    .Where(group => group.All(expense => expense.IsApproved && !expense.IsLocked));
+
+                // Check if there are any unapproved or locked expenses for the same month and year in expensesOfDepartment
+                var allApprovedUnlocked = expensesOfDepartment
+                    .Where(e => e.IsApproved && !e.IsLocked)
+                    .GroupBy(e => new { e.ExpenseDate.Year, e.ExpenseDate.Month })
+                    .All(group => group.All(expense => expense.IsApproved && !expense.IsLocked));
+
+                if (allApprovedUnlocked)
+                {
+                    // Flatten the filtered groups and return the resulting list of expenses
+                    return filteredGroups.SelectMany(group => group).ToList();
+                }
+                else
+                {
+                    // If any expense within the department for the same month and year is not approved and unlocked, return an empty list
+                    return new List<Expenses>();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
         public async Task<bool> UpdateExpenseAsync(Expenses updatedExpense)
         {
             try
@@ -105,7 +146,20 @@ namespace BL.Repositories.ExpenseRepository
                 {
                     throw new DirectoryNotFoundException("Expense not found or not active");
                 }
-                _context.Entry(existingExpense).CurrentValues.SetValues(updatedExpense);
+                //_context.Entry(existingExpense).CurrentValues.SetValues(updatedExpense);
+                existingExpense.ExpenseCategoryId = updatedExpense.ExpenseCategoryId;
+                existingExpense.EventsId = updatedExpense.EventsId;
+                existingExpense.UpdatedBy = updatedExpense.UpdatedBy;
+                existingExpense.DepartmentId = updatedExpense.DepartmentId;
+                existingExpense.StoreName = updatedExpense.StoreName;
+                existingExpense.ExpenseDate = updatedExpense.ExpenseDate;
+                existingExpense.RefundMonth = updatedExpense.RefundMonth;
+                existingExpense.IsLocked = updatedExpense.IsLocked;
+                existingExpense.IsApproved = updatedExpense.IsApproved;
+                existingExpense.BuyerId = updatedExpense.BuyerId;
+                existingExpense.InvoiceScan = updatedExpense.InvoiceScan;
+                existingExpense.ExpenseAmount = updatedExpense.ExpenseAmount;
+                existingExpense.Notes = updatedExpense.Notes;
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -180,13 +234,13 @@ namespace BL.Repositories.ExpenseRepository
             }
         }
 
-        public async Task<bool> ApproveAllExpenses()
+        public async Task<bool> ApproveAllExpenses(string userId, int year, int month)
         {
             try
             {
-                var allExpenses = await _context.Expenses.ToListAsync();
+                var expensesList = await GetActiveExpensesByUserIdAndDate(month, year, userId);
 
-                foreach (var expense in allExpenses)
+                foreach (var expense in expensesList)
                 {
                     expense.IsApproved = true;
                 }
@@ -341,6 +395,28 @@ namespace BL.Repositories.ExpenseRepository
             {
 
                 throw;
+            }
+        }
+
+        public async Task<bool> LockExpenses(int month, int year, int departmentId)
+        {
+            try
+            {
+                var expensesList = await GetActiveExpensesByDepartmentIdAndDate(month, year, departmentId);
+
+                foreach (var expense in expensesList)
+                {
+                    expense.IsLocked = true;
+                }
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception as needed
+                return false;
             }
         }
     }

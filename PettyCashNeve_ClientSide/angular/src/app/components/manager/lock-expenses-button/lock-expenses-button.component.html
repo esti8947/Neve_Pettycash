@@ -1,0 +1,4 @@
+<div *ngFor="let monthYear of uniqueMonthsAndYears">
+    <button pButton class="lockExpensesButton" (click)="navigateToExpenseReport(monthYear)">{{getButtonText(monthYear)}}</button>
+  </div>
+  

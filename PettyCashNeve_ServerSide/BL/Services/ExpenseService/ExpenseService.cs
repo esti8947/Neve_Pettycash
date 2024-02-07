@@ -140,6 +140,27 @@ namespace BL.Services.ExpenseService
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<List<ExpenseDto>>> GetApprovedAndUnlockedExpensesOfDepartment(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<List<ExpenseDto>>();
+            try
+            {
+                var expensesList = await _expenseRepository.GetApprovedAndUnlockedExpensesOfDepartment(departmentId);
+                var expensesListDto = _mapper.Map<List<ExpenseDto>>(expensesList);
+
+                  serviceResponse.Data = expensesListDto;
+                  serviceResponse.Success = true;
+
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message += ex.Message;
+            }
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<bool>> UpdateExpenseAsync(ExpenseDto updatedExpense)
         {
             var serviceResponse = new ServiceResponse<bool>();
@@ -230,12 +251,12 @@ namespace BL.Services.ExpenseService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<bool>> ApproveAllExpenses()
+        public async Task<ServiceResponse<bool>> ApproveAllExpenses(string userId, int year, int month)
         {
             var serviceResponse = new ServiceResponse<bool>();
             try
             {
-                var result = await _expenseRepository.ApproveAllExpenses();
+                var result = await _expenseRepository.ApproveAllExpenses(userId,year, month);
                 serviceResponse.Success = result;
                 serviceResponse.Data = result;
             }
@@ -288,6 +309,23 @@ namespace BL.Services.ExpenseService
             catch (Exception ex)
             {
                 serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> LockExpenses(int month, int year,int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _expenseRepository.LockExpenses(month, year, departmentId);
+                serviceResponse.Success = result;
+                serviceResponse.Data = result;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success=false;
                 serviceResponse.Message = ex.Message;
             }
             return serviceResponse;

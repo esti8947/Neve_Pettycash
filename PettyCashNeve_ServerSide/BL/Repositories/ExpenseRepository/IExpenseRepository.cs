@@ -12,13 +12,15 @@ namespace BL.Repositories.ExpenseRepository
         Task<List<Expenses>> GetAllExpensesAsync();
         Task<List<Expenses>> GetExpensesOfUserAsync(string updatedBy);
         Task<List<Expenses>> GetUnapprovedExpensesByUserAsync(string updatedBy);
+        Task<List<Expenses>> GetApprovedAndUnlockedExpensesOfDepartment(int departmentId);
         Task<List<Expenses>> GetExpensesOfUserByYear(string updatedBy, int year);
         Task<List<Expenses>> GetExpensesOfDepartmentByYear(int departmentId, int year);
         Task<bool> UpdateExpenseAsync(Expenses updatedExpense);
         Task<bool> DeleteExpenseAsync(int expenseId);
         Task<bool> CreateExpenseAsync(Expenses newExpense);
         Task<bool> ApproveExpenses(List<Expenses> expenses);
-        Task<bool> ApproveAllExpenses();
+        Task<bool> ApproveAllExpenses(string userId, int year, int month);
+        Task<bool> LockExpenses(int month, int year,int departmentId);
         //Task<decimal> GetTotalExpenseAmountForMonthYearAsync(int month, int year, string userId);
         Task<List<Expenses>> GetExpensesOfDepartment(int departmentId);
         Task<List<Expenses>> GetUnlockedExpensesOfDepartment(int departmentId);

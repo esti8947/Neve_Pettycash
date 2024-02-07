@@ -52,7 +52,17 @@ export class ExpenseService {
     const url = `${this.baseUrlExpens}/GetUnapprovedExpensesByUserAsync`;
     return this.http.get<any>(url).pipe(
       catchError((error) =>{
-        console.error('Error in GetExpensesOfUser function', error)
+        console.error('Error in GetUnapprovedExpensesByUserAsync function', error)
+        return throwError(error)
+      }),
+    );
+  }
+
+  GetUnlockedExpensesOfDepartment(departmentId:number):Observable<any>{
+    const url  = `${this.baseUrlExpens}/getApprovedAndUnlockedExpensesOfDepartment/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) =>{
+        console.error('Error in GetUnlockedExpensesOfDepartment function', error)
         return throwError(error)
       }),
     );
@@ -84,6 +94,16 @@ export class ExpenseService {
     return this.http.post<NewExpenseModel>(url, newExpense).pipe(
       catchError((error)=>{
         console.error('Error in addNewExpense function', error);
+        return throwError(error)
+      }),
+    );
+  }
+
+  lockExpenses(month:number, year:number, departmentId:number):Observable<any>{
+    const url  = `${this.baseUrlExpens}/lockExpenses/${month}/${year}/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) =>{
+        console.error('Error in GetExpensesOfUser function', error)
         return throwError(error)
       }),
     );

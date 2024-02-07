@@ -44,7 +44,15 @@
     "Inserting a new expense": "הוצאה חדשה",
     "Inserting a new activity": "פעילות חדשה",
     "View previous months": "צפייה בחודשים קודמים",
-    "Expense Details": "פרטי הוצאות"
+    "Expense Details": "פרטי הוצאות",
+    "AdditionalActionsDropdown":{
+      "Additional Actions":"פעולות נוספות",
+      "Adding an Amount to the Budget":"הוספת סכום לתקציב",
+      "Resetting the Budget":"איפוס תקציב",
+      "Users for Current Department":"משתתמשים למחלקה הנוכחית",
+      "Closing the Year":"סגירת שנה",
+      "Opening the Year":"פתיחת שנה חדשה"
+    }
   },
   "addExpenseForm":{
     "Add expense":"הוספת הוצאה",
@@ -99,6 +107,9 @@
     "view the breakdown of expenses":"לצפייה בפירוט ההוצאות",
     "Enter an amount into the cash register":"הכנס סכום לקופה",
     "Percentage of Expenses Compared to Last Year":"אחוז ההוצאות לעומת שנה קודמת"
+  },
+  "lockExpnenseButton":{
+    "Expense Lock for":"נעילת הוצאות לחודש"
   },
   "previousExpenses":{
     "Month": "חודש",

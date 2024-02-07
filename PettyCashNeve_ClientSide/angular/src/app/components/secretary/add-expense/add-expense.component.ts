@@ -177,7 +177,7 @@ export class AddExpenseComponent implements OnInit {
   }
   cancelExpense() {
     this.formGroup.reset();
-    this.router.navigate(['/home-secretary']);
+    this.router.navigate(['/home-department']);
   }
   initializeForm() {
     this.formGroup = new FormGroup({

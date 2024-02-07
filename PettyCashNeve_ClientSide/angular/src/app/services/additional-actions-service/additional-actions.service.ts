@@ -12,8 +12,8 @@ export class AdditionalActionsService {
 
   constructor(private http:HttpClient) { }
 
-  closeMonthlyActivities():Observable<any>{
-    const url = `${this.baseUrlOrchestration}/closeMonthlyActivities`;
+  closeMonthlyActivities(year:number, month:number):Observable<any>{
+    const url = `${this.baseUrlOrchestration}/closeMonthlyActivities/${year}/${month}`;
     return this.http.get<any>(url).pipe(
       catchError((error) =>{
         console.error('Error in CloseMonthlyActivities function', error);
