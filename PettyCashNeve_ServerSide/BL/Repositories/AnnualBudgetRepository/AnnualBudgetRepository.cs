@@ -112,5 +112,45 @@ namespace BL.Repositories.AnnualBudgetRepository
                 throw;
             }
         }
+
+        public async Task<bool> resettingAnnualBudget(int departmentId)
+        {
+            try
+            {
+                var activeBudget = GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId).Result;
+                if(activeBudget == null)
+                {
+                    throw new NotFoundException("Annual budget not found or not active");
+                }
+                    activeBudget.AnnualBudgetCeiling = 0;
+                    await _context.SaveChangesAsync();
+                    return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> addAmountToAnnualBudget(int departmentId, int amountToAdd)
+        {
+            try
+            {
+                var activeBudget = GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId).Result;
+                if (activeBudget == null)
+                {
+                    throw new NotFoundException("Annual budget not found or not active");
+                }
+                activeBudget.AnnualBudgetCeiling += amountToAdd;    
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

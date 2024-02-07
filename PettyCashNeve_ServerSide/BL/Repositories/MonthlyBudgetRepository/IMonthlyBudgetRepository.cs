@@ -18,5 +18,8 @@ namespace BL.Repositories.MonthlyBudgetRepository
         Task<bool> AddSumToMonthlyBudgetCeilingAsync(int monthlyBudgetId, int additionalAmount);
 
         Task<bool> DeleteMonthlyBudgetAsync(int monthlyBudgetId);
+        Task<bool> resettingMonthlyBudget(int departmentId);
+        Task<bool> addAmountToMonthlyBudget(int departmentId, int amountToAdd);
+
     }
 }

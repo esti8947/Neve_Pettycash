@@ -58,7 +58,7 @@ namespace BL.Repositories.MonthlyBudgetRepository
                     .FirstOrDefaultAsync(ab => ab.DepartmentId == departmentId && ab.IsActive == true);
                 if (monthlyBudget == null)
                 {
-                    throw new NotFoundException("Annual budget not found or not active");
+                    throw new NotFoundException("Monthly budget not found or not active");
                 }
                 return monthlyBudget;
             }
@@ -77,7 +77,7 @@ namespace BL.Repositories.MonthlyBudgetRepository
 
                 if (monthlyBudget == null || !monthlyBudget.IsActive == true)
                 {
-                    throw new NotFoundException("Annual budget not found or not active");
+                    throw new NotFoundException("Monthly budget not found or not active");
                 }
 
                 monthlyBudget.MonthlyBudgetCeiling += additionalAmount;
@@ -99,7 +99,7 @@ namespace BL.Repositories.MonthlyBudgetRepository
 
                 if (monthlyBudget == null || !monthlyBudget.IsActive == true)
                 {
-                    throw new NotFoundException("Annual budget not found or not active");
+                    throw new NotFoundException("Monthly budget not found or not active");
                 }
 
                 monthlyBudget.IsActive = false;
@@ -109,6 +109,46 @@ namespace BL.Repositories.MonthlyBudgetRepository
             catch (Exception ex)
             {
                 // Log or handle the exception if needed
+                throw;
+            }
+        }
+
+        public async Task<bool> resettingMonthlyBudget(int departmentId)
+        {
+            try
+            {
+                var activeBudget = GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId).Result;
+                if (activeBudget == null)
+                {
+                    throw new NotFoundException("Monthly budget not found or not active");
+                }
+                activeBudget.MonthlyBudgetCeiling = 0;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> addAmountToMonthlyBudget(int departmentId, int amountToAdd)
+        {
+            try
+            {
+                var activeBudget = GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId).Result;
+                if (activeBudget == null)
+                {
+                    throw new NotFoundException("Monthly budget not found or not active");
+                }
+                activeBudget.MonthlyBudgetCeiling += amountToAdd;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
                 throw;
             }
         }

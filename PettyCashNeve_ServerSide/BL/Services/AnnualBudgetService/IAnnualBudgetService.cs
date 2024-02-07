@@ -19,5 +19,7 @@ namespace BL.Services.AnnualBudgetService
         Task<ServiceResponse<bool>> AddSumToAnnualBudgetCeilingAsync(int annualBudgetId, int additionalAmount);
 
         Task<ServiceResponse<bool>> DeleteAnnualBudgetAsync(int annualBudgetId);
+        Task<ServiceResponse<bool>> resettingAnnualBudget(int departmentId);
+        Task<ServiceResponse<bool>> addAmountToAnnualBudget(int departmentId, int amountToAdd);
     }
 }

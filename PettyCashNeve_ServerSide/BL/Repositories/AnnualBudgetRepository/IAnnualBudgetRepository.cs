@@ -18,5 +18,7 @@ namespace BL.Repositories.AnnualBudgetRepository
         Task<bool> AddSumToAnnualBudgetCeilingAsync(int annualBudgetId, int additionalAmount);
 
         Task<bool> DeleteAnnualBudgetAsync(int annualBudgetId);
+        Task<bool> resettingAnnualBudget(int departmentId);
+        Task<bool> addAmountToAnnualBudget(int departmentId, int amountToAdd);
     }
 }

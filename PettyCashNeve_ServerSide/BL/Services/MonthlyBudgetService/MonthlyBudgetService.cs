@@ -93,5 +93,31 @@ namespace BL.Services.MonthlyBudgetService
                 return new ServiceResponse<bool> { Success = false, Message = ex.Message };
             }
         }
+
+        public async Task<ServiceResponse<bool>> resettingMonthlyBudget(int departmentId)
+        {
+            try
+            {
+                var result = await _monthlyBudgetRepository.resettingMonthlyBudget(departmentId);
+                return new ServiceResponse<bool> { Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool> { Success = false, Message = ex.Message };
+            }
+        }
+
+        public async Task<ServiceResponse<bool>> addAmountToMonthlyBudget(int departmentId, int amountToAdd)
+        {
+            try
+            {
+                var result = await _monthlyBudgetRepository.addAmountToMonthlyBudget(departmentId, amountToAdd);
+                return new ServiceResponse<bool> { Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool> { Success = false, Message = ex.Message };
+            }
+        }
     }
 }
