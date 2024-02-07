@@ -5,6 +5,7 @@ using Entities.Models_Dto;
 using PettyCashNeve_ServerSide.Exceptions;
 using PettyCashNeve_ServerSide.Repositories.DepartmentRepository;
 using PettyCashNeve_ServerSide.Dto;
+using Entities.Models_Dto.UserDto;
 
 namespace PettyCashNeve_ServerSide.Services.DepartmentService
 {
@@ -115,6 +116,29 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
                 serviceResponse.Message = ex.Message;
             }
             return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<List<UserDto>>> GetUsersByDepartmentId(int departmentId)
+        {
+            var serviceReponse = new ServiceResponse<List<UserDto>>();
+            try
+            {
+                var usersList = await _departmentRepository.GetUsersByDepartmentId(departmentId);
+                var usersDto = _mapper.Map<List<UserDto>>(usersList);
+
+                if (usersDto == null)
+                {
+                    serviceReponse.Message = "no users found";
+                }
+                serviceReponse.Data = usersDto;
+                serviceReponse.Success = true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return serviceReponse;
         }
     }
 }

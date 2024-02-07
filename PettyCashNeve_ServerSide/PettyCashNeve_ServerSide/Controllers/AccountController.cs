@@ -223,6 +223,36 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
+        [Route("getUsersByDepartmentId/{departmentId}")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUsersByDepartmentId(int departmentId)
+        {
+            try
+            {
+                var userList = await _departmentRepository.GetUsersByDepartmentId(departmentId);
+
+                // Create a list to store user information
+                List<UserInfoModel> userInfoList = new List<UserInfoModel>();
+
+                // Iterate over the user list and call GetUserInfoByName for each user
+                foreach (var user in userList)
+                {
+                    var userInfo = await GetUserInfoByName(user.UserName);
+                    userInfoList.Add(userInfo);
+                }
+                userInfoList.ForEach(u => u.Department = null);
+
+                return Ok(userInfoList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving user list: {ex.Message}");
+            }
+        }
+
+
+
         private string GetDepartment()
         {
             if (User.Identity.IsAuthenticated)

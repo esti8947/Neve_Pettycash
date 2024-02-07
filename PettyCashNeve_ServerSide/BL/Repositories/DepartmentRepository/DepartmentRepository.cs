@@ -111,5 +111,20 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
                 throw;
             }
         }
+
+        public async Task<List<NdbUser>> GetUsersByDepartmentId(int departmentId)
+        {
+            try
+            {
+                var usersList = await _context.Users.Where(
+                    u => u.DepartmentId == departmentId).ToListAsync();
+                return usersList;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

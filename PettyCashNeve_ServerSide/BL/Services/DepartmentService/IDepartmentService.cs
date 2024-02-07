@@ -1,6 +1,7 @@
 ﻿using Entities.Models_Dto;
 using BL.Services;
 using PettyCashNeve_ServerSide.Dto;
+using Entities.Models_Dto.UserDto;
 
 namespace PettyCashNeve_ServerSide.Services.DepartmentService
 {
@@ -11,5 +12,6 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
         Task<ServiceResponse<bool>> UpdateDepartmentAsync(DepartmentDto updatedDepartment);
         Task<ServiceResponse<bool>> DeleteDepartmentAsync(int departmentId);
         Task<ServiceResponse<bool>> CreateDepartmentAsync(DepartmentDto departmentDto);
+        Task<ServiceResponse<List<UserDto>>> GetUsersByDepartmentId(int departmentId);
     }
 }

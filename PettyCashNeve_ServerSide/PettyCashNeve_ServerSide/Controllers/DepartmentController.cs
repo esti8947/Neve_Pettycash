@@ -50,5 +50,13 @@ namespace PettyCashNeve_ServerSide.Controllers
             var serviceResponse = await _departmentService.CreateDepartmentAsync(newDepartment);
             return HandleResponse(serviceResponse);
         }
+
+        [HttpGet("getUsersByDepartmentId/{departmentId}")]
+        [Authorize (Roles = "Admin")]
+        public async Task<IActionResult> GetUsersByDepartmentId(int departmentId)
+        {
+            var serviceResponse = await _departmentService.GetUsersByDepartmentId(departmentId);
+            return HandleResponse(serviceResponse);
+        }
     }
 }

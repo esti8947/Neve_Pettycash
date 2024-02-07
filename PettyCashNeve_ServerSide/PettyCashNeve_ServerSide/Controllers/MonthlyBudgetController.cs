@@ -23,8 +23,8 @@ namespace PettyCashNeve_ServerSide.Controllers
             return HandleResponse(serviceResponse);
         }
 
-        [HttpGet("getMonthlyBudgetsByDepartmentIdAndIsActive/{departmentId}/{isActive}")]
-        public async Task<IActionResult> GetMonthlyBudgetsByDepartmentIdAndIsActive(int departmentId, bool isActive)
+        [HttpGet("getMonthlyBudgetsByDepartmentIdAndIsActive/{departmentId}")]
+        public async Task<IActionResult> GetMonthlyBudgetsByDepartmentIdAndIsActive(int departmentId)
         {
             var serviceResponse = await _monthlyBudgetService.GetMonthlyBudgetByDepartmentIdAndIsActiveAsync(departmentId); 
             return HandleResponse(serviceResponse);

@@ -9,5 +9,6 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
         public Task UpdateDepartmentAsync(Department updatedDepartment);
         public Task<bool> DeleteDepartmentAsync(int departmentID);
         public Task<bool> CreateDepartment(Department department);
+        public Task<List<NdbUser>> GetUsersByDepartmentId(int departmentIk);
     }
 }

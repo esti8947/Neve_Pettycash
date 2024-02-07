@@ -30,8 +30,8 @@ namespace PettyCashNeve_ServerSide
             CreateMap<EventDto, Events>();
             CreateMap<EventCategory, EventCategoryDto>();
             CreateMap<EventCategoryDto, EventCategory>();
-            //CreateMap<User, UserDto>();
-            //CreateMap<UserDto, User>();
+            CreateMap<NdbUser, UserDto>();
+            CreateMap<UserDto, NdbUser>();
             CreateMap<ExpenseCategory, ExpenseCategoryDto>();
             CreateMap<ExpenseCategoryDto, ExpenseCategory>();
             CreateMap<BudgetType, BudgetTypeDto>();
