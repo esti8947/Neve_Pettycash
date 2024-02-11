@@ -4,6 +4,8 @@ using DAL.Models;
 using DAL.Data;
 using BL.Repositories.ExpenseCategoryRepository;
 using BL.Repositories.ExpenseRepository;
+using Entities.Models_Dto;
+using BL.Repositories.UserRepository;
 
 
 namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
@@ -12,10 +14,12 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
     {
         private readonly PettyCashNeveDbContext _context;
         private readonly IExpenseRepository _expenseRepository;
-        public MonthlyCashRegisterRepository(PettyCashNeveDbContext context, IExpenseRepository expenseRepository)
+        private readonly IUserRepository _userRepository;
+        public MonthlyCashRegisterRepository(PettyCashNeveDbContext context, IExpenseRepository expenseRepository, IUserRepository userRepository)
         {
             _context = context;
             _expenseRepository = expenseRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<MonthlyCashRegister> GetMonthlyCashRegisterByIdAsync(int monthlyCashRegisterId)
@@ -52,42 +56,6 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
             }
         }
 
-        //public async Task<MonthlyCashRegister> GetMonthlyCashRegisterByUserOfDepartmentIdAsync(int userOfDepartmentId)
-        //{
-        //    try
-        //    {
-        //        var monthlyRegister = await _context.MonthlyCashRegisters
-        //            .FirstOrDefaultAsync(m => m.UserOfDepartmentId == userOfDepartmentId);
-        //        if (monthlyRegister == null)
-        //        {
-        //            throw new NotFoundException("no monthly cash register found");
-        //        }
-        //        return monthlyRegister;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-        //}
-
-        //public async Task<List<MonthlyCashRegister>> GetMonthlyCashRegistersByDepartmentIdAsync(int departmentId)
-        //{
-        //    try
-        //    {
-        //        var monthlyCRegistersQuery = _context.MonthlyCashRegisters
-        //            .Where(m => m.UserOfDepartment != null &&
-        //                        m.UserOfDepartment.Department != null &&
-        //                        m.UserOfDepartment.Department.Id == departmentId);
-        //        var monthlyRegistersDB = await monthlyCRegistersQuery.ToListAsync();
-        //        return monthlyRegistersDB;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-        //}
 
         public async Task<bool> CreateNewMonthlyCashRegisterAsync(MonthlyCashRegister monthlyCashRegister)
         {
@@ -191,6 +159,51 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
                 throw;
             }
 
+        }
+
+        public async Task<List<MonthlyCashRegister>> GetMonthlyCashRegisterByDepartmenId(int departmentId)
+        {
+            try
+            {
+                var usersList = await _userRepository.GetUsersOfDepartment(departmentId);
+
+                var monthlyRegistersList = new List<MonthlyCashRegister>();
+
+                foreach (var user in usersList)
+                {
+                    var monthlyRegisters = GetCurrentMonthlyCashRegistersByUserIdAsync(user.Id).Result;
+                    if (monthlyRegisters != null)
+                        monthlyRegistersList.Add(monthlyRegisters);
+                }
+                return monthlyRegistersList;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> CheckAllMonthlyCashRegistersInactiveForYearAsync(int departmentId, int academicYear)
+        {
+            try
+            {
+                var startYear = academicYear / 10000;
+                var endYear = academicYear % 10000;
+
+                var monthlyRegisterForDepartment = GetMonthlyCashRegisterByDepartmenId(departmentId).Result;
+                var activeMonthlyCashRegister = monthlyRegisterForDepartment.FirstOrDefault(mcr => (mcr.MonthlyCashRegisterYear == startYear && mcr.MonthlyCashRegisterMonth >= 10) || (mcr.MonthlyCashRegisterYear == endYear && mcr.MonthlyCashRegisterMonth < 10) && mcr.IsActive);  
+                
+                if(activeMonthlyCashRegister != null)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

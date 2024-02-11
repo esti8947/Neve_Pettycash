@@ -107,7 +107,7 @@ namespace BL.Services.MonthlyBudgetService
             }
         }
 
-        public async Task<ServiceResponse<bool>> addAmountToMonthlyBudget(int departmentId, int amountToAdd)
+        public async Task<ServiceResponse<bool>> addAmountToMonthlyBudget(int departmentId, decimal amountToAdd)
         {
             try
             {

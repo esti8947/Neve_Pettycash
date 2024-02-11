@@ -129,59 +129,80 @@ namespace BL.Services.BudgetTypeService
         {
             var serviceResponse = new ServiceResponse<BudgetInformation>();
             var budgetInformation = new BudgetInformation();
-            //var expensesList = await _expenseRepository.GetExpensesOfDepartment(departmentId);
+
             try
             {
                 var department = await _departmentRepository.GetDepartmentByIdAsync(departmentId);
-                int budgetTypeId = department?.CurrentBudgetTypeId ?? 0;
-                var budgetType = (await GetBudgetTypeByIdAsync(budgetTypeId))?.Data;
+                if (department == null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Department not found.";
+                    return serviceResponse;
+                }
+
+                var budgetType = await GetBudgetTypeByDepartmentId(departmentId);
+                if (budgetType == null)
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "No active budget type found.";
+                    return serviceResponse;
+                }
+
                 budgetInformation.BudgetType = budgetType;
 
-                if (budgetType.BudgetTypeId == 1)
+                switch (budgetType.BudgetTypeId)
                 {
-                    var activeAnnualBudgetResponse = await _annualBudgetService.GetAnnualBudgetByDepartmentIdAndIsActiveAsync(departmentId);
-                    var activeAnnualBudget = activeAnnualBudgetResponse.Data;
-                    budgetInformation.AnnualBudget = activeAnnualBudget;
+                    case 1:
+                        var annualBudgetResponse = await _annualBudgetService.GetAnnualBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (!annualBudgetResponse.Success)
+                        {
+                            serviceResponse.Success = false;
+                            serviceResponse.Message = annualBudgetResponse.Message;
+                            return serviceResponse;
+                        }
 
-                    if (activeAnnualBudget != null)
-                    {
-                        int yearRange = activeAnnualBudget.AnnualBudgetYear;
-                        var expensesOfYer = await _expenseRepository.GetExpensesByYearRangeAndDepartmentAsync(yearRange, departmentId);
-                        decimal totalAmount = expensesOfYer.Select(e => e.ExpenseAmount).Sum();
+                        budgetInformation.AnnualBudget = annualBudgetResponse.Data;
+                        budgetInformation.TotalAmount = await CalculateTotalAmountForAnnualBudget(departmentId, annualBudgetResponse.Data);
+                        break;
 
-                        // Assign the total amount to the AnnualBudget property
-                        budgetInformation.TotalAmount = totalAmount;
-                    }
+                    case 2:
+                        var monthlyBudgetResponse = await _monthlyBudgetService.GetMonthlyBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (!monthlyBudgetResponse.Success)
+                        {
+                            serviceResponse.Success = false;
+                            serviceResponse.Message = monthlyBudgetResponse.Message;
+                            return serviceResponse;
+                        }
+
+                        budgetInformation.MonthlyBudget = monthlyBudgetResponse.Data;
+                        budgetInformation.TotalAmount = await CalculateTotalAmountForMonthlyBudget(departmentId, monthlyBudgetResponse.Data);
+                        break;
+
+                    case 3:
+                        var refundBudgetResponse = await _refundBudgetService.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (!refundBudgetResponse.Success)
+                        {
+                            serviceResponse.Success = false;
+                            serviceResponse.Message = refundBudgetResponse.Message;
+                            return serviceResponse;
+                        }
+
+                        budgetInformation.RefundBudget = refundBudgetResponse.Data;
+                        budgetInformation.TotalAmount = await CalculateTotalAmountForRefundBudget(departmentId, refundBudgetResponse.Data);
+                        break;
+
+                    default:
+                        serviceResponse.Success = false;
+                        serviceResponse.Message = "No active budget found.";
+                        break;
                 }
-                else
-                {
-                    if (budgetType.BudgetTypeId == 2)
-                    {
-                        var activeMonthlyBudget = (await _monthlyBudgetService.GetMonthlyBudgetByDepartmentIdAndIsActiveAsync(departmentId))?.Data;
-                        budgetInformation.MonthlyBudget = activeMonthlyBudget;
-                        var expensesOfMonth = await _expenseRepository.GetActiveExpensesByDepartmentIdAndDate(activeMonthlyBudget.MonthlyBudgetMonth, activeMonthlyBudget.MonthlyBudgetYear, departmentId);
-
-                        var totalAmount = expensesOfMonth.Select(e => e.ExpenseAmount).Sum();
-                        budgetInformation.TotalAmount = totalAmount;
-                    }
-                    else
-                    {
-                        var activeRefundBudget = (await _refundBudgetService.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId))?.Data;
-                        budgetInformation.RefundBudget = activeRefundBudget;
-                        int yearRang = activeRefundBudget.RefundBudgetYear;
-                        var expensesOfYear = await _expenseRepository.GetExpensesByYearRangeAndDepartmentAsync(yearRang, departmentId);
-                        var totalAmount = expensesOfYear.Select(e => e.ExpenseAmount).Sum();
-
-                        budgetInformation.TotalAmount = totalAmount;
-                    }
-                }
-
             }
             catch (Exception ex)
             {
-
-                throw;
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
             }
+
             serviceResponse.Data = budgetInformation;
             return serviceResponse;
         }
@@ -189,6 +210,43 @@ namespace BL.Services.BudgetTypeService
         public Task<ServiceResponse<object>> GetBudgetInformationByDepartmentId(int? departmentIdByAdmin)
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<BudgetTypeDto> GetBudgetTypeByDepartmentId(int departmentId)
+        {
+            var department = await _departmentRepository.GetDepartmentByIdAsync(departmentId);
+            if (department == null)
+                return null;
+
+            int budgetTypeId = department.CurrentBudgetTypeId;
+            return (await GetBudgetTypeByIdAsync(budgetTypeId))?.Data;
+        }
+
+        private async Task<decimal> CalculateTotalAmountForAnnualBudget(int departmentId, AnnualBudgetDto annualBudget)
+        {
+            if (annualBudget == null)
+                return 0;
+
+            var expensesOfYear = await _expenseRepository.GetExpensesByYearRangeAndDepartmentAsync(annualBudget.AnnualBudgetYear, departmentId);
+            return expensesOfYear.Sum(e => e.ExpenseAmount);
+        }
+
+        private async Task<decimal> CalculateTotalAmountForMonthlyBudget(int departmentId, MonthlyBudgetDto monthlyBudget)
+        {
+            if (monthlyBudget == null)
+                return 0;
+
+            var expensesOfMonth = await _expenseRepository.GetActiveExpensesByDepartmentIdAndDate(monthlyBudget.MonthlyBudgetMonth, monthlyBudget.MonthlyBudgetYear, departmentId);
+            return expensesOfMonth.Sum(e => e.ExpenseAmount);
+        }
+
+        private async Task<decimal> CalculateTotalAmountForRefundBudget(int departmentId, RefundBudgetDto refundBudget)
+        {
+            if (refundBudget == null)
+                return 0;
+
+            var expensesOfYear = await _expenseRepository.GetExpensesByYearRangeAndDepartmentAsync(refundBudget.RefundBudgetYear, departmentId);
+            return expensesOfYear.Sum(e => e.ExpenseAmount);
         }
     }
 

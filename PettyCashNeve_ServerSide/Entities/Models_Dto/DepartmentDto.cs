@@ -10,7 +10,6 @@ namespace PettyCashNeve_ServerSide.Dto
         public string DeptHeadFirstName { get; set; }
         public string DeptHeadLastName { get; set; }
         public string PhonePrefix { get; set; }
-
         public string PhoneNumber { get; set; }
         public string Description { get; set; }
         public bool IsCurrent { get; set; }

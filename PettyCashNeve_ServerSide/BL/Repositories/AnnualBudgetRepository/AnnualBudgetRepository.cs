@@ -133,7 +133,7 @@ namespace BL.Repositories.AnnualBudgetRepository
             }
         }
 
-        public async Task<bool> addAmountToAnnualBudget(int departmentId, int amountToAdd)
+        public async Task<bool> addAmountToAnnualBudget(int departmentId, decimal amountToAdd)
         {
             try
             {

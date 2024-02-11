@@ -19,6 +19,6 @@ namespace BL.Repositories.AnnualBudgetRepository
 
         Task<bool> DeleteAnnualBudgetAsync(int annualBudgetId);
         Task<bool> resettingAnnualBudget(int departmentId);
-        Task<bool> addAmountToAnnualBudget(int departmentId, int amountToAdd);
+        Task<bool> addAmountToAnnualBudget(int departmentId, decimal amountToAdd);
     }
 }

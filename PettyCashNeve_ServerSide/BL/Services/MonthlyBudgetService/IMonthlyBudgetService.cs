@@ -19,6 +19,6 @@ namespace BL.Services.MonthlyBudgetService
 
         Task<ServiceResponse<bool>> DeleteMonthlyBudgetAsync(int monthlyBudgetId);
         Task<ServiceResponse<bool>> resettingMonthlyBudget(int departmentId);
-        Task<ServiceResponse<bool>> addAmountToMonthlyBudget(int departmentId, int amountToAdd);
+        Task<ServiceResponse<bool>> addAmountToMonthlyBudget(int departmentId, decimal amountToAdd);
     }
 }

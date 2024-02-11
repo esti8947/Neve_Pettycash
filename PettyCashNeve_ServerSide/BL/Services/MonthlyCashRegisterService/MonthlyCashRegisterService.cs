@@ -111,38 +111,6 @@ namespace PettyCashNeve_ServerSide.Services.MonthlyCashRegisterService
         }
 
 
-        //public async Task<ServiceResponse<MonthlyCashRegisterDto>> GetMonthlyCashRegistersByUserOfDepartmentIdAsync(int userOfDepartmentId)
-        //{
-        //    var serviceResponse = new ServiceResponse<MonthlyCashRegisterDto>();
-        //    try
-        //    {
-        //        var monthlyRegister = await _monthlyCashRegisterRepository.GetMonthlyCashRegisterByUserOfDepartmentIdAsync(userOfDepartmentId);
-        //        var monthlyRegisterDto = _mapper.Map<MonthlyCashRegisterDto>(monthlyRegister);
-        //        serviceResponse.Data = monthlyRegisterDto;
-        //        return serviceResponse;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ServiceResponse<MonthlyCashRegisterDto> { Success = false, Message = ex.Message };
-        //    }
-        //}
-
-        //public async Task<ServiceResponse<List<MonthlyCashRegisterDto>>> GetMonthlyCashRegistersByDepartmentIdAsync(int departmentId)
-        //{
-        //    var serviceResponse = new ServiceResponse<List<MonthlyCashRegisterDto>>();
-        //    try
-        //    {
-        //        var monthlyRegisters = await _monthlyCashRegisterRepository.GetMonthlyCashRegistersByDepartmentIdAsync(departmentId);
-        //        var monthlyRegistersDtos = _mapper.Map<List<MonthlyCashRegisterDto>>(monthlyRegisters);
-        //        serviceResponse.Data = monthlyRegistersDtos;
-        //        return serviceResponse;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new ServiceResponse<List<MonthlyCashRegisterDto>> { Success = false, Message = ex.Message };
-        //    }
-        //}
-
         public async Task<ServiceResponse<bool>> CreateNewMonthlyCashRegisterAsync(MonthlyCashRegisterDto newMonthlyCashRegisterDto)
         {
             var serviceResponse = new ServiceResponse<bool>();
@@ -229,6 +197,23 @@ namespace PettyCashNeve_ServerSide.Services.MonthlyCashRegisterService
                     serviceResponse.Data = totalAmount;
                     serviceResponse.Success = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> CheckAllMonthlyCashRegistersInactiveForYearAsync(int departmentId, int academicYear)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _monthlyCashRegisterRepository.CheckAllMonthlyCashRegistersInactiveForYearAsync(departmentId, academicYear);
+                serviceResponse.Data = result;
+                serviceResponse.Success = result;
             }
             catch (Exception ex)
             {

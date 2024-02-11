@@ -2,22 +2,31 @@
 using DAL.Models;
 using PettyCashNeve_ServerSide.Exceptions;
 using DAL.Data;
+using BL.Repositories.AnnualBudgetRepository;
+using BL.Repositories.MonthlyBudgetRepository;
+using BL.Repositories.RefundBudgetRepository;
 
 namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
 {
     public class DepartmentRepository : IDepartmentRepository
     {
         private readonly PettyCashNeveDbContext _context;
-        public DepartmentRepository(PettyCashNeveDbContext context)
+        private readonly IAnnualBudgetRepository _annualBudgetRepository;
+        private readonly IMonthlyBudgetRepository _monthlyBudgetRepository;
+        private readonly IRefundBudgetRepository _refundBudgetRepository;
+        public DepartmentRepository(PettyCashNeveDbContext context, IAnnualBudgetRepository annualBudgetRepository, IMonthlyBudgetRepository monthlyBudgetRepository, IRefundBudgetRepository refundBudgetRepository)
         {
             _context = context;
+            _annualBudgetRepository = annualBudgetRepository;
+            _monthlyBudgetRepository = monthlyBudgetRepository;
+            _refundBudgetRepository = refundBudgetRepository;
         }
 
         public async Task<List<Department>> GetDepartmentsAsync()
         {
             try
             {
-                IQueryable<Department> departmentsQuery =_context.Departments.Where(d => d.IsCurrent == true);
+                IQueryable<Department> departmentsQuery = _context.Departments.Where(d => d.IsCurrent == true);
                 var departmentsDB = await departmentsQuery.ToListAsync();
                 return departmentsDB;
             }
@@ -123,6 +132,40 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             catch (Exception ex)
             {
 
+                throw;
+            }
+        }
+
+        public async Task<int> GetYearByDepartmentId(int departmentId)
+        {
+            int year = 0;
+            try
+            {
+                var department = GetDepartmentByIdAsync(departmentId);
+                var budgetTypeId = department.Result.CurrentBudgetTypeId;
+                if (budgetTypeId != null || budgetTypeId != 0)
+                {
+                    switch (budgetTypeId)
+                    {
+                        case 1:
+                            var annualBudgetResponse = await _annualBudgetRepository.GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                            year = annualBudgetResponse.AnnualBudgetYear;
+                            break;
+
+                        case 2:
+                            var monthlyBudgetResponse = await _monthlyBudgetRepository.GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                            year = monthlyBudgetResponse.MonthlyBudgetYear;
+                            break;
+                        case 3:
+                            var refundBudgetResponse = await _refundBudgetRepository.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                            year = refundBudgetResponse.RefundBudgetYear;
+                        break;
+                    }
+                }
+                return year;
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }

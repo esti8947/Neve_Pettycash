@@ -419,5 +419,22 @@ namespace BL.Repositories.ExpenseRepository
                 return false;
             }
         }
+
+        public async Task<bool> IsExpensesLockedAndApprovedForDepartmentAsync(int departmentId, int yearRange)
+        {
+            try
+            {
+                var expensesList = await GetExpensesByYearRangeAndDepartmentAsync(yearRange, departmentId);
+                bool allApprovedAndLocked = expensesList.All(expense => expense.IsApproved && expense.IsLocked);
+
+                return allApprovedAndLocked;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

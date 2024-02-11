@@ -330,5 +330,22 @@ namespace BL.Services.ExpenseService
             }
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<bool>> IsExpensesLockedAndApprovedForDepartmentAsync(int departmentId, int yearRange)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _expenseRepository.IsExpensesLockedAndApprovedForDepartmentAsync(departmentId, yearRange);
+                serviceResponse.Success = result;
+                serviceResponse.Data = result;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
     }
 }

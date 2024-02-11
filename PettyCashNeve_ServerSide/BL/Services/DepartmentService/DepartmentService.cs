@@ -140,5 +140,25 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             }
             return serviceReponse;
         }
+
+        public async Task<ServiceResponse<int>> GetYearByDepartmentId(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<int>();
+            try
+            {
+                var year = await _departmentRepository.GetYearByDepartmentId(departmentId);
+                if(year != 0)
+                {
+                    serviceResponse.Success = true;
+                    serviceResponse.Data = year;
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success=false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
         Task<bool> UpdateMonthlyCashRegisterAsync(MonthlyCashRegister updatedMonthlyCashRegister);
         Task<bool> DeactivateMonthlyCashRegister(string userId);
         Task<bool> InsertRefundAmount(decimal refunatedAmount, string userId);
+        Task<List<MonthlyCashRegister>> GetMonthlyCashRegisterByDepartmenId(int departmenId);
+        Task<bool> CheckAllMonthlyCashRegistersInactiveForYearAsync(int departmentId, int academicYear);
 
         //Task<bool> DeleteMonthlyCashRegisterAsync(int monthlyCashRegisterId);
     }
