@@ -70,7 +70,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<PettyCashNeveDbContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<PettyCashNeveDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<PettyCashNeveDbContext>(options =>
+    options.UseSqlServer(connectionString,
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
+
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 builder.Services.AddIdentity<NdbUser, IdentityRole>(options => { options.SignIn.RequireConfirmedAccount = false; })

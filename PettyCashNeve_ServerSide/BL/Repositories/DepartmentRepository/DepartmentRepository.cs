@@ -150,15 +150,21 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
                         case 1:
                             var annualBudgetResponse = await _annualBudgetRepository.GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
                             year = annualBudgetResponse.AnnualBudgetYear;
+                            annualBudgetResponse.IsActive = false;
+                            await _context.SaveChangesAsync();
                             break;
 
                         case 2:
                             var monthlyBudgetResponse = await _monthlyBudgetRepository.GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
                             year = monthlyBudgetResponse.MonthlyBudgetYear;
+                            monthlyBudgetResponse.IsActive = false;
+                            await _context.SaveChangesAsync();
                             break;
                         case 3:
                             var refundBudgetResponse = await _refundBudgetRepository.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
                             year = refundBudgetResponse.RefundBudgetYear;
+                            refundBudgetResponse.IsActive = false;
+                            await _context.SaveChangesAsync();
                         break;
                     }
                 }

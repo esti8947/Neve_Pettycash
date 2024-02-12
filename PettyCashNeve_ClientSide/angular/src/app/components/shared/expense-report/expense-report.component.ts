@@ -14,6 +14,7 @@ import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-s
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'expense-report',
@@ -211,7 +212,7 @@ export class ExpenseReportComponent implements OnInit {
       storeName: expense.expense.storeName,
       expenseAmount: expense.expense.expenseAmount,
       expenseDate: new Date(expense.expense.expenseDate), // Assuming expenseDate is a string
-      selectedBuyer: selectedBuyer,
+      selectedBuyer: selectedBuyer || null,
       notes: expense.expense.notes,
     });
     console.log(this.formGroup.value)
@@ -232,6 +233,7 @@ export class ExpenseReportComponent implements OnInit {
     if (this.validForm) {
       const refundMonth = this.monthlyCashRegisterService.getCurrentMothlyRegister().monthlyCashRegisterMonth;
       const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes } = this.formGroup.value;
+      const formattedExpenseDate = formatDate(expenseDate, 'yyyy-MM-ddTHH:mm:ss', 'en-US'); 
 
       const updatedExpense: NewExpenseModel = {
         expenseId: expenseToUpdate.expenseId,
@@ -240,7 +242,7 @@ export class ExpenseReportComponent implements OnInit {
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,
-        expenseDate: expenseDate?.toISOString(),
+        expenseDate: formattedExpenseDate,
         storeName,
         notes: notes,
         isActive: true,

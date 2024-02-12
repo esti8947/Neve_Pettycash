@@ -13,6 +13,7 @@ import { CustomMessageService } from 'src/app/services/customMessage-service/cus
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'add-expense',
@@ -138,6 +139,7 @@ export class AddExpenseComponent implements OnInit {
     if(this.validForm && this.isMonthlyCashRegister){
       const refundMonth  =  this.monthlyCashRegisterService.getCurrentMothlyRegister().monthlyCashRegisterMonth;
       const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes } = this.formGroup.value;
+      const formattedExpenseDate = formatDate(expenseDate, 'yyyy-MM-ddTHH:mm:ss', 'en-US');
 
       const newExpenseModel: NewExpenseModel = {
         expenseId: 0,
@@ -146,7 +148,8 @@ export class AddExpenseComponent implements OnInit {
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,
-        expenseDate: expenseDate?.toISOString(),
+        // expenseDate: expenseDate?.toISOString(),
+        expenseDate:formattedExpenseDate,
         storeName,
         notes: notes || "",
         isActive: true,
