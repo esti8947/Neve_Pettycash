@@ -13,6 +13,7 @@ namespace PettyCashNeve_ServerSide.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventController : BaseController
     {
         private readonly IEventService _eventService;
@@ -39,7 +40,6 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpGet("getEventsByUserAndMonth")]
-        [Authorize]
         public async Task<IActionResult> GetEventsByUserAndMonth()
         {
             try
@@ -71,15 +71,26 @@ namespace PettyCashNeve_ServerSide.Controllers
 
 
         [HttpDelete("deleteEvent/{eventId}")]
-        [Authorize]
         public async Task<IActionResult> DeleteEvent(int eventId)
         {
-            var serviceResponse = await _eventService.DeleteEventById(eventId);
+            var userId = UserId;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("UserId is null or empty.");
+            }
+            var serviceResponse = await _eventService.DeleteEventById(eventId, userId);
+            return HandleResponse(serviceResponse);
+        }
+
+        [HttpPut("updateEvent")]
+        public async Task<IActionResult> UpdateEvent([FromBody] EventDto updatedEvent)
+        {
+            var serviceResponse = await _eventService.UpdateEvent(updatedEvent);
             return HandleResponse(serviceResponse);
         }
 
         [HttpPost("createEvent")]
-        [Authorize]
         public async Task<IActionResult> CreateEvent([FromBody] EventDto newEvent)
         {
             try
@@ -103,7 +114,6 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpGet("deactivateAllEvents")]
-        [Authorize]
         public async Task<IActionResult> DeactivateAllEvents()
         {
             var serviceResponse = await _eventService.DeactivateAllEvents();

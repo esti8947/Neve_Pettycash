@@ -12,7 +12,8 @@ namespace BL.Services.EventService
     {
         Task<ServiceResponse<string>> GetEventNameById(int id);
         Task<ServiceResponse<EventDto>> GetEventById(int id);
-        Task<ServiceResponse<bool>> DeleteEventById(int id);
+        Task<ServiceResponse<bool>> DeleteEventById(int eventId, string userId);
+        Task<ServiceResponse<bool>> UpdateEvent(EventDto eventDto);
         Task<ServiceResponse<bool>> CreateEvent(EventDto newEvent);
         Task<ServiceResponse<List<EventDto>>> GetEventsByUserAndMonth(string updatedBy, int month);
         Task<ServiceResponse<bool>> DeactivateAllEvents();

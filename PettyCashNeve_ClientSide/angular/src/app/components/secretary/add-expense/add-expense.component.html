@@ -6,45 +6,78 @@
   <p-toast></p-toast>
   <form [formGroup]="formGroup">
     <div class="form-group" *ngIf="isEvents">
-      <p-dropdown formControlName="selectedEvent" [options]="events" [placeholder]="'addExpenseForm.Event' | translate" optionLabel="eventName" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+      <span class="p-float-label">
+        <p-dropdown formControlName="selectedEvent" [options]="events" optionLabel="eventName" appendTo="body"
+          [placeholder]="'addExpenseForm.Event' | translate" [style]="{'width':'80%'}"></p-dropdown>
+        <label for="eventName" translate>addExpenseForm.Event</label>
+      </span>
       <div>
         <small *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
       </div>
     </div>
     <div class="form-group">
-      <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory" [placeholder]="'addExpenseForm.Expense Category' | translate" [optionLabel]="getOptionLabel('expenseCategory')" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+      <span class="p-float-label">
+        <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory"
+          [placeholder]="'addExpenseForm.Expense Category' | translate"
+          [optionLabel]="getOptionLabel('expenseCategory')" appendTo="body" [style]="{'width':'80%'}"></p-dropdown>
+        <label for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
+      </span>
       <div>
-        <small *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense category.</small>
+        <small *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense
+          category.</small>
       </div>
     </div>
     <div class="form-group">
-      <input type="text" [placeholder]="'addExpenseForm.Store name' | translate" pInputText formControlName="storeName">
+      <span class="p-float-label">
+        <input type="text" pInputText formControlName="storeName">
+        <label for="storeName" translate>addExpenseForm.Store name</label>
+      </span>
       <div>
         <small *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
       </div>
     </div>
     <div class="form-group">
-      <p-inputNumber [placeholder]="'addExpenseForm.Expense amount' | translate" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
+      <span class="p-float-label">
+        <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
+          formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
+        <label for="expenseAmount" translate>addExpenseForm.Expense amount</label>
+      </span>
       <div>
         <small *ngIf="isInvalid('expenseAmount')" translate>addExpenseForm.Please enter an expense amount.</small>
       </div>
-      </div>
+    </div>
     <div class="form-group">
-      <p-calendar [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate" [placeholder]="'addExpenseForm.Expense date' | translate" dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'80%'}"></p-calendar>
+      <span class="p-float-label">
+        <p-calendar [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate"
+          [(ngModel)]="defalutDate" dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'80%'}"></p-calendar>
+        <label for="expenseDate" translate>addExpenseForm.Expense date</label>
+      </span>
       <div>
         <small *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>
       </div>
     </div>
     <div class="form-group">
-      <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body" [placeholder]="'addExpenseForm.buyer' | translate" [optionLabel]="getOptionLabel('buyer')" [style]="{'width':'80%'}"></p-dropdown>
+      <span class="p-float-label">
+        <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body"
+          [placeholder]="'addExpenseForm.buyer' | translate" [optionLabel]="getOptionLabel('buyer')"
+          [style]="{'width':'80%'}"></p-dropdown>
+        <label for="selectedBuyer" translate>addExpenseForm.buyer</label>
+      </span>
     </div>
     <div class="form-group">
-      <input type="text" [placeholder]="'addExpenseForm.Notes' | translate" pInputText formControlName="notes">
+      <span class="p-float-label">
+        <input type="text" pInputText formControlName="notes">
+        <label for="notes" translate>addExpenseForm.Notes</label>
+      </span>
     </div>
     <p *ngIf="!validForm">Please fill in all required fields</p>
     <div>
-      <button pButton type="button"   (click)="addExpense()"><i class="pi pi-check"></i>{{ 'addExpenseForm.Add' | translate }}</button>
-      <button pButton type="button" id="cancelButton" (click)="cancelExpense()"><i class="pi pi-times"></i>{{ 'addExpenseForm.Cancel' | translate }}</button>
+      <button pButton type="button" class="submitButton" (click)="addExpense()"
+        label="{{'addExpenseForm.Add'|translate}}">
+      </button>
+      <button pButton type="button" class="cancelButton" label="{{'addExpenseForm.Cancel'|translate}}"
+        (click)="cancelExpense()">
+      </button>
     </div>
   </form>
 </div>

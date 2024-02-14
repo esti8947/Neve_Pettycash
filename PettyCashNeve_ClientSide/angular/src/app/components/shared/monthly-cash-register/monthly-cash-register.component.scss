@@ -12,11 +12,25 @@
   small{
     color: $bluegray-700;
   } 
+
   ::ng-deep{
     .p-button{
-      width: 60%;
+      width: 300px;
       color: #fff;
-      margin: 10px;  
+      margin: 5px;
+    }
+  }
+  #enterAmountButton{
+    background-color: $secondaryColor;
+    color: $bluegray-800;
+    width: 610px;
+    margin: 5px;
+    border-radius: 5px;
+    font-weight: bolder;
+    font-size: medium;
+    &:hover{
+      background-color: #e0e5f5;
+      color: $bluegray-600;
     }
   }
   .orange-text {

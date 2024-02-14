@@ -1,6 +1,6 @@
 export interface Event {
-  id: number;
-  name: string;
+  eventId: number;
+  eventName: string;
   eventCategoryID: number;
   updatedBy:string ;
 }

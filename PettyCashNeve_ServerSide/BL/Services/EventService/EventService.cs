@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using BL.Repositories.EventRepository;
+using BL.Repositories.ExpenseRepository;
 using DAL.Models;
 using PettyCashNeve_ServerSide.Dto;
 
@@ -10,11 +11,13 @@ namespace BL.Services.EventService
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IExpenseRepository _expenseRepository;
         private readonly IMapper _mapper;
 
-        public EventService(IEventRepository eventRepository, IMapper mapper)
+        public EventService(IEventRepository eventRepository, IExpenseRepository expenseRepository ,IMapper mapper)
         {
             _eventRepository = eventRepository;
+            _expenseRepository = expenseRepository;
             _mapper = mapper;
         }
 
@@ -72,13 +75,21 @@ namespace BL.Services.EventService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<bool>> DeleteEventById(int id)
+        public async Task<ServiceResponse<bool>> DeleteEventById(int eventId, string userId)
         {
             var serviceResponse = new ServiceResponse<bool>();
 
             try
             {
-                var result = await _eventRepository.DeleteEventById(id);
+                var expensesList = await _expenseRepository.GetUnapprovedExpensesByUserAsync(userId);
+                if (expensesList.Any(expense => expense.EventsId == eventId))
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.Message = "Cannot delete event with associated expenses.";
+                    return serviceResponse;
+                }
+
+                var result = await _eventRepository.DeleteEventById(eventId);
                 serviceResponse.Data = result;
                 serviceResponse.Success = result;
                 if (!result)
@@ -152,6 +163,25 @@ namespace BL.Services.EventService
                 var result = await _eventRepository.DeactivateAllEvents();
                 serviceResponse.Success = result;
                 serviceResponse.Data = result;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> UpdateEvent(EventDto eventDto)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var updatedEvent = _mapper.Map<Events>(eventDto);
+                var result = await _eventRepository.UpdateEvent(updatedEvent);
+
+                serviceResponse.Data = result;
+                serviceResponse.Success = result;
             }
             catch (Exception ex)
             {

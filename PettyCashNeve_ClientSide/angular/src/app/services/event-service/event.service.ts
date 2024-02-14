@@ -34,4 +34,25 @@ export class EventService {
       }),
     );
   }
+
+  deleteEvent(eventId:number):Observable<any>{
+    const url = `${this.baseUrlEvent}/deleteEvent/${eventId}`;
+    return this.http.delete<any>(url).pipe(
+      catchError((error)=>{
+        console.error('Error in deleteEvent function', error);
+        return throwError(error);
+      }),
+    );
+  }
+
+  updateEvent(updatedEvent:any):Observable<any>{
+    const url = `${this.baseUrlEvent}/UpdateEvent`;
+    return this.http.put<any>(url, updatedEvent).pipe(
+      catchError((error)=>{
+        console.error('Error in updateEvent function', error);
+        return throwError(error);
+      }),
+    );
+
+  }
 }

@@ -9,7 +9,7 @@
       <div class="formGroup">
         <input type="password" pInputText formControlName="password" [placeholder]="'password' | translate" />
       </div>
-      <p-button [label]="'Log in'|translate" (click)="loginUser()"></p-button>
+      <p-button type="submit" [label]="'Log in'|translate" [disabled]="!signInForm.valid" (click)="loginUser()"></p-button>
     </form>
   </p-card>
 </div>

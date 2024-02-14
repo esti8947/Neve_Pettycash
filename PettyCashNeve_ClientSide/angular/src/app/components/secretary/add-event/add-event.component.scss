@@ -1,13 +1,16 @@
 @import '../../../../styles.scss';
-#addEventPage{
+
+#addEventPage {
   display: flex;
   justify-content: space-around;
 }
-p{
+
+p {
   color: $bluegray-800;
   font-weight: bolder;
 }
-#addEventForm{
+
+#addEventForm {
   width: 30%;
   margin: 2rem;
   padding: 2rem;
@@ -16,26 +19,65 @@ p{
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   height: 15rem;
 }
-#eventsList{
+
+#eventsList {
+  direction: rtl;
   margin: 2rem;
   padding: 2rem;
   width: 35%;
-  .eventListItems{
+
+  .card {
+    position: relative;
+  }
+
+  .eventListItems {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    button{
-      background-color:rgb(129,142,161);
+
+    .editAndNameContainer {
+      display: flex;
+      /* Ensure edit buttons and event name stay side by side */
+      align-items: center;
+      /* Vertically center items within container */
+    }
+
+    .editButtons {
+      position: absolute;
+      right: 5px;
+
+      // top: 0; 
+      ::ng-deep {
+        .p-button {
+          background: none;
+          color: $bluegray-800;
+          border-color: $secondaryColor;
+          // border-radius: 50%;
+          margin: 1px;
+        }
+      }
+    }
+    .eventName, .eventNameContainer {
+      position: absolute;
+      right: 100px;
+    }
+
+    button {
+      background-color: rgb(129, 142, 161);
       border: none;
       color: #fff;
     }
   }
 }
-.form-group{
+
+.form-group {
   margin-bottom: 30px;
-  input{
+
+  input {
     width: 100%;
   }
 }
+
 .centered-button {
   display: flex;
   justify-content: center;

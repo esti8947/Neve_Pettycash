@@ -55,13 +55,33 @@ img{
 li{
   list-style: none;
 }
+
+
 //variable
-$bluegray-600: rgb(85,99,118);
 $bluegray-600: rgb(85,99,118);
 $bluegray-700: rgb(70,81,97);
 $bluegray-800: rgb(55,64,76);
 $bluegray-900: rgb(40,46,56);
 $primaryColor:#6381ac;
-$secondaryColor:#d6dbeb
+$secondaryColor:#d6dbeb;
 
+.cancelButton {
+  background-color: #fff;
+  color:$bluegray-600;
+  border: 1px solid $bluegray-600;
+}
 
+.cancelButton:hover {
+  background-color: hsl(0, 0%, 95%)!important; 
+  color: $bluegray-700 !important;;
+}
+.submitButton {
+  width: 40%!important;
+  background-color: $primaryColor;
+  color: white!important;
+  border: 1px solid $bluegray-600;
+}
+
+.submitButton:hover {
+  background-color: darken($primaryColor, 10%);
+}

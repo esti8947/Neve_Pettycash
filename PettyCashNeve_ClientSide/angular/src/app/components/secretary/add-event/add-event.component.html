@@ -1,4 +1,4 @@
-<div  *ngIf="!isMonthlyCashRegister">
+<div *ngIf="!isMonthlyCashRegister">
   <p>Cannot add events before setting up a monthly cash register.</p>
   <add-monthly-cash-register>add monthly cash register</add-monthly-cash-register>
 </div>
@@ -7,28 +7,54 @@
   <div id="addEventForm">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories" [placeholder]="'addEventForm.select event category'|translate" [optionLabel]="getOptionLabel()"appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+        <span class="p-float-label">
+          <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories"
+            [placeholder]="'addEventForm.select event category'|translate" [optionLabel]="getOptionLabel()"
+            appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+          <label for="selectedEventCategory" translate>addEventForm.select event category</label>
+        </span>
       </div>
       <div class="form-group">
-        <input type="text" pInputText formControlName="eventName" [placeholder]="'addEventForm.event name'|translate">
+        <span class="p-float-label">
+          <input type="text" pInputText formControlName="eventName">
+          <label for="eventName" translate=>addEventForm.event name</label>
+        </span>
       </div>
       <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
-      <button pButton type="button" (click)="addEvent()" class="centered-button">{{'addEventForm.add event' | translate}}</button>
+      <button pButton type="button" (click)="addEvent()" class="centered-button">{{'addEventForm.add event' |
+        translate}}</button>
     </form>
   </div>
   <div id="eventsList" *ngIf="existingEvents">
     <div class="card xl:flex xl:justify-content-center">
-      <p-orderList [value]="existingEvents" [listStyle]="{ height: '25rem' }" header="existingEvents">
-          <ng-template let-event pTemplate="item">
-            <div class="eventListItems">
-              <div>
+      <p-orderList [value]="existingEvents" [listStyle]="{ height: '25rem' }"
+        header="{{'addEventForm.existingEvents' | translate}}">
+        <ng-template let-event pTemplate="item">
+          <div class="eventListItems">
+            <p-confirmPopup></p-confirmPopup>
+            
+            <div class="editAndNameContainer">
+            <div class="editButtons">
+              <p-button icon="pi pi-pencil" rounded="true" text="true" pTooltip="Update"
+                (click)="editEvent(event)"></p-button>
+              <p-button icon="pi pi-trash" rounded="true" text="true" pTooltip="Delete"
+                (click)="deleteEvent($event, event)"></p-button>
+            </div>
+            
+            <div class="eventNameContainer" *ngIf="selectedEvent == event; else viewMode">
+              <input type="text" [(ngModel)]="editedEventName" (keyup.enter)="saveEventChanges(event)">
+            </div>
+            <ng-template #viewMode>
+              <div class="eventName">
                 <span class="font-bold">{{ event.eventName }}</span>
               </div>
-              <div>
-                <button pButton (click)="addExpenseToSelectedEvent(event)">add Expense</button>
-              </div>
+            </ng-template>
             </div>
-          </ng-template>
+            <div>
+              <button pButton (click)="addExpenseToSelectedEvent(event)">add Expense</button>
+            </div>
+          </div>
+        </ng-template>
       </p-orderList>
     </div>
   </div>

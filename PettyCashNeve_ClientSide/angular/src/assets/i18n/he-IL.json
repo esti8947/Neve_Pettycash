@@ -1,7 +1,7 @@
 {
   "Petty cash - Neve Yerushalayim": "מערכת קופה קטנה - נווה ירושלים",
   "Hello": "שלום",
-  "choose language": "בחר שפה",
+  "choose language": "שפה",
   "Log in": "התחבר",
   "username": "שם משתמש",
   "password": "סיסמא",
@@ -23,7 +23,10 @@
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
-    "expenseDeleted": "הוצאה נמחקה"
+    "expenseDeleted": "הוצאה נמחקה",
+    "deleteEventConfirmation":"האם ברצונך למחוק את הפעילות הזו",
+    "eventDeleted":"הפעילות נמחקה",
+    "eventUpdateError":"אין אפשרות למחוק פעילות שקיימות לה הוצאות"
   },
   "MONTHS": {
     "January": "ינואר",
@@ -44,7 +47,7 @@
     "Inserting a new expense": "הוצאה חדשה",
     "Inserting a new activity": "פעילות חדשה",
     "View previous months": "צפייה בחודשים קודמים",
-    "Expense Details": "פרטי הוצאות",
+    "Expense Details": "צפייה / עריכה פרטי הוצאות",
     "AdditionalActionsDropdown":{
       "Additional Actions":"פעולות נוספות",
       "Adding an Amount to the Budget":"הוספת סכום לתקציב",
@@ -78,15 +81,16 @@
     "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
   },
   "addEventForm":{
+    "existingEvents": "פעילויות",
     "select event category":"בחר קטגוריה",
     "event name":"שם הפעילות",
-    "add event":"הוסף פעילות"
+    "add event":"הוספת פעילות"
   },
   "budgetInformation":{
     "Your annual budget":"התקציב השנתי שלך",
     "Your monthly budget":"התקציב החודשי שלך",
-    "So far you have spent":"עד כה הוצאת:",
-    "Your remaining budget":"התקציב הנותר לך:",
+    "So far you have spent":"סך הכל הוצאות:",
+    "Your remaining budget":"יתרה:",
     "The percentage of expenses from the annual budget":"אחוז ההוצאות מהתקציב השנתי שלך",
     "The percentage of expenses from the monthly budget":"אחוז ההוצאות מהתקציב החודשי שלך",
     "annual budget":"תקציב שנתי",
@@ -99,12 +103,13 @@
     "The department does not have any open cash registers for the current month":"אין קופות פתוחות למחלקה זו  בחודש הנוכחי",
     "New Monthly Cash Register":"קופה חודשית חדשה",
     "Add Monthly Cash Register":"הוסף קופה חודשית חדשה",
-    "The monthly cash register for the month of":"הקופה החודשית לחודש",
-    "The amount of expenses for this month is":"סכום ההוצאות לחודש זה הוא",
-    "The refund amount is":"סכום החזר הוצאות ",
+    "The monthly cash register for the month of":"קופה חודשית -",
+    "The amount of expenses for this month is":"הוצאות החודש",
+    "The refund amount is":"סכום בקופה ",
     "Budget ceiling":"תקרת התקציב",
     "youy ar at % of the budget":"אתה עומד על % מהתקציב",
-    "view the breakdown of expenses":"לצפייה בפירוט ההוצאות",
+    "Add New Expense":"הוספת הוצאה חדשה",
+    "view the breakdown of expenses":"עריכת הוצאות",
     "Enter an amount into the cash register":"הכנס סכום לקופה",
     "Percentage of Expenses Compared to Last Year":"אחוז ההוצאות לעומת שנה קודמת"
   },
@@ -117,8 +122,8 @@
     "Select a Year":"בחר שנה"
   },
   "insertRefundAmount":{
-    "insert refund amount":"הכנס סכום החזר",
-    "refund amount":"סכום החזר"
+    "insert refund amount":"הכנס סכום לקופה",
+    "refund amount":"סכום"
   }
   
 }

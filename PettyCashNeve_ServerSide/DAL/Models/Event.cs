@@ -10,6 +10,7 @@ namespace DAL.Models
         [MaxLength(150)]
         public string EventName { get; set; }
         public int EventMonth { get; set; }
+        public int EventYear { get; set; }
         public int EventCategoryID { get; set; }
         [MaxLength(128)]
         public string UpdatedBy { get; set; }

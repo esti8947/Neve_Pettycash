@@ -29,8 +29,8 @@ h4 {
   margin: 10px;
   color: $bluegray-600;
 }
-#cancelButton{
-  background-color: white!important;
+.editButtons{
+  display: flex;
 }
 .confirmButton{
   justify-content: center;

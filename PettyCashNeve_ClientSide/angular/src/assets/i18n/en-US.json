@@ -1,7 +1,7 @@
 
 {
   "Petty cash - Neve Yerushalayim": "Petty cash - Neve Yerushalayim",
-  "choose language": "Choose your language",
+  "choose language": "Language",
   "Hello": "Hello",
   "Log in":"Log in",
   "username":"Username",
@@ -13,8 +13,8 @@
     "Date":"Date",
     "Amount":"Amount",
     "Event":"Event",
-    "buyer":"buyer",
-    "invice scan":"invice scan",
+    "buyer":"Bbuyer",
+    "invice scan":"Invoice Scan",
     "Notes":"Notes",
     "deleteExpenseConfirmation":"Are you sure you want to delete this expense?",
     "Expense Details":"Expense Details"
@@ -24,7 +24,10 @@
   },
   "messages": {
     "deleteExpenseConfirmation": "Do you want to delete this expense?",
-    "expenseDeleted": "Expense is deleted"
+    "expenseDeleted": "Expense is deleted",
+    "deleteEventConfirmation":"Do you want to delete this event?",
+    "eventDeleted":"Event is deleted",
+    "eventUpdateError":"Cannot delete event with associated expenses"
   },
   "MONTHS": {
     "January": "January",
@@ -45,7 +48,7 @@
     "Inserting a new expense": "New Expense",
     "Inserting a new activity": "New Activity",
     "View previous months": "View Previous",
-    "Expense Details": "Expense Details",
+    "Expense Details": "View / Edit Expense Details",
     "AdditionalActionsDropdown":{
       "Additional Actions":"Additional Actions",
       "Adding an Amount to the Budget":"Adding an Amount to the Budget",
@@ -61,16 +64,16 @@
     "Please select an event.":"Please select an event.",
     "Expense Category":"* Select a category",
     "Please select an expense category.":"Please select an expense category.",
-    "Store name":"* Store Name",
+    "Store name":"* Store name",
     "Please enter a store name.":"Please enter a store name.",
     "Expense date":"* Date of expense",
     "Please enter an expense date.":"Please enter an expense date.",
     "Expense amount":"* Expense amount",
     "Please enter an expense amount.":"Please enter an expense amount.",
-    "event Category Name":"event Category Name",
-    "expense Category Name":"expense Category Name",
-    "buyer":"select a buyer",
-    "invice scan":"invice scan",
+    "event Category Name":"Event category name",
+    "expense Category Name":"Expense category name",
+    "buyer":"Select a buyer",
+    "invice scan":"Invoice scan",
     "Notes":"Notes",
     "Add":"Add",
     "Cancel":"Cancel",
@@ -79,33 +82,36 @@
     "Please fill in all required fields":"Please fill in all required fields"
   },
   "addEventForm":{
-    "select event category":"select event category",
-    "event name":"event name",
-    "add event":"add event"
+    "existingEvents": "Events",
+    "select event category":"Lelect event category",
+    "event name":"Event name",
+    "add event":"Add Event"
   },
   "budgetInformation":{
     "Your annual budget":"Your annual budget",
-    "So far you have spent":"So far you have spent:",
+    "So far you have spent":"Total Expenses:",
     "Your monthly budget":"Your monthly budget",
-    "Your remaining budget":"Your remaining budget:",
+    "Your remaining budget":"Remaining Budget:",
     "The percentage of expenses from the annual budget":"The percentage of expenses from the annual budget",
     "The percentage of expenses from the monthly budget":"The percentage of expenses from the monthly budget",
-    "annual budget":"annual budget",
-    "monthly budget":"monthly budget",
-    "refund budget":"refund budget",
-    "budget type":"budget type",
+    "annual budget":"Annual Budget",
+    "monthly budget":"Monthly Budget",
+    "refund budget":"Refund Budget",
+    "budget type":"Budget Type",
     "Percentage spent":"Percentage spent"
   },
   "monthlyCashRegister":{
-    "The department does not have any open cash registers for the current month":"The department does not have any open cash registers for the current month",    "New Monthly Cash Register":"New Monthly Cash Register",
-    "Add Monthly Cash Register":"Add Monthly Cash Register",
-    "The monthly cash register for the month of":"The monthly cash register for the month of ",
-    "The amount of expenses for this month is":"The amount of expenses for this month is",
-    "The refund amount is":"The refund amount is ",
+    "The department does not have any open cash registers for the current month":"The department does not have any open kupa for the current month",    
+    "New Monthly Cash Register":"New Kupa",
+    "Add Monthly Cash Register":"Add Kupa",
+    "The monthly cash register for the month of":"Kupa ",
+    "The amount of expenses for this month is":"Monthly Expenses",
+    "The refund amount is":"Amount in kupa",
     "Budget ceiling":"Budget ceiling",
-    "youy ar at % of the budget":"youy ar at % of the budget",
-    "view the breakdown of expenses":"view the breakdown of expenses",
-    "Enter an amount into the cash register":"Enter an amount into the cash register",
+    "youy ar at % of the budget":"youy are at % of the budget",
+    "Add New Expense":"Add New Expense",
+    "view the breakdown of expenses":"Edit Monthly Expenses",
+    "Enter an amount into the cash register":"Enter amount into the kupa",
     "Percentage of Expenses Compared to Last Year":"Percentage of Expenses Compared to Last Year"
   },
   "lockExpnenseButton":{
@@ -117,8 +123,8 @@
     "Select a Year":"Select a Year"
   },
   "insertRefundAmount":{
-    "insert refund amount":"insert refund amount",
-    "refund amount":"refund amount"
+    "insert refund amount":"Enter amount into the kupa ",
+    "refund amount":"Amount"
   }
   
 }

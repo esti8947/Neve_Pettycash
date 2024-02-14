@@ -146,6 +146,9 @@ export class MonthlyCashRegisterComponent implements OnInit {
     this.currentUser.isManager? this.router.navigate(['/navbar/expense-report']):
     this.router.navigate(['/navbar/expense-report']);
   }
+  navigateToAddExpense() {
+    this.router.navigate(['/navbar/add-expense']);
+  }
 
   initializeForm() {
     this.formGroup = this.formBuilder.group({

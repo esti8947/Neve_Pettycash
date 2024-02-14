@@ -40,8 +40,8 @@ export class DynamicNavbarComponent implements OnInit {
     } else {
       this.navbarItems = [
         { label: 'navbar.Home', route: '/navbar/home-department' },
-        { label: 'navbar.Inserting a new activity', route: '/navbar/add-event' },
         { label: 'navbar.Inserting a new expense', route: '/navbar/add-expense' },
+        { label: 'navbar.Inserting a new activity', route: '/navbar/add-event' },
         { label: 'navbar.Expense Details', route: '/navbar/expense-report' },
         { label: 'navbar.View previous months', route: '/navbar/previous-expenses' },
       ];

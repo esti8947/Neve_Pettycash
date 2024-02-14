@@ -125,5 +125,25 @@ namespace BL.Repositories.EventRepository
             }
         }
 
+        public async Task<bool> UpdateEvent(Events updatedEvent)
+        {
+            try
+            {
+                var eventToUpdata = await GetEventById(updatedEvent.EventId);
+                if(eventToUpdata == null)
+                {
+                    throw new DirectoryNotFoundException("event to fount or not active");
+                }
+                _context.Entry(eventToUpdata).CurrentValues.SetValues(updatedEvent);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }

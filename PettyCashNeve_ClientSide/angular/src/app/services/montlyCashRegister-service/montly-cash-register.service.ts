@@ -61,7 +61,7 @@ export class MontlyCashRegisterService {
     const url = `${this.baseUrlMonthlyCashRegister}/createNewMonthlyCashRegister`;
     return this.http.post<any>(url, newMonthlyRegister).pipe(
       catchError((error) => {
-        console.error('Error in addNewEvents function:', error);
+        console.error('Error in addMonthlyRegister function:', error);
         return throwError(error);
       })
     );

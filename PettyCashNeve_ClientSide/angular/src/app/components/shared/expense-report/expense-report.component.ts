@@ -168,7 +168,7 @@ export class ExpenseReportComponent implements OnInit {
     }
   }
 
-  deleteExpense(event: Event, expense: any) {
+  deleteExpense(event: MouseEvent, expense: any) {
     const expenseIdToDelete = expense.expense.expenseId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,

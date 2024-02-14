@@ -33,7 +33,7 @@ export class AddExpenseComponent implements OnInit {
   currentMonth:number | undefined;
   minDateValue: Date = new Date();
   maxDateValue: Date = new Date();
-  
+  defalutDate:Date = new Date();
 
   constructor(
     private readonly translateService:TranslateService,

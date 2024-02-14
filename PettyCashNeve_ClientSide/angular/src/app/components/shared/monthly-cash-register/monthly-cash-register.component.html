@@ -1,7 +1,7 @@
 <div class="card flex justify-content-center">
   <p-toast></p-toast>
   <p-card>
-    <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue.monthlyCashRegisterMonth)}}</h3>
+    <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue.monthlyCashRegisterMonth)}} {{MonthlyRegisterValue.monthlyCashRegisterYear}}</h3>
     <h4><span translate>monthlyCashRegister.The amount of expenses for this month is</span> &#8362;{{MonthlyRegisterValue.amountInCashRegister | number}}</h4>
 
     <ng-container *ngIf="budgetType === 'annualBudget'">
@@ -23,9 +23,12 @@
       <p translate>monthlyCashRegister.youy ar at % of the budget</p>
     </div> -->
     <ng-template pTemplate="footer">
-      <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.view the breakdown of expenses'|translate"></p-button>
-      <p-button *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" [label]="'monthlyCashRegister.Enter an amount into the cash register'|translate"></p-button>
-    </ng-template>
+      <div style="display: flex;">
+        <p-button *ngIf="!currentUser.isManager" styleClass="p-button" (click)="navigateToAddExpense()" [label]="'monthlyCashRegister.Add New Expense'|translate"></p-button>
+        <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.view the breakdown of expenses'|translate"></p-button>
+      </div>
+        <button id="enterAmountButton" *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" translate>monthlyCashRegister.Enter an amount into the cash register</button>
+    </ng-template>    
   </p-card>
 </div>
 <p-dialog [(visible)]="insertRefundAmountDialog" [style]="{ width: '450px' }" [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">

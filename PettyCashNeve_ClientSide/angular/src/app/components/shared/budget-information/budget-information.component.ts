@@ -57,7 +57,7 @@ export class BudgetInformationComponent implements OnInit{
 
   getBudgetType(): string {
     return this.translateService.currentLang === 'en-US' ?
-      `budget type - ${this.budgetInformation?.budgetType?.budgetTypeName}` :
+      `Budget Type - ${this.budgetInformation?.budgetType?.budgetTypeName}` :
       `סוג תקציב - ${this.budgetInformation?.budgetType?.budgetTypeNameHeb}`;
   }
   getBudgetTypeName():string{

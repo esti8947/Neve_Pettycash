@@ -15,16 +15,6 @@ export class ExpenseService {
 
   constructor(private http: HttpClient) {}
 
-  // getExpensesOfUser(): Observable<any> {
-  //   const url = `${this.baseUrl}/GetExpensesOfUser`;
-  //   return this.http.get<any>(url).pipe(
-  //     catchError((error) =>{
-  //       console.error('Error in GetExpensesOfUser function', error)
-  //       return throwError(error)
-  //     }),
-  //   );
-  // }
-
   getExpensesOfUserByYear(year:number, departmentId?: number): Observable<any> {
     let url = `${this.baseUrlExpens}/GetExpensesOfUserByYear/${year}`;
     if(departmentId !== undefined && departmentId!== null){
