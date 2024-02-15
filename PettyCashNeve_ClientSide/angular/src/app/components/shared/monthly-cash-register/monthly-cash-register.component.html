@@ -25,10 +25,16 @@
     <ng-template pTemplate="footer">
       <div style="display: flex;">
         <p-button *ngIf="!currentUser.isManager" styleClass="p-button" (click)="navigateToAddExpense()" [label]="'monthlyCashRegister.Add New Expense'|translate"></p-button>
-        <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.view the breakdown of expenses'|translate"></p-button>
+        <ng-container *ngIf="currentUser.isManager; else editExpenseButton">
+          <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.View Monthly Expenses'|translate"></p-button>
+        </ng-container>
+        <ng-template #editExpenseButton>
+          <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.Edit Monthly Expenses'|translate"></p-button>
+        </ng-template>
       </div>
-        <button id="enterAmountButton" *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" translate>monthlyCashRegister.Enter an amount into the cash register</button>
-    </ng-template>    
+      <button id="enterAmountButton" *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" translate>monthlyCashRegister.Enter an amount into the cash register</button>
+    </ng-template>
+      
   </p-card>
 </div>
 <p-dialog [(visible)]="insertRefundAmountDialog" [style]="{ width: '450px' }" [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">

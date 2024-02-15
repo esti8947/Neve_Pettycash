@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetImformationService } from 'src/app/services/budget-information-service/budget-imformation.service';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { ExpenseService } from 'src/app/services/expense-service/expense.service';
+import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 
 @Component({
@@ -27,20 +28,13 @@ export class MonthlyCashRegisterComponent implements OnInit {
   currentUser:any;
   monthlyAmountForCalculatingPercentages: number | undefined;
   amountWastedForCalculatingPercentages: number | undefined;
-  monthNames: string[] = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
-  ];
-  monthNamesHeb:string[] = [
-    'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי',
-    'אוגוס', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
-  ];
 
   constructor(
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private budgetInformationService: BudgetImformationService,
     private expenseService: ExpenseService,
     private authService:AuthService,
+    private monthNameService:MonthNameService,
     private router: Router,
     private formBuilder: FormBuilder,
     private customMessageService: CustomMessageService,
@@ -109,11 +103,7 @@ export class MonthlyCashRegisterComponent implements OnInit {
   }
 
   getMonthName(monthNumber: number | undefined): string {
-    if(monthNumber == undefined){
-      return '';
-    }
-    return this.translateService.currentLang === 'en-US' ? this.monthNames[monthNumber - 1]:
-    this.monthNamesHeb[monthNumber - 1];
+    return this.monthNameService.getMonthName(monthNumber);
   }
 
   getBudgetInformation() {

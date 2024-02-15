@@ -191,7 +191,7 @@ namespace PettyCashNeve_ServerSide.Controllers
 
         [Route("deleteUser/{username}")]
         [HttpDelete]
-        //[Authorize(Roles = "Admin")] // Only allow deletion by Admin role
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string username)
         {
             try

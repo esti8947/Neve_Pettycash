@@ -15,6 +15,8 @@ namespace Entities.Models_Dto.UserDto
         public bool LoggedIn { get; set; }
         public string Token { get; set; }
         public  Department Department { get; set; }
+        public string email { get; set; }
+        public string phoneNubmer { get; set; }
 
     }
 }

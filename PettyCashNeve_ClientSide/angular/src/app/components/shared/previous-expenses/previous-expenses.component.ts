@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ExpenseService } from 'src/app/services/expense-service/expense.service';
+import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 
 @Component({
   selector: 'previous-expenses',
@@ -29,6 +30,7 @@ export class PreviousExpensesComponent implements OnInit {
   constructor(
     private expenseService: ExpenseService,
     private authService: AuthService,
+    private monthNameService:MonthNameService,
     private router: Router,
     private translateService: TranslateService,
   ) { }
@@ -95,13 +97,8 @@ export class PreviousExpensesComponent implements OnInit {
   }
 
   getMonthName(monthNumber: number | undefined): string {
-    if (monthNumber == undefined) {
-      return '';
-    }
-    return this.translateService.currentLang === 'en-US' ? this.monthNames[monthNumber - 1] :
-      this.monthNamesHeb[monthNumber - 1];
+    return this.monthNameService.getMonthName(monthNumber);
   }
-
   getMonthNumber(monthName: string): number {
 
     const monthIndex = this.monthNames.indexOf(monthName);

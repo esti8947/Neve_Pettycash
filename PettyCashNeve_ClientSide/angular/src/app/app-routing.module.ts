@@ -11,6 +11,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PreviousExpensesComponent } from './components/shared/previous-expenses/previous-expenses.component';
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
+import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
 
 const routes: Routes = [
   // { path: '', component: HomeManagerComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'add-expense', component: AddExpenseComponent },
       { path: 'expense-report', component: ExpenseReportComponent },      
       { path: 'previous-expenses', component: PreviousExpensesComponent},
+      {path: 'users-of-department', component: UsersOfDepartmentComponent}
     ]}
 ];
 

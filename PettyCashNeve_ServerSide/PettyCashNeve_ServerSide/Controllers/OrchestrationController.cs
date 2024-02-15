@@ -141,6 +141,14 @@ namespace PettyCashNeve_ServerSide.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("getUsersOfDepartment/{departmentId}")]
+        [Authorize (Roles = "Admin")]
+        public async Task<IActionResult> GetUsersOfDepartment(int departmentId)
+        {
+            var serviceResponse = await _departmentService.GetUsersByDepartmentId(departmentId);
+            return HandleResponse(serviceResponse);
+        }
     }
 }
 

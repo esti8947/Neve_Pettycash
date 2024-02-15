@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { formatDate } from '@angular/common';
+import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 
 @Component({
   selector: 'expense-report',
@@ -48,6 +49,7 @@ export class ExpenseReportComponent implements OnInit {
     private buyerService: BuyerService,
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private eventService: EventService,
+    private monthNameService:MonthNameService,
     private additionalActionsService:AdditionalActionsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -117,11 +119,8 @@ export class ExpenseReportComponent implements OnInit {
   }
 
   formatMonthYear(): string {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const monthNamesHeb= ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוס', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
-    if(this.month != undefined){
-      const monthName = this.translateService.currentLang === 'en-US' ? monthNames[this.month - 1] :
-      monthNamesHeb[this.month - 1];
+    if (this.month != undefined) {
+      const monthName = this.monthNameService.getMonthName(this.month);
       return `${monthName} ${this.year}`;
     }
     return '';

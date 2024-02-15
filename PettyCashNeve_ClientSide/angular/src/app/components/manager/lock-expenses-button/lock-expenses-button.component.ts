@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 import { ExpenseService } from 'src/app/services/expense-service/expense.service';
+import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 
 @Component({
   selector: 'lock-expenses-button',
@@ -17,7 +18,8 @@ export class LockExpensesButtonComponent implements OnInit {
   uniqueMonthsAndYears: string[] = [];
 
   constructor(private expenseService: ExpenseService, private authService: AuthService, private departmentService: DepartmentService,
-    private router: Router, private translateService: TranslateService) { }
+    private router: Router, private translateService: TranslateService,
+    private monthNameService:MonthNameService) { }
 
   ngOnInit(): void {
     this.currnetUser = this.authService.getCurrentUser();
@@ -52,13 +54,12 @@ export class LockExpensesButtonComponent implements OnInit {
   getButtonText(monthYear: string): string {
     const [month, year] = monthYear.split(' ');
     const monthNumber = new Date(Date.parse(month + ' 1, ' + year)).getMonth() + 1;
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const monthNamesHeb = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוס', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
-    const monthName = this.translateService.currentLang === 'en-US' ? monthNames[monthNumber - 1] :
-      monthNamesHeb[monthNumber - 1];
 
-    return this.translateService.currentLang === 'en-US'? `Expense Lock for ${monthName} ${year}`:
-    `נעילת הוצאות לחודש ${monthName} ${year}`
+    const monthName = this.monthNameService.getMonthName(monthNumber);
+
+    return this.translateService.currentLang === 'en-US' ?
+      `Expense Lock for ${monthName} ${year}` :
+      `נעילת הוצאות לחודש ${monthName} ${year}`;
   }
 
   navigateToExpenseReport(monthYear: string) {

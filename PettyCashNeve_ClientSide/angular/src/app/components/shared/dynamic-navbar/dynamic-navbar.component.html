@@ -9,9 +9,9 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a translate>navbar.AdditionalActionsDropdown.Adding an Amount to the Budget</a>
+                    <a translate (click)="openAddingAmountDialog()">navbar.AdditionalActionsDropdown.Adding an Amount to the Budget</a>
                     <a translate>navbar.AdditionalActionsDropdown.Resetting the Budget</a>
-                    <a translate>navbar.AdditionalActionsDropdown.Users for Current Department</a>
+                    <a [routerLink]="['/navbar/users-of-department']" translate>navbar.AdditionalActionsDropdown.Users for Current Department</a>
                     <a translate>navbar.AdditionalActionsDropdown.Closing the Year</a>
                     <a translate>navbar.AdditionalActionsDropdown.Opening the Year</a>
                 </div>
@@ -30,3 +30,16 @@
     </nav>
     <router-outlet></router-outlet>
 </div>
+<p-dialog [(visible)]="addingAmountDialog" [style]="{ width: '450px' }" [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">
+      <form [formGroup]="formGroup">
+        <div class="form-group">
+          <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="amountToAdd" [placeholder]="'insertRefundAmount.refund amount'|translate"></p-inputNumber>
+          <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+        </div>
+        <div>
+          <button class="button" pButton type="button" (click)="addingAmountToBudget()">{{ 'insertRefundAmount.insert refund amount' | translate }}</button>
+        </div>
+      </form>
+    <!-- </div> -->
+  </p-dialog>
+  

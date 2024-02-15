@@ -11,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { Department } from 'src/app/models/department';
 import { UserInfo } from 'src/app/models/userInfo';
+import { RegisterUser } from 'src/app/models/registerUser';
 
 @Injectable({
   providedIn: 'root',
@@ -87,6 +88,26 @@ export class AuthService {
     const payloadDecodedJson = window.atob(payload);
     const payloadDecoded = JSON.parse(payloadDecodedJson);
     return payloadDecoded.jti;
+  }
+
+  registerUser(newUser:RegisterUser):Observable<any>{
+    const url = `${this.endpoint}/Register`;
+    return this.http.post<any>(url, newUser).pipe(
+      catchError((error) => {
+        console.error('Error in registerUser function:', error);
+        return throwError(error);
+      })
+    )
+  }
+  
+  deleteUser(username:string){
+    const url = `${this.endpoint}/deleteUser/${username}`;
+    return this.http.delete<any>(url).pipe(
+      catchError((error)=>{
+        console.error('Error in deleteUser function', error);
+        return throwError(error);
+      }),
+    );
   }
 
   handleError(error: HttpErrorResponse) {

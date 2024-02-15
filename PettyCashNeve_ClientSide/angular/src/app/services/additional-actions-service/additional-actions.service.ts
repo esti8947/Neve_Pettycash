@@ -21,4 +21,23 @@ export class AdditionalActionsService {
       })
     )
   }
+
+  addAmountToBudget( departmentId:number, amount:number):Observable<any>{
+    const url = `${this.baseUrlOrchestration}/addAmountToBudget/${departmentId}/${amount}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) =>{
+        console.error('Error in addAmountToBudget function', error);
+        return(error);
+      })
+    )
+  }
+
+  getUsersOfDepartment(departmentId:number):Observable<any>{
+    const url = `${this.baseUrlOrchestration}/getUsersOfDepartment/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) =>{
+        console.error('Error in getUsersOfDepartment function', error);
+        return(error);
+      })
+    )  }
 }

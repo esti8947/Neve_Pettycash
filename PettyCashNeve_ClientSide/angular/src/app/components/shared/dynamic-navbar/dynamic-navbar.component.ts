@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 
 interface CustomMenuItem extends MenuItem {
@@ -18,16 +21,27 @@ export class DynamicNavbarComponent implements OnInit {
   currentUser: any;
   selectedDepartment: any;
 
+  formGroup!: FormGroup;
+  validForm: boolean = true;
+  addingAmountDialog:boolean = false;
+
   constructor(
     private authService: AuthService,
     private departmentService: DepartmentService,
     private router: Router,
+
+    private formBuilder: FormBuilder,
+    private additionalActionsService: AdditionalActionsService,
+    private customMessageService:CustomMessageService,
+
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.selectedDepartment = this.departmentService.getSelectedDepartment();
     this.initializeNavbarItems();
+    this.initializeForm();
+
   }
 
   initializeNavbarItems() {
@@ -59,5 +73,38 @@ export class DynamicNavbarComponent implements OnInit {
     } else {
       this.authService.doLogout();
     }
+  }
+  initializeForm() {
+    this.formGroup = this.formBuilder.group({
+      amountToAdd: new FormControl<number | null>(null, Validators.required)
+    });
+  }
+
+  openAddingAmountDialog() {
+    this.addingAmountDialog = true;
+  }
+
+  addingAmountToBudget(){
+    this.validForm = !this.formGroup.invalid;
+    if (this.validForm) {
+      const amoutnToAdd = this.formGroup.value.amountToAdd;
+      const departmentId = this.selectedDepartment.departmentId;
+      this.additionalActionsService.addAmountToBudget(departmentId, amoutnToAdd).subscribe(
+        (response) =>{
+          console.log('insert refund amount succeddfull: ', response);
+          this.customMessageService.showSuccessMessage("add amount to budget is successfull.");
+          this.formGroup.reset();
+          this.addingAmountDialog = false;
+        },
+        (error)=>{
+          console.error('An error occurred while add amount to budget: ', error);
+          this.customMessageService.showErrorMessage("'An error occurred while add amount");
+        }
+      )
+    }
+  }
+
+  ResettingBudget(){
+    
   }
 }

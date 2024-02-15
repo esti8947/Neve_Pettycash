@@ -57,6 +57,7 @@ import { AddDepartmentComponent } from './components/manager/add-department/add-
 import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
+import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -83,6 +84,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddExpenseCategoryComponent,
     DynamicNavbarComponent,
     LockExpensesButtonComponent,
+    UsersOfDepartmentComponent,
     
   ],
   imports: [

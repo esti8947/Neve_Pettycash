@@ -118,27 +118,45 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<UserDto>>> GetUsersByDepartmentId(int departmentId)
+        public async Task<ServiceResponse<List<UserInfoModel>>> GetUsersByDepartmentId(int departmentId)
         {
-            var serviceReponse = new ServiceResponse<List<UserDto>>();
+            var serviceResponse = new ServiceResponse<List<UserInfoModel>>();
             try
             {
                 var usersList = await _departmentRepository.GetUsersByDepartmentId(departmentId);
-                var usersDto = _mapper.Map<List<UserDto>>(usersList);
 
-                if (usersDto == null)
+                if (usersList == null || !usersList.Any())
                 {
-                    serviceReponse.Message = "no users found";
+                    serviceResponse.Message = "No users found";
+                    serviceResponse.Success = false;
+                    return serviceResponse;
                 }
-                serviceReponse.Data = usersDto;
-                serviceReponse.Success = true;
+                var usersInfo = new List<UserInfoModel>();
+
+                foreach (var user in usersList)
+                {
+                    var userInfo = new UserInfoModel
+                    {
+                        Username = user.UserName,
+                        DepartmentId = user.DepartmentId,
+                        Id = user.Id,
+                        email = user.Email,
+                        phoneNubmer = user.PhoneNumber
+                    };
+
+                    // Add UserInfoModel to the list
+                    usersInfo.Add(userInfo);
+                }
+
+                serviceResponse.Data = usersInfo;
+                serviceResponse.Success = true;
             }
             catch (Exception ex)
             {
-
-                throw;
+                serviceResponse.Message = "An error occurred while retrieving users.";
+                serviceResponse.Success = false;
             }
-            return serviceReponse;
+            return serviceResponse;
         }
 
         public async Task<ServiceResponse<int>> GetYearByDepartmentId(int departmentId)

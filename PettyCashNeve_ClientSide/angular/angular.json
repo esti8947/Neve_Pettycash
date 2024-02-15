@@ -27,8 +27,13 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-               "src/assets",
-               "src/web.config" 
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/assets/i18n",
+                "output": "/assets/i18n"
+              },
+              "src/web.config"
             ],
             "styles": [
               "node_modules/primeng/resources/primeng.min.css",
@@ -39,14 +44,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "outputPath": "dist/neve_yerushalayim_petty_cash-production",
-              "index": "src/index-prod.html",
               "budgets": [
                 {
                   "type": "initial",
@@ -102,7 +99,12 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/web.config" 
+              {
+                "glob": "**/*",
+                "input": "src/assets/i18n",
+                "output": "/assets/i18n"
+              },
+              "src/web.config"
             ],
             "styles": [
               "src/styles.scss"

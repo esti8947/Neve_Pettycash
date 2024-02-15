@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetImformationService } from 'src/app/services/budget-information-service/budget-imformation.service';
+import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 
 @Component({
   selector: 'budget-information',
@@ -19,6 +20,7 @@ export class BudgetInformationComponent implements OnInit{
     private budgetInformationService:BudgetImformationService,
     private translateService:TranslateService,
     private authService:AuthService,
+    private monthNameService:MonthNameService,
   ){}
 
   async ngOnInit(): Promise<void> {
@@ -66,6 +68,10 @@ export class BudgetInformationComponent implements OnInit{
       this.budgetInformation.budgetType.budgetTypeNameHeb;
   }
 
+  getMonthName(): string {
+    const monthNumber = this.budgetInformation.monthlyBudget.monthlyBudgetMonth;
+    return this.monthNameService.getMonthName(monthNumber);
+  }
   getSpentPercentage(totalAmount: number, annualBudgetCeiling: number): number {
     return (totalAmount / annualBudgetCeiling) * 100;
   }

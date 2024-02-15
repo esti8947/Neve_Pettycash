@@ -236,7 +236,18 @@ namespace BL.Services.BudgetTypeService
             if (monthlyBudget == null)
                 return 0;
 
-            var expensesOfMonth = await _expenseRepository.GetActiveExpensesByDepartmentIdAndDate(monthlyBudget.MonthlyBudgetMonth, monthlyBudget.MonthlyBudgetYear, departmentId);
+            int targetYear = monthlyBudget.MonthlyBudgetYear;
+
+            if (monthlyBudget.MonthlyBudgetMonth > 8)
+            {
+                targetYear = monthlyBudget.MonthlyBudgetYear / 10000;
+            }
+            else
+            {
+                targetYear = monthlyBudget.MonthlyBudgetYear % 10000;
+            }
+
+            var expensesOfMonth = await _expenseRepository.GetActiveExpensesByDepartmentIdAndDate(monthlyBudget.MonthlyBudgetMonth, targetYear, departmentId);
             return expensesOfMonth.Sum(e => e.ExpenseAmount);
         }
 

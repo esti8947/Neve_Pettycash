@@ -19,6 +19,7 @@
       </h4>    
     </ng-container>
     <ng-container *ngIf="budgetType === 'monthlyBudget'">
+      <h1>{{getMonthName()}}</h1>
       <h1>{{getBudgetTypeName()}} - ₪{{budgetInformation.monthlyBudget.monthlyBudgetCeiling | number}}</h1>
       <h4>
         {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
