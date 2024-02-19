@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationService } from 'primeng/api';
 import { RegisterUser } from 'src/app/models/registerUser';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
@@ -19,13 +20,16 @@ export class UsersOfDepartmentComponent implements OnInit{
   formGroup!: FormGroup;
   validForm: boolean = true;
 
+
+
   constructor(
     private additionalActionsService:AdditionalActionsService,
     private departmentService:DepartmentService,
     private authService:AuthService,
     private formBuilder: FormBuilder,
     private customMessageService:CustomMessageService,
-    private confirmationService:ConfirmationService,){}
+    private confirmationService:ConfirmationService,
+    private translateService:TranslateService,){}
 
   ngOnInit(): void {
     this.selectedDepartment = this.departmentService.getSelectedDepartment();
@@ -86,5 +90,32 @@ export class UsersOfDepartmentComponent implements OnInit{
         }
       )
     }
+  }
+
+  deleteUser(event:MouseEvent, user:any){
+    const userIdToDelete = user.userId;
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: this.translateService.instant('messages.deleteExpenseConfirmation'),
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: ' p-button-sm',
+      accept: () => {
+        this.authService.deleteUser(userIdToDelete).subscribe(
+          (data) => {
+            console.log('user is deleted', data);
+            this.customMessageService.showSuccessMessage(this.translateService.instant('messages.userDeleted'));
+            this.usersList = this.usersList.filter((val) => val.user.userId !== userIdToDelete);
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.customMessageService.showErrorMessage('An error occurred while deleting the user');
+          }
+        );
+      },
+    })
+  }
+
+  editUser(user:any){
+
   }
 }

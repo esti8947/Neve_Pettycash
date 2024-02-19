@@ -1,40 +1,62 @@
 <div id="usersPage">
-    <p-toast></p-toast>
-    <div class="card flex justify-content-center">
-        <p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
-        <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-            <p class="m-0">
-                <form [formGroup]="formGroup">
-                    <div class="form-group">
-                    </div>
-                    <div class="form-group">
-                      <span class="p-float-label">
-                        <input type="text" pInputText formControlName="username">
-                        <label for="username" translate=>registerUser.username</label>
-                      </span>
-                    </div>
-                    <div class="form-group">
-                        <span class="p-float-label">
-                          <input type="text" pInputText formControlName="password">
-                          <label for="password" translate=>registerUser.password</label>
-                        </span>
-                      </div>
-                      <div class="form-group">
-                        <span class="p-float-label">
-                          <input type="text" pInputText formControlName="email">
-                          <label for="email" translate=>registerUser.email</label>
-                        </span>
-                      </div>
-                      <div class="form-group">
-                        <span class="p-float-label">
-                          <input type="text" pInputText formControlName="phoneNumber">
-                          <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
-                        </span>
-                      </div>
-                    <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
-                    <button pButton type="button" (click)="registerUser()" class="centered-button">{{'registerUser.egister new user' |
-                      translate}}</button>
-                  </form>
-        </p-dialog>
+  <p-toast></p-toast>
+  <div class="card flex justify-content-center">
+    <p-button (click)="showDialog()" icon="pi pi-external-link" label="Show"></p-button>
+    <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+      [resizable]="false">
+      <p class="m-0">
+      <form [formGroup]="formGroup">
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+          <span class="p-float-label">
+            <input type="text" pInputText formControlName="username">
+            <label for="username" translate=>registerUser.username</label>
+          </span>
+        </div>
+        <div class="form-group">
+          <span class="p-float-label">
+            <input type="text" pInputText formControlName="password">
+            <label for="password" translate=>registerUser.password</label>
+          </span>
+        </div>
+        <div class="form-group">
+          <span class="p-float-label">
+            <input type="text" pInputText formControlName="email">
+            <label for="email" translate=>registerUser.email</label>
+          </span>
+        </div>
+        <div class="form-group">
+          <span class="p-float-label">
+            <input type="text" pInputText formControlName="phoneNumber">
+            <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
+          </span>
+        </div>
+        <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+        <button pButton type="button" (click)="registerUser()" class="centered-button">{{'registerUser.egister new user'
+          |translate}}</button>
+      </form>
+    </p-dialog>
+  </div>
+  <div *ngFor="let user of usersList" class="card flex justify-content-center">
+    <p-confirmPopup></p-confirmPopup>
+    <div class="userCard">
+      <div class="userDetails">
+        <div>
+          <i class="fa-solid fa-circle-user"></i>
+        </div>
+        <div>
+          <h3>{{user.username}}</h3>
+          <h4>{{user.email}}</h4>
+          <h4>{{user.phoneNumber}}</h4>
+        </div>
+      </div>
+      <div class="editButtons">
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded" pTooltip="Update" (click)="editUser(user)"
+          [style]="{'color':'#fff'}"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded" pTooltip="Delete"
+          (click)="deleteUser($event, user)" [style]="{'color':'#fff'}"></button>
+      </div>
     </div>
+  </div>
 </div>

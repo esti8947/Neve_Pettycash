@@ -16,7 +16,7 @@ namespace Entities.Models_Dto.UserDto
         public string Token { get; set; }
         public  Department Department { get; set; }
         public string email { get; set; }
-        public string phoneNubmer { get; set; }
+        public string phoneNumber { get; set; }
 
     }
 }

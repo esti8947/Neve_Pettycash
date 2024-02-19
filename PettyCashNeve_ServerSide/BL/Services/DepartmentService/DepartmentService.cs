@@ -141,7 +141,7 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
                         DepartmentId = user.DepartmentId,
                         Id = user.Id,
                         email = user.Email,
-                        phoneNubmer = user.PhoneNumber
+                        phoneNumber = user.PhoneNumber
                     };
 
                     // Add UserInfoModel to the list

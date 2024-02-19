@@ -223,6 +223,39 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
+        [Route("updateUser")]
+        [HttpPut]
+        [Authorize (Roles = "Admin")]
+        public async Task<IActionResult> UpdateUser(UpdateUserModel updatedUser)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(updatedUser.Id);
+                if(user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                user.UserName = updatedUser.UserName;
+                user.Email = updatedUser.Email;
+                user.PhoneNumber = updatedUser.PhoneNumber;
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    _dbContext.SaveChanges();
+                    return Ok("User updated successfully");
+                }
+                else
+                {
+                    return BadRequest(result.Errors.Select(e => e.Description));
+                }
+            }catch(Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while updating the user: {ex.Message}");
+            }
+        }
+
         [Route("getUsersByDepartmentId/{departmentId}")]
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -338,5 +371,12 @@ namespace PettyCashNeve_ServerSide.Controllers
         public string Email { get; set; }
         public int DepartmentId { get; set; }
         public bool IsAdmin { get; set; } = false;
+    }
+    public class UpdateUserModel
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
