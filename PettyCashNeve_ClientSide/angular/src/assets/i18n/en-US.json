@@ -58,6 +58,13 @@
       "Opening the Year":"Opening new year"
     }
   },
+  "navbarManager":{
+    "Add Department":"Add Department",
+    "Add Expense Category":"Add Expense Category",
+    "Add Event Category":"Add Event Category",
+    "Add Buyer":"Add Buyer",
+    "Select Department":"Select Department"
+  },
   "addExpenseForm":{
     "Add expense":"Add Expense",
     "Event":"Event",

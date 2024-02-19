@@ -57,6 +57,13 @@
       "Opening the Year":"פתיחת שנה חדשה"
     }
   },
+  "navbarManager":{
+    "Add Department":"מחלקה חדשה",
+    "Add Expense Category":"קטגורית הוצאה חדשה",
+    "Add Event Category":"קטגורית פעילות חדשה",
+    "Add Buyer":"קונה חדש",
+    "Select Department":"בחר מחלקה"
+  },
   "addExpenseForm":{
     "Add expense":"הוספת הוצאה",
     "Event":"בחר פעילות",

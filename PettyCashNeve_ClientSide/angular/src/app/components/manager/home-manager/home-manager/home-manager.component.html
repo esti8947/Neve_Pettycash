@@ -1,11 +1,42 @@
-<div id="container">
-    <div id="choose-department">
-        <choose-department></choose-department>
-    </div>
-    <div>
-        <add-department></add-department>
-    </div>
-    <div>
-        <add-expense-category></add-expense-category>
-    </div>
+<div class="card">
+    <nav>
+        <ul class="nav-list">
+            <li><a (click)="openAddDepartmentDialog()" translate>navbarManager.Add Department</a></li>
+            <li><a (click)="openAddExpenseCategoryDialog()" translate> navbarManager.Add Expense Category </a></li>
+            <li><a (click)="openAddEventCategoryDialog()" translate> navbarManager.Add Event Category </a></li>
+            <li><a (click)="openAddBuyerDialog()" translate> navbarManager.Add Buyer </a></li>
+            <div class="dropdown">
+                <button class="dropbtn" translate>navbarManager.Select Department
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a *ngFor="let department of departments" (click)="selectDepartment(department)">
+                        {{ department.departmentName }}
+                    </a>
+                </div>
+            </div>
+        </ul>
+        <div class="nav-info">
+            <div>
+                <p>{{ currentUser?.username }}</p>
+            </div>
+            <div>
+                <i class="fa-sharp fa-solid fa-arrow-right-from-bracket" (click)="logOut()"></i>
+            </div>
+        </div>
+    </nav>
 </div>
+<p-dialog header="New Department" [(visible)]="departmentDialog">
+    <!-- Department Form -->
+</p-dialog>
+
+<p-dialog header="New Expense Category" [(visible)]="expenseCategoryDialog">
+    <!-- Expense Category Form -->
+</p-dialog>
+<p-dialog header="New Event Category" [(visible)]="eventCategoryDialog">
+    <!-- Department Form -->
+</p-dialog>
+
+<p-dialog header="New Buyer" [(visible)]="buyerDialog">
+    <!-- Expense Category Form -->
+</p-dialog>

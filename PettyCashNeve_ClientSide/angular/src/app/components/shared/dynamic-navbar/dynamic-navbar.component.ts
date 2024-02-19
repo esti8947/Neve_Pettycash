@@ -104,8 +104,4 @@ export class DynamicNavbarComponent implements OnInit {
       )
     }
   }
-
-  ResettingBudget(){
-    
-  }
 }
