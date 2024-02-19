@@ -369,6 +369,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
+        public string phoneNumber { get; set; }
         public int DepartmentId { get; set; }
         public bool IsAdmin { get; set; } = false;
     }

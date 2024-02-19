@@ -1,5 +1,5 @@
 export class MonthlyCashRegister {
-  monthlyCashRegisterid: number | undefined;
+  monthlyCashRegisterId: number | undefined;
   updatedBy: string | undefined;
   monthlyCashRegisterName: string | undefined;
   monthlyCashRegisterMonth: number | undefined;

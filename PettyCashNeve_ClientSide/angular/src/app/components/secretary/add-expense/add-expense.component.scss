@@ -9,12 +9,31 @@
 small{
   color: $bluegray-700;
 }
+#addExpenseForm{
+  width: 40rem;
+  padding: 10px 50px;
+}
 .form-group{
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   input{
-    width: 80%;
+    width:100%;
+  }
+  ::ng-deep{
+    p-inputNumber{
+      width: 100% !important;
+    }
+  }
+  label{
+    font-weight: bold;
+    color:  #808080 ;
+    margin-bottom: 4px;
   }
 }
+// .form-group label {
+//   width: 200px !important;
+//   background-color: slateblue; // Set the desired fixed width for all labels
+// }
+
 .ui-datepicker {
   z-index: 10000;
 }

@@ -60,7 +60,7 @@
   "addExpenseForm":{
     "Add expense":"הוספת הוצאה",
     "Event":"בחר פעילות",
-    "Please select an event.":"אנא בחר פעילות",
+    "select an event":"בחר פעילות",
     "Expense Category":"* בחר קטגוריה",
     "Please select an expense category.":"אנא בחר קטגורית הוצאה.",
     "Store name":"* שם החנות",
@@ -89,8 +89,8 @@
   "budgetInformation":{
     "Your annual budget":"התקציב השנתי שלך",
     "Your monthly budget":"התקציב החודשי שלך",
-    "So far you have spent":"סך הכל הוצאות:",
-    "Your remaining budget":"יתרה:",
+    "So far you have spent":"סך הכל הוצאות",
+    "Your remaining budget":"יתרה",
     "The percentage of expenses from the annual budget":"אחוז ההוצאות מהתקציב השנתי שלך",
     "The percentage of expenses from the monthly budget":"אחוז ההוצאות מהתקציב החודשי שלך",
     "annual budget":"תקציב שנתי",
@@ -125,6 +125,16 @@
   "insertRefundAmount":{
     "insert refund amount":"הכנס סכום לקופה",
     "refund amount":"סכום"
+  },
+  "registerUser":{
+    "Add New User":"משתמש חדש",
+    "username":"*שם משתמש",
+    "password":"*סיסמא",
+    "email":"*אימייל",
+    "phoneNumber":"טלפון",
+    "Please enter username":"הכנס שם משתמש",
+    "Password must be at least 6 characters long and include both letters and numbers":"הסיסמ חייבת להיות בעלת 6 תווים לפחות ולכלול אותיות ומספרים",
+    "Invalid email format":"כתובת אימייל לא תקינה"
   }
   
 }

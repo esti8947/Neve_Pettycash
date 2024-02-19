@@ -61,8 +61,8 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
 
   async saveMonthlyRegister(){
     // this.validForm = !this.validForm;
-    if (this.validForm) {
-      const selectedMonthValue = this.formGroup.value.selectedMonth;
+    const selectedMonthValue = this.formGroup.value.selectedMonth;
+    if (this.validForm && selectedMonthValue != 0) {
 
       const newMonthlyRegister = {
         monthlyCashRegisterId: 0,
@@ -80,15 +80,11 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
       try {
         const response = await this.monthlyCashRegisterService.addMonthlyRegister(newMonthlyRegister).toPromise();
         console.log('Monthly register added successfully:', response);
-        this.customMessageService.showSuccessMessage('Monthly register added successfully');
-        this.formGroup.reset();
         this.addMonthlyRegisterDialog = false;
+        this.formGroup.reset();
+        this.router.navigate(['navbar']);
+        this.customMessageService.showSuccessMessage('Monthly register added successfully');
   
-        const currentMonthlyCashRegisterResponse = await this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId().toPromise();
-  
-        console.log('Current Monthly Cash Register:', currentMonthlyCashRegisterResponse);
-  
-        this.router.navigate(['/navbar/home-.;']);
       } catch (error) {
         console.error('An error occurred while adding the monthly register:', error);
         this.customMessageService.showErrorMessage('An error occurred while adding the monthly register');

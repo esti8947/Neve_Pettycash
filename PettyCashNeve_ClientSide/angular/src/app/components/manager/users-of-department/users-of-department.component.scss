@@ -1,4 +1,33 @@
 @import '../../../../styles.scss';
+
+#usersPage {
+    display: flex;
+    justify-content: space-around;
+
+    .addUserButton {
+        margin: 10rem;
+    }
+
+    .usersList {
+        margin-top: 2rem;
+    }
+
+}
+
+.form-group {
+    margin-bottom: 30px;
+
+    input {
+        width: 100%;
+    }
+
+    label {
+        font-weight: bold;
+        color: #808080;
+        margin-bottom: 4px;
+    }
+}
+
 .userCard {
     display: flex;
     justify-content: space-between;
@@ -8,23 +37,26 @@
     border-radius: 10px;
     margin: 10px;
     padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out;
 
-    .userDetails{
+    .userDetails {
         display: flex;
         align-items: center;
+
         i {
             font-size: 70px;
             margin-right: 14px;
             color: $bluegray-600;
         }
-        h3{
-            margin:0;
+
+        h3 {
+            margin: 0;
         }
     }
-    .editButtons{
-        button{
+
+    .editButtons {
+        button {
             margin: 2px;
         }
     }

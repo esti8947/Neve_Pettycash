@@ -103,6 +103,7 @@ export class AddExpenseComponent implements OnInit {
     this.expenseCategoryService.getAllExpenseCategories().subscribe(
       (data) => {
         this.expensesCategory = data.data;
+
         console.log("expensesCategory",this.expensesCategory)
       },
       (error) => {

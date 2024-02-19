@@ -23,7 +23,7 @@ export class HomeDepartmentComponent implements OnInit {
       this.loadCurrentMonthlyCashRegister();
     }
   }
-
+  
   loadCurrentMonthlyCashRegister() {
     if (this.currentUser.isManager) {
       this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId(this.currentUser.departmentId).subscribe(
@@ -62,5 +62,9 @@ export class HomeDepartmentComponent implements OnInit {
         }
       );
     }
+  }
+  reloadMonthlyRegisters() {
+    this.monthlyRegisters = []; // Clear existing data
+    this.loadCurrentMonthlyCashRegister(); // Reload data
   }
 }

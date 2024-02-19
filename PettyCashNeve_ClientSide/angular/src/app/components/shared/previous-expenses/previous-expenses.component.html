@@ -14,7 +14,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr *ngIf="rowData.month !== 'Total'">
-              <td *ngFor="let col of columns; let i = index" (click)="showExpensesDetails(formGroup.get('selectedYear')?.value, rowData['month'])">
+              <td id="showExpensesTd" *ngFor="let col of columns; let i = index" (click)="showExpensesDetails(formGroup.get('selectedYear')?.value, rowData['month'])">
                 <ng-container *ngIf="i === 1">
                   <i>₪</i>
                 </ng-container>

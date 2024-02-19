@@ -55,13 +55,13 @@
       "Resetting the Budget":"Resetting the Budget",
       "Users for Current Department":"Users for Current Department",
       "Closing the Year":"Closing the Year",
-      "Opening the Year":"Opening the Year"
+      "Opening the Year":"Opening new year"
     }
   },
   "addExpenseForm":{
     "Add expense":"Add Expense",
     "Event":"Event",
-    "Please select an event.":"Please select an event.",
+    "select an event":"select an event",
     "Expense Category":"* Select a category",
     "Please select an expense category.":"Please select an expense category.",
     "Store name":"* Store name",
@@ -83,15 +83,15 @@
   },
   "addEventForm":{
     "existingEvents": "Events",
-    "select event category":"Lelect event category",
+    "select event category":"Select event category",
     "event name":"Event name",
     "add event":"Add Event"
   },
   "budgetInformation":{
     "Your annual budget":"Your annual budget",
-    "So far you have spent":"Total Expenses:",
+    "So far you have spent":"Total Expenses",
     "Your monthly budget":"Your monthly budget",
-    "Your remaining budget":"Remaining Budget:",
+    "Your remaining budget":"Remaining Budget",
     "The percentage of expenses from the annual budget":"The percentage of expenses from the annual budget",
     "The percentage of expenses from the monthly budget":"The percentage of expenses from the monthly budget",
     "annual budget":"Annual Budget",
@@ -126,6 +126,16 @@
   "insertRefundAmount":{
     "insert refund amount":"Enter amount into the kupa ",
     "refund amount":"Amount"
+  },
+  "registerUser":{
+    "Add New User":"Add New User",
+    "username":"*Username",
+    "password":"*Password",
+    "email":"*Email",
+    "phoneNumber":"PhoneNumber",
+    "Please enter username":"Please enter username",
+    "Password must be at least 6 characters long and include both letters and numbers":"Password must be at least 6 characters long and include both letters and numbers",
+    "Invalid email format":"Invalid email format"
   }
   
 }

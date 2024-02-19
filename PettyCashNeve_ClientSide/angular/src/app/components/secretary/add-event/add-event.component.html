@@ -7,18 +7,14 @@
   <div id="addEventForm">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <span class="p-float-label">
-          <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories"
-            [placeholder]="'addEventForm.select event category'|translate" [optionLabel]="getOptionLabel()"
-            appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
-          <label for="selectedEventCategory" translate>addEventForm.select event category</label>
-        </span>
+        <label for="selectedEventCategory" translate>addEventForm.select event category</label>
+        <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories"
+          [optionLabel]="getOptionLabel()"
+          appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
       </div>
       <div class="form-group">
-        <span class="p-float-label">
-          <input type="text" pInputText formControlName="eventName">
-          <label for="eventName" translate=>addEventForm.event name</label>
-        </span>
+        <label for="eventName" translate=>addEventForm.event name</label>
+        <input type="text" pInputText formControlName="eventName">
       </div>
       <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
       <button pButton type="button" (click)="addEvent()" class="centered-button">{{'addEventForm.add event' |
@@ -32,23 +28,23 @@
         <ng-template let-event pTemplate="item">
           <div class="eventListItems">
             <p-confirmPopup></p-confirmPopup>
-            
+
             <div class="editAndNameContainer">
-            <div class="editButtons">
-              <p-button icon="pi pi-pencil" rounded="true" text="true" pTooltip="Update"
-                (click)="editEvent(event)"></p-button>
-              <p-button icon="pi pi-trash" rounded="true" text="true" pTooltip="Delete"
-                (click)="deleteEvent($event, event)"></p-button>
-            </div>
-            
-            <div class="eventNameContainer" *ngIf="selectedEvent == event; else viewMode">
-              <input type="text" [(ngModel)]="editedEventName" (keyup.enter)="saveEventChanges(event)">
-            </div>
-            <ng-template #viewMode>
-              <div class="eventName">
-                <span class="font-bold">{{ event.eventName }}</span>
+              <div class="editButtons">
+                <p-button icon="pi pi-pencil" rounded="true" text="true" pTooltip="Update"
+                  (click)="editEvent(event)"></p-button>
+                <p-button icon="pi pi-trash" rounded="true" text="true" pTooltip="Delete"
+                  (click)="deleteEvent($event, event)"></p-button>
               </div>
-            </ng-template>
+
+              <div class="eventNameContainer" *ngIf="selectedEvent == event; else viewMode">
+                <input type="text" [(ngModel)]="editedEventName" (keyup.enter)="saveEventChanges(event)">
+              </div>
+              <ng-template #viewMode>
+                <div class="eventName">
+                  <span class="font-bold">{{ event.eventName }}</span>
+                </div>
+              </ng-template>
             </div>
             <div>
               <button pButton (click)="addExpenseToSelectedEvent(event)">add Expense</button>

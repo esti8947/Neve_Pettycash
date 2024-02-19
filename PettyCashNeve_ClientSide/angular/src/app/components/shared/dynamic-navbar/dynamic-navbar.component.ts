@@ -92,9 +92,10 @@ export class DynamicNavbarComponent implements OnInit {
       this.additionalActionsService.addAmountToBudget(departmentId, amoutnToAdd).subscribe(
         (response) =>{
           console.log('insert refund amount succeddfull: ', response);
-          this.customMessageService.showSuccessMessage("add amount to budget is successfull.");
           this.formGroup.reset();
           this.addingAmountDialog = false;
+          this.router.navigate(['navbar']);
+          this.customMessageService.showSuccessMessage("add amount to budget is successfull.");
         },
         (error)=>{
           console.error('An error occurred while add amount to budget: ', error);

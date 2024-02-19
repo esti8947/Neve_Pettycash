@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { Department } from 'src/app/models/department';
 import { UserInfo } from 'src/app/models/userInfo';
-import { RegisterUser } from 'src/app/models/registerUser';
+import { RegisterModel } from 'src/app/models/registerUser';
 
 @Injectable({
   providedIn: 'root',
@@ -90,7 +90,7 @@ export class AuthService {
     return payloadDecoded.jti;
   }
 
-  registerUser(newUser:RegisterUser):Observable<any>{
+  registerUser(newUser:RegisterModel):Observable<any>{
     const url = `${this.endpoint}/Register`;
     return this.http.post<any>(url, newUser).pipe(
       catchError((error) => {
@@ -106,6 +106,16 @@ export class AuthService {
       catchError((error)=>{
         console.error('Error in deleteUser function', error);
         return throwError(error);
+      }),
+    );
+  }
+
+  updateUser(updatedUser: any): Observable<any> {
+    const url = `${this.endpoint}/updateUser`;
+    return this.http.put<any>(url, updatedUser).pipe(
+      catchError((error)=>{
+        console.error('Error in updateUser function', error);
+        return throwError(error)
       }),
     );
   }

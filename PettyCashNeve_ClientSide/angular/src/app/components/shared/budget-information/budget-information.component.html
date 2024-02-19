@@ -10,7 +10,7 @@
         'orange-text': getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) > 80 && getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) <= 90,
         'red-text': getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) > 90
         }">
-        {{ 'budgetInformation.Percentage spent' | translate }}:
+        {{ 'budgetInformation.Percentage spent' | translate }} 
         {{ getSpentPercentage(budgetInformation?.totalAmount ?? 0, budgetInformation?.annualBudget?.annualBudgetCeiling ?? 0) | number: '1.0-2' }}%
       </h5>
       <h4>

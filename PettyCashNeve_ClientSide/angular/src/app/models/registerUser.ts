@@ -1,8 +1,9 @@
-export class RegisterUser {
-    username?: String;
-    password?: String;
-    email?:String;
-    departmentId?:Number;
-    phoneNumber?:string;
-    isAdmin:Boolean = false;
-  }
+// register.model.ts
+export interface RegisterModel {
+  userName: string;
+  passwordHash: string;
+  email: string;
+  phoneNumber: string;
+  departmentId: number;
+  isAdmin: boolean;
+}

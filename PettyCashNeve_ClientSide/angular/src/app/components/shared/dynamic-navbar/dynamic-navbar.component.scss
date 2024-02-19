@@ -89,3 +89,8 @@ nav {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+.form-group{
+  margin-bottom: 20px;
+  border: 1px solid $bluegray-700;
+  border-radius: 5px;
+}

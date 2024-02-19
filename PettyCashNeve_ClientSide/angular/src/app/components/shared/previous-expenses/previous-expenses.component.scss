@@ -16,3 +16,7 @@
 .total-row{
   font-weight: bold;
 }
+#showExpensesTd:hover{
+  color: $primaryColor;
+  cursor: pointer;
+}

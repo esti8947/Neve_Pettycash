@@ -9,7 +9,7 @@
         'orange-text': getSpentPercentage(amountWastedForCalculatingPercentages?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) <= 90,
         'red-text': getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 90
         }">
-        {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }}:
+        {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }} 
         {{ getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
       </h5>
     </ng-container>
@@ -32,21 +32,7 @@
           <p-button styleClass="p-button" (click)="navigateToExpenseReport()" [label]="'monthlyCashRegister.Edit Monthly Expenses'|translate"></p-button>
         </ng-template>
       </div>
-      <button id="enterAmountButton" *ngIf="!currentUser.isManager" (click)="openRefundAmountDialog()" translate>monthlyCashRegister.Enter an amount into the cash register</button>
     </ng-template>
       
   </p-card>
 </div>
-<p-dialog [(visible)]="insertRefundAmountDialog" [style]="{ width: '450px' }" [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">
-  <!-- <div id="addMonthlyRegisterForm"> -->
-    <form [formGroup]="formGroup">
-      <div class="form-group">
-        <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="refundAmount" [placeholder]="'insertRefundAmount.refund amount'|translate"></p-inputNumber>
-        <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
-      </div>
-      <div>
-        <button class="button" pButton type="button" (click)="insertRefundAmount()">{{ 'insertRefundAmount.insert refund amount' | translate }}</button>
-      </div>
-    </form>
-  <!-- </div> -->
-</p-dialog>

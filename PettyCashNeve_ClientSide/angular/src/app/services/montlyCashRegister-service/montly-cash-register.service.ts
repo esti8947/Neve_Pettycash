@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../auth-service/auth.service';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { API_CONFIG } from 'src/app/config/api.config';
 
 @Injectable({
@@ -56,6 +56,7 @@ export class MontlyCashRegisterService {
     }
     return null;
   }
+  
 
   addMonthlyRegister(newMonthlyRegister: any): Observable<boolean> {
     const url = `${this.baseUrlMonthlyCashRegister}/createNewMonthlyCashRegister`;
@@ -70,10 +71,21 @@ export class MontlyCashRegisterService {
   insertRefundAmount(refundAmount: number): Observable<boolean> {
     const url = `${this.baseUrlMonthlyCashRegister}/insertRefundAmount/${refundAmount}`;
     return this.http.get<any>(url).pipe(
+      tap(() => {
+        // Update local storage after successful insertion
+        const currentMonthlyCashRegisterString = localStorage.getItem('current_monthlyCashRegister');
+        if (currentMonthlyCashRegisterString) {
+          const currentMonthlyCashRegister = JSON.parse(currentMonthlyCashRegisterString);
+          currentMonthlyCashRegister.refundAmount += refundAmount;
+          localStorage.setItem('current_monthlyCashRegister', JSON.stringify(currentMonthlyCashRegister));
+        }
+      }),
+      map(() => true),
       catchError((error) => {
         console.error('Error in insertRefundAmount function:', error);
         return throwError(error);
       })
     );
   }
+  
 }

@@ -15,9 +15,19 @@ h4 {
   margin: 1rem 1rem 0; 
 }
 .form-group{
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   input{
-    width: 80%;
+    width:100%;
+  }
+  ::ng-deep{
+    p-inputNumber{
+      width: 100% !important;
+    }
+  }
+  label{
+    font-weight: bold;
+    color:  #808080 ;
+    margin-bottom: 4px;
   }
 }
 .ui-datepicker {
@@ -40,4 +50,10 @@ h4 {
   color: $bluegray-600;
   // border:solid 3px $orange-300;
   border-radius: 25px;
+}
+.button{
+  justify-content: center;
+  color: #fff !important;
+  width: 100%;
+  margin: 0;
 }

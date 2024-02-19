@@ -3,7 +3,7 @@ import { ExpenseService } from 'src/app/services/expense-service/expense.service
 import { ConfirmationService } from 'primeng/api';
 import { ExpenseReportInfoService } from 'src/app/services/expense-service/expense-report-info.service';
 import { ExpenseCategory } from 'src/app/models/expenseCategory';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ExpenseCategoryService } from 'src/app/services/expense-service/expense-category.service';
 import { BuyerService } from 'src/app/services/buyer-service/buyer.service';
 import { EventService } from 'src/app/services/event-service/event.service';
@@ -37,6 +37,8 @@ export class ExpenseReportComponent implements OnInit {
   monthlyRegister: any;
   year: number | undefined;
   month: number | undefined;
+  insertRefundAmountDialog: boolean = false;
+  refundForm!: FormGroup;
 
   constructor(
     private translateService: TranslateService,
@@ -49,10 +51,11 @@ export class ExpenseReportComponent implements OnInit {
     private buyerService: BuyerService,
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private eventService: EventService,
-    private monthNameService:MonthNameService,
-    private additionalActionsService:AdditionalActionsService,
+    private monthNameService: MonthNameService,
+    private additionalActionsService: AdditionalActionsService,
     private route: ActivatedRoute,
     private router: Router,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class ExpenseReportComponent implements OnInit {
       // Check if year and month are undefined
       if (this.year == undefined && this.month == undefined) {
         this.monthlyRegister = this.monthlyCashRegisterService.getCurrentMothlyRegister();
-        if(this.monthlyRegister.length == 0 && this.currentUser.isManager){
+        if (this.monthlyRegister.length == 0 && this.currentUser.isManager) {
           this.GetUnLockedExpensesByDepartmentId(this.currentUser.departmentId);
         }
         // Check if monthlyRegister is an array
@@ -91,6 +94,10 @@ export class ExpenseReportComponent implements OnInit {
         this.loadExpensesByYearAndMonth(this.year, this.month);
       }
     });
+
+    this.refundForm = this.formBuilder.group({
+      refundAmount: new FormControl<number | null>(null, Validators.required)
+    });
   }
 
 
@@ -106,13 +113,13 @@ export class ExpenseReportComponent implements OnInit {
       },
     );
   }
-  GetUnLockedExpensesByDepartmentId(departmentId:number){
+  GetUnLockedExpensesByDepartmentId(departmentId: number) {
     this.expenseReportInfoService.GetUnLockedExpensesByDepartmentId(departmentId).subscribe(
-      (data) =>{
+      (data) => {
         this.expenses = data.data || [];
         console.log(this.expenses);
       },
-      (error) =>{
+      (error) => {
         console.log('An error occurred: ', error);
       },
     );
@@ -127,7 +134,7 @@ export class ExpenseReportComponent implements OnInit {
   }
 
   confirmExpenses() {
-    const year  = this.year || 0;
+    const year = this.year || 0;
     const month = this.month || 0;
     if (this.currentUser.isManager) {
       if (this.expenses && this.expenses.length > 0 && this.expenses[0]?.expense && this.expenses[0]?.expense.isApproved === false) {
@@ -147,23 +154,26 @@ export class ExpenseReportComponent implements OnInit {
       )
     }
     else {
-      if (this.monthlyRegister.refundAmount === 0) {
-        // If refundAmount is 0, show an error and return
-        this.customMessageService.showErrorMessage('Refund amount cannot be 0');
-        return;
+      const currentRefundAmount = this.monthlyCashRegisterService.getCurrentMothlyRegister().refundAmount;
+      if (currentRefundAmount == 0) {
+        this.insertRefundAmountDialog = true;
+        // this.customMessageService.showErrorMessage('Refund amount cannot be 0');
+        // return;
       }
-      this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
-        (respose) => {
-          console.log(respose);
-          this.customMessageService.showSuccessMessage("expenses approved successfully")
-          this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
-          this.router.navigate(['/navbar/home-department']);
-        },
-        (error) => {
-          console.error('An error occurred while approve expenses: ', error);
-          this.customMessageService.showErrorMessage('An error occurred while approve expenses');
-        }
-      )
+      else {
+        this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
+          (respose) => {
+            console.log(respose);
+            this.customMessageService.showSuccessMessage("expenses approved successfully")
+            this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
+            this.router.navigate(['/navbar/home-department']);
+          },
+          (error) => {
+            console.error('An error occurred while approve expenses: ', error);
+            this.customMessageService.showErrorMessage('An error occurred while approve expenses');
+          }
+        )
+      }
     }
   }
 
@@ -232,7 +242,7 @@ export class ExpenseReportComponent implements OnInit {
     if (this.validForm) {
       const refundMonth = this.monthlyCashRegisterService.getCurrentMothlyRegister().monthlyCashRegisterMonth;
       const { selectedBuyer, selectedEvent, selectedExpenseCategory, expenseAmount, expenseDate, storeName, notes } = this.formGroup.value;
-      const formattedExpenseDate = formatDate(expenseDate, 'yyyy-MM-ddTHH:mm:ss', 'en-US'); 
+      const formattedExpenseDate = formatDate(expenseDate, 'yyyy-MM-ddTHH:mm:ss', 'en-US');
 
       const updatedExpense: NewExpenseModel = {
         expenseId: expenseToUpdate.expenseId,
@@ -345,4 +355,26 @@ export class ExpenseReportComponent implements OnInit {
       notes: new FormControl<string | null>(null),
     });
   }
+
+  insertRefundAmount() {
+    if (this.refundForm.valid) {
+      const refundAmount = this.refundForm.value.refundAmount;
+      this.monthlyCashRegisterService.insertRefundAmount(refundAmount).subscribe(
+        (response) => {
+          this.insertRefundAmountDialog = false;
+          this.monthlyRegister.refundAmount += refundAmount;
+          // this.monthlyCashRegisterService.saveResponseToLocalStorage(this.monthlyRegister);
+          console.log('insert refund amount succeddfull: ', this.monthlyRegister);
+          this.customMessageService.showSuccessMessage("insert refund amount is successfull.");
+          // this.formGroup.reset();
+          this.insertRefundAmountDialog = false;
+        },
+        (error) => {
+          console.error('An error occurred while insert refund amount: ', error);
+          this.customMessageService.showErrorMessage("'An error occurred while insert refund amount");
+        }
+      )
+    }
+  };
+
 }
