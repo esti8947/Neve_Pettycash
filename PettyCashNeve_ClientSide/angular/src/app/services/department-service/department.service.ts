@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
+import { Department } from 'src/app/models/department';
 
 @Injectable({
   providedIn: 'root',
@@ -43,5 +44,15 @@ export class DepartmentService {
   getDepartmentById(id: number): Observable<any> {
     const url = `${this.baseUrlDepartment}/GetDepartmentById/${id}`;
     return this.http.get(url);
+  }
+  
+  addDepartment(newDepartment:Department):Observable<any>{
+    const url = `${this.baseUrlDepartment}/createDepartment`;
+    return this.http.post<Department>(url, newDepartment).pipe(
+      catchError((error)=>{
+        console.error('Error in addDepartment function', error);
+        return throwError(error)
+      }),
+    );
   }
 }

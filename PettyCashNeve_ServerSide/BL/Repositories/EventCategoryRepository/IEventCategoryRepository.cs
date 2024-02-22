@@ -13,5 +13,7 @@ namespace BL.Repositories.EventCategoryRepository
         Task<EventCategory> GetEventCategoryByIdAsync(int id);
         Task<string> GetEventCategoryNameByIdAsync(int id);
         Task<bool> CreateEventCategoryAsync(EventCategory newEventCategory);
+        Task<bool> DeleteEventCategory(int expenseCategoryId);
+
     }
 }

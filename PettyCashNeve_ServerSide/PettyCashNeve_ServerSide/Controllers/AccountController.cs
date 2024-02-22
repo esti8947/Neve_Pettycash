@@ -61,7 +61,8 @@ namespace PettyCashNeve_ServerSide.Controllers
                     UserName = model.UserName,
                     Email = model.Email,
                     PasswordHash = model.PasswordHash,
-                    DepartmentId = model.DepartmentId
+                    DepartmentId = model.DepartmentId,
+                    IsActive = true
                 };
 
                 // Attempt to create the user
@@ -223,8 +224,44 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
+        [Route("deactivateUser/{username}")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeactivateUser(string username)
+        {
+            try
+            {
+                // Find the user by username
+                var userToDeactivate = await _userManager.FindByNameAsync(username);
+
+                if (userToDeactivate == null)
+                {
+                    // User not found
+                    return NotFound("User not found.");
+                }
+
+                // Deactivate the user
+                userToDeactivate.IsActive = false;
+                var result = await _userManager.UpdateAsync(userToDeactivate);
+
+                if (result.Succeeded)
+                {
+                    return Ok("User deactivated successfully.");
+                }
+                else
+                {
+                    return BadRequest(result.Errors.Select(e => e.Description));
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while deactivating the user: {ex.Message}");
+            }
+        }
+
+
         [Route("updateUser")]
-        [HttpPut]
+        [HttpPost]
         [Authorize (Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(UpdateUserModel updatedUser)
         {
@@ -244,7 +281,8 @@ namespace PettyCashNeve_ServerSide.Controllers
                 if (result.Succeeded)
                 {
                     _dbContext.SaveChanges();
-                    return Ok("User updated successfully");
+                    return Ok();
+                    //return Ok("User updated successfully");
                 }
                 else
                 {
@@ -264,6 +302,8 @@ namespace PettyCashNeve_ServerSide.Controllers
             try
             {
                 var userList = await _departmentRepository.GetUsersByDepartmentId(departmentId);
+
+                userList = userList.Where(u => u.IsActive).ToList();
 
                 // Create a list to store user information
                 List<UserInfoModel> userInfoList = new List<UserInfoModel>();

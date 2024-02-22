@@ -64,7 +64,7 @@ export class PreviousExpensesComponent implements OnInit {
       });
     });
 
-    this.years = this.generateYears(2020, new Date().getFullYear());
+    this.years = this.generateYears(2022, new Date().getFullYear());
 
 
   }

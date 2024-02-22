@@ -78,5 +78,27 @@ namespace BL.Repositories.EventCategoryRepository
                 throw;
             }
         }
+
+        public async Task<bool> DeleteEventCategory(int eventCategoryId)
+        {
+            var eventCategoryToDelete = await _context.EventCategories
+                .FirstOrDefaultAsync(ec => ec.EventCategoryId == eventCategoryId);
+            if (eventCategoryToDelete != null)
+            {
+                try
+                {
+                    _context.EventCategories.Remove(eventCategoryToDelete);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return false;
+
+        }
     }
 }

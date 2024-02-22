@@ -1,5 +1,8 @@
 export interface ExpenseCategory {
-  expenseCategoryId: number;
-  expenseCategoryName: string;
-  accountingCode: number;
+  expenseCategoryId: 0,
+  expenseCategoryType: string,
+  expenseCategoryName: string,
+  expenseCategoryNameHeb: string,
+  accountingCode: string,
+  isActive: true
 }

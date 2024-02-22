@@ -6,8 +6,8 @@ using PettyCashNeve_ServerSide.Services.DepartmentService;
 
 namespace PettyCashNeve_ServerSide.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
+    [Route("api/[controller]")]
+    [ApiController]
     public class DepartmentController : BaseController
     {
         private readonly IDepartmentService _departmentService;
@@ -45,6 +45,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpPost("createDepartment")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateDepartment([FromBody] DepartmentDto newDepartment)
         {
             var serviceResponse = await _departmentService.CreateDepartmentAsync(newDepartment);

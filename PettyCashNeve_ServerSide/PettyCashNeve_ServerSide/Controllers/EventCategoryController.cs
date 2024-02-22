@@ -1,4 +1,5 @@
 ﻿using BL.Services.EventCategoryService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PettyCashNeve_ServerSide.Dto;
@@ -8,6 +9,7 @@ namespace PettyCashNeve_ServerSide.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EventCategoryController : BaseController
     {
         private readonly IEventCategoryService _eventCategoryService;
@@ -31,9 +33,18 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpPost("createEventCategory")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEventCategory([FromBody] EventCategoryDto eventCategoryDto)
         {
             var serviceResponse = await _eventCategoryService.CreateEventCategory(eventCategoryDto);
+            return HandleResponse(serviceResponse);
+        }
+
+        [HttpDelete("deleteEventCategory/{eventCategoryId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteEventCategory(int eventCategoryId)
+        {
+            var serviceResponse = await _eventCategoryService.DeleteEventCategory(eventCategoryId);
             return HandleResponse(serviceResponse);
         }
     }

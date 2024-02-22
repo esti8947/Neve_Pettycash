@@ -12,27 +12,35 @@ import { PreviousExpensesComponent } from './components/shared/previous-expenses
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
+import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
 
 const routes: Routes = [
   // { path: '', component: HomeManagerComponent },
   { path: '', component: SignInComponent },
   { path: 'login', component: SignInComponent },
   { path: 'choose-language', component: ChooseLanguageComponent },
-  { path: 'home-manager', component:HomeManagerComponent},
-  { path: 'navbar', component: DynamicNavbarComponent,
-    children:[
+  {
+    path: 'home-manager', component: HomeManagerComponent,
+    children: [
+      { path: 'add-expense-category', component: AddExpenseCategoryComponent },
+    ]
+  },
+  {
+    path: 'navbar', component: DynamicNavbarComponent,
+    children: [
       { path: '', redirectTo: 'home-department', pathMatch: 'full' },
       { path: 'home-department', component: HomeDepartmentComponent },
       { path: 'add-event', component: AddEventComponent },
       { path: 'add-expense', component: AddExpenseComponent },
-      { path: 'expense-report', component: ExpenseReportComponent },      
-      { path: 'previous-expenses', component: PreviousExpensesComponent},
-      {path: 'users-of-department', component: UsersOfDepartmentComponent}
-    ]}
+      { path: 'expense-report', component: ExpenseReportComponent },
+      { path: 'previous-expenses', component: PreviousExpensesComponent },
+      { path: 'users-of-department', component: UsersOfDepartmentComponent }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

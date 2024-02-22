@@ -1,4 +1,6 @@
 export interface EventCategory {
-  id: number;
-  name: string;
+  eventCategoryId: 0;
+  eventCategoryName: string;
+  eventCategoryNameHeb: string;
+  isActive:true;
 }

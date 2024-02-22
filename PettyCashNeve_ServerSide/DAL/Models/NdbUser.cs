@@ -10,6 +10,7 @@ namespace DAL.Models
     public class NdbUser : IdentityUser
     {
         public int DepartmentId { get; set; }
+        public bool IsActive { get; set; }
     }
 
 }

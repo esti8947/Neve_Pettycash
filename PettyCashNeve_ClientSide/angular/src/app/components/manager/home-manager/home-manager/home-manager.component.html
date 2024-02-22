@@ -1,10 +1,6 @@
 <div class="card">
     <nav>
         <ul class="nav-list">
-            <li><a (click)="openAddDepartmentDialog()" translate>navbarManager.Add Department</a></li>
-            <li><a (click)="openAddExpenseCategoryDialog()" translate> navbarManager.Add Expense Category </a></li>
-            <li><a (click)="openAddEventCategoryDialog()" translate> navbarManager.Add Event Category </a></li>
-            <li><a (click)="openAddBuyerDialog()" translate> navbarManager.Add Buyer </a></li>
             <div class="dropdown">
                 <button class="dropbtn" translate>navbarManager.Select Department
                     <i class="fa fa-caret-down"></i>
@@ -15,6 +11,10 @@
                     </a>
                 </div>
             </div>
+            <li><a (click)="openAddDepartmentDialog()" translate>navbarManager.Add Department</a></li>
+            <li><a (click)="openAddExpenseCategoryDialog()" translate> navbarManager.Add Expense Category </a></li>
+            <li><a (click)="openAddEventCategoryDialog()" translate> navbarManager.Add Event Category </a></li>
+            <li><a (click)="openAddBuyerDialog()" translate> navbarManager.Add Buyer </a></li>
         </ul>
         <div class="nav-info">
             <div>
@@ -25,18 +25,266 @@
             </div>
         </div>
     </nav>
+    <router-outlet></router-outlet>
 </div>
-<p-dialog header="New Department" [(visible)]="departmentDialog">
-    <!-- Department Form -->
+<p-toast></p-toast>
+<p-dialog header="New Department" [(visible)]="departmentDialog" [style]="{width:'600px'}" [modal]="true"
+    styleClass="p-fluid">
+    <form [formGroup]="departmentForm">
+        <div class="form-group">
+            <label for="departmentName" translate>addDepartment.Department name</label>
+            <input type="text" pInputText formControlName="departmentName">
+            <div>
+                <small *ngIf="isInvalid('departmentName', departmentForm, departmentFormSubmitted)" translate>
+                    addDepartment.Please enter department name
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="departmentName" translate>addDepartment.Department code</label>
+            <input type="text" pInputText formControlName="departmentCode">
+            <div>
+                <small *ngIf="isInvalid('departmentCode', departmentForm, departmentFormSubmitted)"
+                    translate>addDepartment.Please enter department code
+                </small>
+            </div>
+        </div>
+        <div class="form-group inputFlex">
+            <div>
+                <label for="departmentName" translate>addDepartment.Department head first name</label>
+                <div [style]="{'margin-right':'10px','margin-left':'10px'}">
+                    <input type="text" pInputText formControlName="deptHeadFirstName">
+                </div>
+                <div>
+                    <small *ngIf="isInvalid('deptHeadFirstName', departmentForm, departmentFormSubmitted)"
+                        translate>addDepartment.Please enter department head first name
+                    </small>
+                </div>
+            </div>
+            <div>
+                <label for="departmentName" translate>addDepartment.Department head last name</label>
+                <input type="text" pInputText formControlName="deptHeadLastName">
+                <div>
+                    <small *ngIf="isInvalid('deptHeadLastName', departmentForm, departmentFormSubmitted)"
+                        translate>addDepartment.Please enter department head last name
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group inputFlex">
+            <div>
+                <label for="departmentName" translate>addDepartment.Department phonePerfix</label>
+                <div [style]="{'margin-right':'10px','margin-left':'10px', 'width':'10rem'}">
+                    <input type="text" pInputText formControlName="phonePerfix">
+                </div>
+                <div>
+                    <small *ngIf="isInvalid('phonePerfix', departmentForm, departmentFormSubmitted)"
+                        translate>addDepartment.Please enter department phonePerfix
+                    </small>
+                </div>
+            </div>
+            <div>
+                <label for="departmentName" translate>addDepartment.Department phone number</label>
+                <input type="text" pInputText formControlName="phoneNumber">
+                <div>
+                    <small *ngIf="isInvalid('phoneNumber', departmentForm, departmentFormSubmitted)"
+                        translate>addDepartment.Please enter department phone number
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="departmentName" translate>addDepartment.Department descreption</label>
+            <input type="text" pInputText formControlName="descreption">
+            <div>
+                <small *ngIf="isInvalid('descreption', departmentForm, departmentFormSubmitted)"
+                    translate>addDepartment.Please enter department descreption
+                </small>
+            </div>
+        </div>
+        <div>
+            <button pButton type="button" (click)="saveDepartment()" class="centered-button, saveButton" translate>
+                addDepartment.Add department</button>
+        </div>
+    </form>
 </p-dialog>
 
-<p-dialog header="New Expense Category" [(visible)]="expenseCategoryDialog">
-    <!-- Expense Category Form -->
+<p-dialog header="New Expense Category" [(visible)]="expenseCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
+    styleClass="p-fluid">
+    <div class="flexDialog">
+        <div class="itemsList" *ngIf="existingExpensesCategory">
+            <div class="card flex justify-content-center">
+                <h4>existingExpensesCategory</h4>
+                <p-listbox [options]="existingExpensesCategory" [(ngModel)]="selectedExpenseCategory"
+                    [optionLabel]="getExpenseCategoryOptionLabel()" [style]="{'width':'340px'}"
+                    [listStyle]="{'max-height': '220px'}">
+                    <ng-template let-expenseCategory pTemplate="item">
+                        <div class="items">
+                            <p-confirmPopup></p-confirmPopup>
+                            <div (click)="deleteExpenseCategory($event, expenseCategory)">
+                                <i class="fa fa-trash"></i>
+                            </div>
+                            <span>{{ expenseCategory[getExpenseCategoryOptionLabel()] }}</span>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        </div>
+        <div class="flexForm">
+            <form [formGroup]="expenseCategoryForm">
+                <div class="form-group">
+                    <label for="expenseCategoryType" translate>addExpenseCategory.Expense Category Type</label>
+                    <input type="text" pInputText formControlName="expenseCategoryType">
+                    <div>
+                        <small
+                            *ngIf="isInvalid('expenseCategoryType', expenseCategoryForm, expenseCategoryFormSubmitted)"
+                            translate>
+                            Department name is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategoryName" translate>Expense Category Name</label>
+                    <input type="text" pInputText formControlName="expenseCategoryName">
+                    <div>
+                        <small
+                            *ngIf="isInvalid('expenseCategoryName', expenseCategoryForm, expenseCategoryFormSubmitted)"
+                            translate>
+                            Department code is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategoryNameHeb" translate>Expense Category Name Heb</label>
+                    <input type="text" pInputText formControlName="expenseCategoryNameHeb">
+                    <div>
+                        <small
+                            *ngIf="isInvalid('expenseCategoryNameHeb', expenseCategoryForm, expenseCategoryFormSubmitted)"
+                            translate>
+                            Department head first name is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="accountingCode" translate>Expense Category Account Code</label>
+                    <input type="text" pInputText formControlName="accountingCode">
+                    <div>
+                        <small *ngIf="isInvalid('accountingCode', expenseCategoryForm, expenseCategoryFormSubmitted)"
+                            translate>
+                            Department head last name is required
+                        </small>
+                    </div>
+                </div>
+                <div>
+                    <button pButton type="button" (click)="saveExpenseCategory()" class="centered-button saveButton"
+                        translate>
+                        Add Expense Category
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </p-dialog>
-<p-dialog header="New Event Category" [(visible)]="eventCategoryDialog">
-    <!-- Department Form -->
+<p-dialog header="New Event Category" [(visible)]="eventCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
+    styleClass="p-fluid">
+    <div class="flexDialog">
+        <div class="itemsList" *ngIf="existingEventsCategory">
+            <div class="card flex justify-content-center">
+                <h4>existingEventsCategory</h4>
+                <p-listbox [options]="existingEventsCategory" [(ngModel)]="selectedEventCategory"
+                    [optionLabel]="getEventCategoryOptionLabel()" [style]="{'width':'340px'}"
+                    [listStyle]="{'max-height': '220px'}">
+                    <ng-template let-eventCategory pTemplate="item">
+                        <div class="items">
+                            <p-confirmPopup></p-confirmPopup>
+                            <div (click)="deleteEventCategory($event, eventCategory)">
+                                <i class="fa fa-trash"></i>
+                            </div>
+                            <span>{{ eventCategory[getEventCategoryOptionLabel()] }}</span>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        </div>
+        <div class="flexForm">
+            <form [formGroup]="eventCategoryForm">
+                <div class="form-group">
+                    <label for="eventCategoryName" translate>Event Category Name</label>
+                    <input type="text" pInputText formControlName="eventCategoryName">
+                    <div>
+                        <small *ngIf="isInvalid('eventCategoryName', eventCategoryForm, eventCategoryFormSubmitted)"
+                            translate>
+                            Event Category Name is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="eventCategoryNameHeb" translate>Event Category Name Heb</label>
+                    <input type="text" pInputText formControlName="eventCategoryNameHeb">
+                    <div>
+                        <small *ngIf="isInvalid('eventCategoryNameHeb', eventCategoryForm, eventCategoryFormSubmitted)"
+                            translate>
+                            Event Category Name Heb is required
+                        </small>
+                    </div>
+                </div>
+                <div>
+                    <button pButton type="button" (click)="saveEventCategory()" class="centered-button saveButton"
+                        translate>
+                        Add Event Category
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </p-dialog>
-
-<p-dialog header="New Buyer" [(visible)]="buyerDialog">
-    <!-- Expense Category Form -->
+<p-dialog header="New Buyer" [(visible)]="buyerDialog" [style]="{width:'1200px'}" [modal]="true" styleClass="p-fluid">
+    <div class="flexDialog">
+        <div class="itemsList" *ngIf="existingBuyers">
+            <div class="card flex justify-content-center">
+                <h4>existingBuyers</h4>
+                <p-listbox [options]="existingBuyers" [(ngModel)]="selectedBuyer"
+                    [optionLabel]="getBuyerOptionLabel()" [style]="{'width':'340px'}"
+                    [listStyle]="{'max-height': '220px'}">
+                    <ng-template let-buyer pTemplate="item">
+                        <div class="items">
+                            <p-confirmPopup></p-confirmPopup>
+                            <div (click)="deleteBuyer($event, buyer)">
+                                <i class="fa fa-trash"></i>
+                            </div>
+                            <span>{{ buyer[getBuyerOptionLabel()] }}</span>
+                        </div>
+                    </ng-template>
+                </p-listbox>
+            </div>
+        </div>
+        <div class="flexForm">
+            <form [formGroup]="buyerForm">
+                <div class="form-group">
+                    <label for="buyerName" translate>Buyer Name</label>
+                    <input type="text" pInputText formControlName="buyerName">
+                    <div>
+                        <small *ngIf="isInvalid('buyerName', buyerForm, buyerFormSubmitted)" translate>
+                            Buyer Name is required
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="buyerNameHeb" translate>Buyer Name Heb</label>
+                    <input type="text" pInputText formControlName="buyerNameHeb">
+                    <div>
+                        <small *ngIf="isInvalid('buyerNameHeb', buyerForm, buyerFormSubmitted)" translate>
+                            Buyer Name Heb is required
+                        </small>
+                    </div>
+                </div>
+                <div>
+                    <button pButton type="button" (click)="saveBuyer()" class="centered-button saveButton" translate>
+                        Add Buyer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </p-dialog>

@@ -83,9 +83,6 @@ export class AddExpenseCategoryComponent implements OnInit {
             }
           );        
         },
-        reject: () => {
-          this.customMessageService.showRejectedMessage('You have rejected');
-        }
     });
   }
 

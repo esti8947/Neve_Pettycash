@@ -1,6 +1,7 @@
 ﻿using BL.Services;
 using BL.Services.ExpenseCategoryService;
 using Entities.Models_Dto.ExpenseDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PettyCashNeve_ServerSide.Dto;
@@ -9,6 +10,7 @@ namespace PettyCashNeve_ServerSide.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExpenseCategoryController : BaseController
     {
         private readonly IExpenseCategoryService _expenseCategoryService;
@@ -25,6 +27,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpPost("createExpenseCategory")]
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> CreateExpenseCategory([FromBody] ExpenseCategoryDto expenseCategory)
         {
             var serviceResponse = await _expenseCategoryService.CreateExpenseCategory(expenseCategory);
@@ -32,6 +35,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpDelete("deleteExpenseCategory/{expenseCategoryId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteExpenseCategory(int expenseCategoryId)
         {
             var serviceResponse = await _expenseCategoryService.DeleteExpenseCategory(expenseCategoryId);

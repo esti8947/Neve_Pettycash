@@ -110,14 +110,24 @@ export class AuthService {
     );
   }
 
+  deactivateUser(username:string){
+    const url = `${this.endpoint}/deactivateUser/${username}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error)=>{
+        console.error('Error in deactivateUser function', error);
+        return throwError(error);
+      }),
+    );
+  }
+
   updateUser(updatedUser: any): Observable<any> {
     const url = `${this.endpoint}/updateUser`;
-    return this.http.put<any>(url, updatedUser).pipe(
+    return this.http.post<any>(url, updatedUser).pipe(
       catchError((error)=>{
         console.error('Error in updateUser function', error);
         return throwError(error)
-      }),
-    );
+      })
+    )
   }
 
   handleError(error: HttpErrorResponse) {

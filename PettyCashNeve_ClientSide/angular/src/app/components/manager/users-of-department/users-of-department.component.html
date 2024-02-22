@@ -2,26 +2,26 @@
   <p-toast></p-toast>
   <div class="card flex justify-content-center">
     <div class="addUserButton">
-      <p-button (click)="showDialog()" [label]="'registerUser.Add New User'|translate"></p-button>
+      <p-button (click)="openRegiterUsersDialog()" [label]="'registerUser.Add New User'|translate"></p-button>
     </div>
-    <p-dialog [header]="'registerUser.Add New User'|translate" [(visible)]="visible" [modal]="true"
+    <p-dialog [header]="'registerUser.Add New User'|translate" [(visible)]="registerUserDialog" [modal]="true"
       [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
       <p class="m-0">
-      <form [formGroup]="formGroup">
+      <form [formGroup]="registerUserForm">
         <div class="form-group">
         </div>
         <div class="form-group">
-          <label for="username" translate=>registerUser.username</label>
-          <input type="text" pInputText formControlName="username">
+          <label for="userName" translate=>registerUser.username</label>
+          <input type="text" pInputText formControlName="userName">
           <div>
-            <small *ngIf="isInvalid('username')" translate>registerUser.Please enter username</small>
+            <small *ngIf="isInvalid('userName', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Please enter username</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="password" translate=>registerUser.password</label>
-          <input type="text" pInputText formControlName="password">
+          <label for="passwordHash" translate=>registerUser.password</label>
+          <input type="text" pInputText formControlName="passwordHash">
           <div>
-            <small *ngIf="isInvalid('password')" translate>registerUser.Password must be at least 6 characters long and
+            <small *ngIf="isInvalid('passwordHash', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Password must be at least 6 characters long and
               include both letters and numbers</small>
           </div>
         </div>
@@ -29,14 +29,14 @@
           <label for="email" translate=>registerUser.email</label>
           <input type="text" pInputText formControlName="email">
           <div>
-            <small *ngIf="isInvalid('email')" translate>registerUser.Invalid email format</small>
+            <small *ngIf="isInvalid('email', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Invalid email format</small>
           </div>
         </div>
         <div class="form-group">
           <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
           <input type="text" pInputText mask="99-999999" formControlName="phoneNumber">
         </div>
-        <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>
+        <!-- <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p> -->
         <button pButton type="button" (click)="registerUser()" class="centered-button">{{'registerUser.Add New User'
           |translate}}</button>
       </form>
@@ -69,24 +69,24 @@
 <!-- Modify the p-dialog to include a form for updating user details -->
 <p-dialog header="Edit User" [(visible)]="editUserDialog" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false"
   [resizable]="false">
-  <form [formGroup]="formGroup">
+  <form [formGroup]="updateUserForm">
     <div class="form-group">
-      <label for="username" translate=>registerUser.username</label>
-      <input type="text" pInputText formControlName="username">
+      <label for="userName" translate=>registerUser.username</label>
+      <input type="text" pInputText formControlName="userName">
       <div>
-        <small *ngIf="isInvalid('username')" translate>registerUser.Please enter username</small>
+        <small *ngIf="isInvalid('userName', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Please enter username</small>
       </div>
     </div>
     <div class="form-group">
       <label for="email" translate=>registerUser.email</label>
       <input type="text" pInputText formControlName="email">
       <div>
-        <small *ngIf="isInvalid('email')" translate>registerUser.Invalid email format</small>
+        <small *ngIf="isInvalid('email', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Invalid email format</small>
       </div>
     </div>
     <div class="form-group">
       <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
-      <input type="text" pInputText mask="99-999999" placeholder="99-999999" formControlName="phoneNumber">
+      <input type="text" pInputText formControlName="phoneNumber">
     </div>
     <button pButton type="button" (click)="updateUser()" class="centered-button">Save</button>
   </form>

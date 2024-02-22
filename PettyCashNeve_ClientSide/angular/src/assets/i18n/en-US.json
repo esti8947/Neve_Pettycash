@@ -143,6 +143,22 @@
     "Please enter username":"Please enter username",
     "Password must be at least 6 characters long and include both letters and numbers":"Password must be at least 6 characters long and include both letters and numbers",
     "Invalid email format":"Invalid email format"
+  },
+  "addDepartment":{
+    "Department name":"Name",
+    "Department code":"Code",
+    "Department head first name":"Head first name",
+    "Department head last name":"Head last name",
+    "Department phone number":"Phone number",
+    "Department phonePerfix":"Phone prefix",
+    "Department descreption":"Descreption",
+    "Please enter department name":"Please enter department name",
+    "Please enter department code":"Please enter department code",
+    "Please enter department head first name":"Please enter department head first name",
+    "Please enter department head last name":"Please enter department head last name",
+    "Please enter department phonePerfix":"Please enter department phonePerfix (2 or 3 digits)",
+    "Please enter department phone number":"Please enter department phone number (7 digits)",
+    "Please enter department descreption":"Please enter department descreption",
+    "Add department":"Add Department"
   }
-  
 }

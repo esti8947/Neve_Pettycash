@@ -126,7 +126,7 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             try
             {
                 var usersList = await _context.Users.Where(
-                    u => u.DepartmentId == departmentId).ToListAsync();
+                    u => u.DepartmentId == departmentId && u.IsActive).ToListAsync();
                 return usersList;
             }
             catch (Exception ex)

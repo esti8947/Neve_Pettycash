@@ -80,7 +80,7 @@ namespace BL.Repositories.ExpenseCategoryRepository
             {
                 try
                 {
-                    _context.Remove(expenseCategoryToDelete);
+                    _context.ExpenseCategories.Remove(expenseCategoryToDelete);
                     await _context.SaveChangesAsync();
                     return true;
                 }

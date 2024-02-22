@@ -12,5 +12,7 @@ namespace BL.Services.EventCategoryService
         Task<ServiceResponse<List<EventCategoryDto>>> GetEventCategoriesAsync();
         Task<ServiceResponse<string>> GetEventCategoryNameById(int id);
         Task<ServiceResponse<bool>> CreateEventCategory(EventCategoryDto eventCategoryDto);
+        Task<ServiceResponse<bool>> DeleteEventCategory(int eventCategoryId);
+
     }
 }
