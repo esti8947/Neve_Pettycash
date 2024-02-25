@@ -145,8 +145,9 @@
     "Invalid email format":"Invalid email format"
   },
   "addDepartment":{
-    "Department name":"Name",
-    "Department code":"Code",
+    "New Department":"New Department",
+    "Department name":"Department name",
+    "Department code":"Department code",
     "Department head first name":"Head first name",
     "Department head last name":"Head last name",
     "Department phone number":"Phone number",
@@ -160,5 +161,36 @@
     "Please enter department phone number":"Please enter department phone number (7 digits)",
     "Please enter department descreption":"Please enter department descreption",
     "Add department":"Add Department"
+  },
+  "addExpenseCategory":{
+    "New Expense Category":"New Expense Category",
+    "Add Expense Category":"Add Expense Category",
+    "existingExpensesCategory":"Existing Expenses Category",
+    "Expense category type":"Expense category type",
+    "Please enter expense category type":"Please enter expense category type",
+    "Expense category name - english":"Expense category name - english",
+    "Please enter expense category name - english":"Please enter expense category name - english",
+    "Expense category name - hebrew":"Expense category name - hebrew",
+    "Please enter expense category name - hebrew":"Please enter expense category name - hebrew",
+    "Expense category account code":"Expense category account code",
+    "Please enter expense category account code":"Please enter expense category account code"
+  },
+  "addEventCategory":{
+    "New Event Category":"New Event Category",
+    "Add Event Category":"Add Event Category",
+    "existingEventsCategory":"Existing Events Category",
+    "Event category name - english":"Event category name - english",
+    "Please enter event category name - english":"Please enter event category name - english",
+    "Event category name - hebrew":"Event category name - hebrew",
+    "Please enter event category name - hebrew":"Please enter event category name - hebrew"
+  },
+  "addBuyer":{
+    "New Buyer":"New Buyer",
+    "Add Buyer":"Add Buyer",
+    "existingBuyers":"Existing Buyers",
+    "Buyer name - english":"Buyer name - english",
+    "Please enter buyer name - english":"Please enter buyer name - english",
+    "Buyer name - hebrew":"Buyer name - hebrew",
+    "Please enter buyer name - hebrew":"Please enter buyer name - hebrew"
   }
 }

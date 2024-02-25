@@ -75,10 +75,6 @@ export class UsersOfDepartmentComponent implements OnInit {
       phoneNumber: new FormControl<string | null>(null, Validators.pattern('[0-9]{9,10}')),
     })
   }
-  // isInvalid(controlName: string): boolean {
-  //   const control: AbstractControl | null = this.registerUserForm.get(controlName);
-  //   return control ? control.touched && control.invalid : false;
-  // }
 
   isInvalid(controlName: string, formGroup: FormGroup, formSubmitted: boolean): boolean {
     const control: AbstractControl | null = formGroup.get(controlName);
@@ -95,7 +91,7 @@ export class UsersOfDepartmentComponent implements OnInit {
         email: formValues.email,
         phoneNumber: formValues.phoneNumber || "",
         departmentId: departmentId,
-        isAdmin: false // Or true if appropriate
+        isAdmin: false 
       };
 
       this.authService.registerUser(newUser).subscribe(
@@ -147,7 +143,7 @@ export class UsersOfDepartmentComponent implements OnInit {
     console.log(user)
     this.user = user;
     this.editUserDialog = true;
-    this.selectedUserId = user.id; // Set the selectedUserId property
+    this.selectedUserId = user.id; 
 
     this.updateUserForm.patchValue({
       userId: this.selectedUserId,

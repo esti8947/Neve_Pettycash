@@ -5,6 +5,7 @@
     || currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
     (click)="confirmExpenses()" translate>expenseDtails.confirm
   </button>
+  <button *ngIf="currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"  (click)="exportToExcel()">Export to Excel</button>
   <h4>{{formatMonthYear()}}</h4>
 
   <div id="expensesReport">

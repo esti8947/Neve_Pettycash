@@ -1,5 +1,5 @@
 <button pButton id="departmentDialog" (click)="addDepartment()">new department</button>
-<p-dialog id="p-dialog" [(visible)]="departmentDialog" [style]="{width:'600px'}" header="new department" [modal]="true" styleClass="p-fluid" >
+<p-dialog id="p-dialog" [(visible)]="departmentDialog" [style]="{width:'600px'}" [header]="'addDepartment.New Department'|translate" [modal]="true" styleClass="p-fluid" >
     <div *ngIf="formGroup" id="form">
         <form [formGroup]="formGroup">
             <div class="form-group">

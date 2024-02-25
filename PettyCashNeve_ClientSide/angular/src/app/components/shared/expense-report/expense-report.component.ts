@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { formatDate } from '@angular/common';
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
+import { ExportService } from 'src/app/services/export-service/export.service';
 
 @Component({
   selector: 'expense-report',
@@ -53,6 +54,7 @@ export class ExpenseReportComponent implements OnInit {
     private eventService: EventService,
     private monthNameService: MonthNameService,
     private additionalActionsService: AdditionalActionsService,
+    private exportService:ExportService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -175,6 +177,11 @@ export class ExpenseReportComponent implements OnInit {
         )
       }
     }
+  }
+
+  exportToExcel(): void {
+    // Assuming expenses is an array containing expense data
+    this.exportService.exportToExcel(this.expenses, 'expenses');
   }
 
   deleteExpense(event: MouseEvent, expense: any) {

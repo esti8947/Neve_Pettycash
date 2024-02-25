@@ -36,6 +36,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { TooltipModule } from 'primeng/tooltip';
 import { DataViewModule } from 'primeng/dataview';
 
+
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
 import { HomeDepartmentComponent } from './components/secretary/home-department/home-department.component';
 import { ChooseLanguageComponent } from './components/shared/choose-language/choose-language.component';
@@ -59,6 +60,7 @@ import { AddExpenseCategoryComponent } from './components/manager/add-expenseCat
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
+import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -86,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DynamicNavbarComponent,
     LockExpensesButtonComponent,
     UsersOfDepartmentComponent,
+    PhoneNumberPipe,
     
   ],
   imports: [

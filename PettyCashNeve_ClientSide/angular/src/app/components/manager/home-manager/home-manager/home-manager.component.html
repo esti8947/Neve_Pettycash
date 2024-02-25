@@ -28,7 +28,7 @@
     <router-outlet></router-outlet>
 </div>
 <p-toast></p-toast>
-<p-dialog header="New Department" [(visible)]="departmentDialog" [style]="{width:'600px'}" [modal]="true"
+<p-dialog [header]="'addDepartment.New Department'|translate" [(visible)]="departmentDialog" [style]="{width:'600px'}" [modal]="true"
     styleClass="p-fluid">
     <form [formGroup]="departmentForm">
         <div class="form-group">
@@ -109,12 +109,12 @@
     </form>
 </p-dialog>
 
-<p-dialog header="New Expense Category" [(visible)]="expenseCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
+<p-dialog [header]="'addExpenseCategory.New Expense Category'|translate" [(visible)]="expenseCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
     styleClass="p-fluid">
     <div class="flexDialog">
         <div class="itemsList" *ngIf="existingExpensesCategory">
             <div class="card flex justify-content-center">
-                <h4>existingExpensesCategory</h4>
+                <h4 translate>addExpenseCategory.existingExpensesCategory</h4>
                 <p-listbox [options]="existingExpensesCategory" [(ngModel)]="selectedExpenseCategory"
                     [optionLabel]="getExpenseCategoryOptionLabel()" [style]="{'width':'340px'}"
                     [listStyle]="{'max-height': '220px'}">
@@ -133,64 +133,64 @@
         <div class="flexForm">
             <form [formGroup]="expenseCategoryForm">
                 <div class="form-group">
-                    <label for="expenseCategoryType" translate>addExpenseCategory.Expense Category Type</label>
+                    <label for="expenseCategoryType" translate>addExpenseCategory.Expense category type</label>
                     <input type="text" pInputText formControlName="expenseCategoryType">
                     <div>
                         <small
                             *ngIf="isInvalid('expenseCategoryType', expenseCategoryForm, expenseCategoryFormSubmitted)"
                             translate>
-                            Department name is required
+                            addExpenseCategory.Please enter expense category type
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="expenseCategoryName" translate>Expense Category Name</label>
+                    <label for="expenseCategoryName" translate>addExpenseCategory.Expense category name - english</label>
                     <input type="text" pInputText formControlName="expenseCategoryName">
                     <div>
                         <small
                             *ngIf="isInvalid('expenseCategoryName', expenseCategoryForm, expenseCategoryFormSubmitted)"
                             translate>
-                            Department code is required
+                            addExpenseCategory.Please enter expense category name - english
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="expenseCategoryNameHeb" translate>Expense Category Name Heb</label>
+                    <label for="expenseCategoryNameHeb" translate>addExpenseCategory.Expense category name - hebrew</label>
                     <input type="text" pInputText formControlName="expenseCategoryNameHeb">
                     <div>
                         <small
                             *ngIf="isInvalid('expenseCategoryNameHeb', expenseCategoryForm, expenseCategoryFormSubmitted)"
                             translate>
-                            Department head first name is required
+                            addExpenseCategory.Please enter expense category name - hebrew
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="accountingCode" translate>Expense Category Account Code</label>
+                    <label for="accountingCode" translate>addExpenseCategory.Expense category account code</label>
                     <input type="text" pInputText formControlName="accountingCode">
                     <div>
                         <small *ngIf="isInvalid('accountingCode', expenseCategoryForm, expenseCategoryFormSubmitted)"
                             translate>
-                            Department head last name is required
+                            addExpenseCategory.Please enter expense category account code
                         </small>
                     </div>
                 </div>
                 <div>
                     <button pButton type="button" (click)="saveExpenseCategory()" class="centered-button saveButton"
                         translate>
-                        Add Expense Category
+                        addExpenseCategory.Add Expense Category
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </p-dialog>
-<p-dialog header="New Event Category" [(visible)]="eventCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
+<p-dialog [header]="'addEventCategory.New Event Category'|translate" [(visible)]="eventCategoryDialog" [style]="{width:'1200px'}" [modal]="true"
     styleClass="p-fluid">
     <div class="flexDialog">
         <div class="itemsList" *ngIf="existingEventsCategory">
             <div class="card flex justify-content-center">
-                <h4>existingEventsCategory</h4>
+                <h4 translate>addEventCategory.existingEventsCategory</h4>
                 <p-listbox [options]="existingEventsCategory" [(ngModel)]="selectedEventCategory"
                     [optionLabel]="getEventCategoryOptionLabel()" [style]="{'width':'340px'}"
                     [listStyle]="{'max-height': '220px'}">
@@ -209,40 +209,40 @@
         <div class="flexForm">
             <form [formGroup]="eventCategoryForm">
                 <div class="form-group">
-                    <label for="eventCategoryName" translate>Event Category Name</label>
+                    <label for="eventCategoryName" translate>addEventCategory.Event category name - english</label>
                     <input type="text" pInputText formControlName="eventCategoryName">
                     <div>
                         <small *ngIf="isInvalid('eventCategoryName', eventCategoryForm, eventCategoryFormSubmitted)"
                             translate>
-                            Event Category Name is required
+                            addEventCategory.Please enter event category name - english
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="eventCategoryNameHeb" translate>Event Category Name Heb</label>
+                    <label for="eventCategoryNameHeb" translate>addEventCategory.Event category name - hebrew</label>
                     <input type="text" pInputText formControlName="eventCategoryNameHeb">
                     <div>
                         <small *ngIf="isInvalid('eventCategoryNameHeb', eventCategoryForm, eventCategoryFormSubmitted)"
                             translate>
-                            Event Category Name Heb is required
+                            addEventCategory.Please enter event category name - hebrew
                         </small>
                     </div>
                 </div>
                 <div>
                     <button pButton type="button" (click)="saveEventCategory()" class="centered-button saveButton"
                         translate>
-                        Add Event Category
+                        addEventCategory.Add Event Category
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </p-dialog>
-<p-dialog header="New Buyer" [(visible)]="buyerDialog" [style]="{width:'1200px'}" [modal]="true" styleClass="p-fluid">
+<p-dialog [header]="'addBuyer.New Buyer'|translate" [(visible)]="buyerDialog" [style]="{width:'1200px'}" [modal]="true" styleClass="p-fluid">
     <div class="flexDialog">
         <div class="itemsList" *ngIf="existingBuyers">
             <div class="card flex justify-content-center">
-                <h4>existingBuyers</h4>
+                <h4 translate>addBuyer.existingBuyers</h4>
                 <p-listbox [options]="existingBuyers" [(ngModel)]="selectedBuyer"
                     [optionLabel]="getBuyerOptionLabel()" [style]="{'width':'340px'}"
                     [listStyle]="{'max-height': '220px'}">
@@ -261,26 +261,26 @@
         <div class="flexForm">
             <form [formGroup]="buyerForm">
                 <div class="form-group">
-                    <label for="buyerName" translate>Buyer Name</label>
+                    <label for="buyerName" translate>addBuyer.Buyer name - english</label>
                     <input type="text" pInputText formControlName="buyerName">
                     <div>
                         <small *ngIf="isInvalid('buyerName', buyerForm, buyerFormSubmitted)" translate>
-                            Buyer Name is required
+                            addBuyer.Please enter buyer name - english
                         </small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="buyerNameHeb" translate>Buyer Name Heb</label>
+                    <label for="buyerNameHeb" translate>addBuyer.Buyer name - hebrew</label>
                     <input type="text" pInputText formControlName="buyerNameHeb">
                     <div>
                         <small *ngIf="isInvalid('buyerNameHeb', buyerForm, buyerFormSubmitted)" translate>
-                            Buyer Name Heb is required
+                            addBuyer.Please enter buyer name - hebrew
                         </small>
                     </div>
                 </div>
                 <div>
                     <button pButton type="button" (click)="saveBuyer()" class="centered-button saveButton" translate>
-                        Add Buyer
+                        addBuyer.Add Buyer
                     </button>
                 </div>
             </form>

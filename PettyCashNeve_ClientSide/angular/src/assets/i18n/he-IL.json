@@ -5,28 +5,28 @@
   "Log in": "התחבר",
   "username": "שם משתמש",
   "password": "סיסמא",
-  "expenseDtails":{
-    "confirm":"אשר הוצאות לחודש זה",
-    "Category":"קטגוריה",
-    "Store":"חנות",
-    "Date":"תאריך",
-    "Amount":"סכום",
-    "Event":"אירוע",
-    "buyer":"קונה",
-    "invice scan":"חשבונית",
-    "Notes":"הערות",
-    "deleteExpenseConfirmation":"האם אתה בטוח שברצונך למחוק הוצאה זו?",
-    "Expense Details":"פרטי הוצאה"
+  "expenseDtails": {
+    "confirm": "אשר הוצאות לחודש זה",
+    "Category": "קטגוריה",
+    "Store": "חנות",
+    "Date": "תאריך",
+    "Amount": "סכום",
+    "Event": "אירוע",
+    "buyer": "קונה",
+    "invice scan": "חשבונית",
+    "Notes": "הערות",
+    "deleteExpenseConfirmation": "האם אתה בטוח שברצונך למחוק הוצאה זו?",
+    "Expense Details": "פרטי הוצאה"
   },
-  "globalForm":{
-    "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
+  "globalForm": {
+    "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים"
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
     "expenseDeleted": "הוצאה נמחקה",
-    "deleteEventConfirmation":"האם ברצונך למחוק את הפעילות הזו",
-    "eventDeleted":"הפעילות נמחקה",
-    "eventUpdateError":"אין אפשרות למחוק פעילות שקיימות לה הוצאות"
+    "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
+    "eventDeleted": "הפעילות נמחקה",
+    "eventUpdateError": "אין אפשרות למחוק פעילות שקיימות לה הוצאות"
   },
   "MONTHS": {
     "January": "ינואר",
@@ -42,110 +42,111 @@
     "November": "נובמבר",
     "December": "דצמבר"
   },
-  "navbar":{
+  "navbar": {
     "Home": "בית",
     "Inserting a new expense": "הוצאה חדשה",
     "Inserting a new activity": "פעילות חדשה",
     "View previous months": "צפייה בחודשים קודמים",
     "Expense Details": "צפייה / עריכה פרטי הוצאות",
-    "AdditionalActionsDropdown":{
-      "Additional Actions":"פעולות נוספות",
-      "Adding an Amount to the Budget":"הוספת סכום לתקציב",
-      "Resetting the Budget":"איפוס תקציב",
-      "Users for Current Department":"משתתמשים למחלקה הנוכחית",
-      "Closing the Year":"סגירת שנה",
-      "Opening the Year":"פתיחת שנה חדשה"
+    "AdditionalActionsDropdown": {
+      "Additional Actions": "פעולות נוספות",
+      "Adding an Amount to the Budget": "הוספת סכום לתקציב",
+      "Resetting the Budget": "איפוס תקציב",
+      "Users for Current Department": "משתתמשים למחלקה הנוכחית",
+      "Closing the Year": "סגירת שנה",
+      "Opening the Year": "פתיחת שנה חדשה"
     }
   },
-  "navbarManager":{
-    "Add Department":"מחלקה חדשה",
-    "Add Expense Category":"קטגורית הוצאה חדשה",
-    "Add Event Category":"קטגורית פעילות חדשה",
-    "Add Buyer":"קונה חדש",
-    "Select Department":"בחר מחלקה"
+  "navbarManager": {
+    "Add Department": "מחלקה חדשה",
+    "Add Expense Category": "קטגורית הוצאה חדשה",
+    "Add Event Category": "קטגורית פעילות חדשה",
+    "Add Buyer": "קונה חדש",
+    "Select Department": "בחר מחלקה"
   },
-  "addExpenseForm":{
-    "Add expense":"הוספת הוצאה",
-    "Event":"בחר פעילות",
-    "select an event":"בחר פעילות",
-    "Expense Category":"* בחר קטגוריה",
-    "Please select an expense category.":"אנא בחר קטגורית הוצאה.",
-    "Store name":"* שם החנות",
-    "Please enter a store name.":"אנא הכנס שם חנות",
-    "Expense date":"* תאריך הוצאה",
-    "Please enter an expense date.":"אנא הכנס תאריך הוצאה",
-    "Expense amount":"* סכום הוצאה",
-    "Please enter an expense amount.":"אנא הכנס סכום הוצאה",
-    "event Category Name":"שם פעילות",
-    "expense Category Name":"קטגורית ההוצאה",
-    "buyer":"בחר קונה", 
-    "invice scan":"",
-    "Notes":"הערות",
-    "Add":"הוספת ההוצאה",
-    "Cancel":"ביטול",
-    "Update":"עדכן",
-    "Delete":"מחק",
-    "Please fill in all required fields":"אנא מלא את כל השדות הנדרשים"
+  "addExpenseForm": {
+    "Add expense": "הוספת הוצאה",
+    "Event": "בחר פעילות",
+    "select an event": "בחר פעילות",
+    "Expense Category": "* בחר קטגוריה",
+    "Please select an expense category.": "אנא בחר קטגורית הוצאה.",
+    "Store name": "* שם החנות",
+    "Please enter a store name.": "אנא הכנס שם חנות",
+    "Expense date": "* תאריך הוצאה",
+    "Please enter an expense date.": "אנא הכנס תאריך הוצאה",
+    "Expense amount": "* סכום הוצאה",
+    "Please enter an expense amount.": "אנא הכנס סכום הוצאה",
+    "event Category Name": "שם פעילות",
+    "expense Category Name": "קטגורית ההוצאה",
+    "buyer": "בחר קונה",
+    "invice scan": "",
+    "Notes": "הערות",
+    "Add": "הוספת ההוצאה",
+    "Cancel": "ביטול",
+    "Update": "עדכן",
+    "Delete": "מחק",
+    "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים"
   },
-  "addEventForm":{
+  "addEventForm": {
     "existingEvents": "פעילויות",
-    "select event category":"בחר קטגוריה",
-    "event name":"שם הפעילות",
-    "add event":"הוספת פעילות"
+    "select event category": "בחר קטגוריה",
+    "event name": "שם הפעילות",
+    "add event": "הוספת פעילות"
   },
-  "budgetInformation":{
-    "Your annual budget":"התקציב השנתי שלך",
-    "Your monthly budget":"התקציב החודשי שלך",
-    "So far you have spent":"סך הכל הוצאות",
-    "Your remaining budget":"יתרה",
-    "The percentage of expenses from the annual budget":"אחוז ההוצאות מהתקציב השנתי שלך",
-    "The percentage of expenses from the monthly budget":"אחוז ההוצאות מהתקציב החודשי שלך",
-    "annual budget":"תקציב שנתי",
-    "monthly budget":"תקציב חודשי",
-    "refund budget":"תקציב החזר הוצאות",
-    "budget type":"סוג תקציב",
-    "Percentage spent":"אחוז ההוצאות"
+  "budgetInformation": {
+    "Your annual budget": "התקציב השנתי שלך",
+    "Your monthly budget": "התקציב החודשי שלך",
+    "So far you have spent": "סך הכל הוצאות",
+    "Your remaining budget": "יתרה",
+    "The percentage of expenses from the annual budget": "אחוז ההוצאות מהתקציב השנתי שלך",
+    "The percentage of expenses from the monthly budget": "אחוז ההוצאות מהתקציב החודשי שלך",
+    "annual budget": "תקציב שנתי",
+    "monthly budget": "תקציב חודשי",
+    "refund budget": "תקציב החזר הוצאות",
+    "budget type": "סוג תקציב",
+    "Percentage spent": "אחוז ההוצאות"
   },
-  "monthlyCashRegister":{
-    "The department does not have any open cash registers for the current month":"אין קופות פתוחות למחלקה זו  בחודש הנוכחי",
-    "New Monthly Cash Register":"קופה חודשית חדשה",
-    "Add Monthly Cash Register":"הוסף קופה חודשית חדשה",
-    "The monthly cash register for the month of":"קופה חודשית -",
-    "The amount of expenses for this month is":"הוצאות החודש",
-    "The refund amount is":"סכום בקופה ",
-    "Budget ceiling":"תקרת התקציב",
-    "youy ar at % of the budget":"אתה עומד על % מהתקציב",
-    "Add New Expense":"הוספת הוצאה חדשה",
-    "Edit Monthly Expenses":"עריכת הוצאות",
-    "View Monthly Expenses":"צפייה בהוצאות",
-    "Enter an amount into the cash register":"הכנס סכום לקופה",
-    "Percentage of Expenses Compared to Last Year":"אחוז ההוצאות לעומת שנה קודמת"
+  "monthlyCashRegister": {
+    "The department does not have any open cash registers for the current month": "אין קופות פתוחות למחלקה זו  בחודש הנוכחי",
+    "New Monthly Cash Register": "קופה חודשית חדשה",
+    "Add Monthly Cash Register": "הוסף קופה חודשית חדשה",
+    "The monthly cash register for the month of": "קופה חודשית -",
+    "The amount of expenses for this month is": "הוצאות החודש",
+    "The refund amount is": "סכום בקופה ",
+    "Budget ceiling": "תקרת התקציב",
+    "youy ar at % of the budget": "אתה עומד על % מהתקציב",
+    "Add New Expense": "הוספת הוצאה חדשה",
+    "Edit Monthly Expenses": "עריכת הוצאות",
+    "View Monthly Expenses": "צפייה בהוצאות",
+    "Enter an amount into the cash register": "הכנס סכום לקופה",
+    "Percentage of Expenses Compared to Last Year": "אחוז ההוצאות לעומת שנה קודמת"
   },
-  "lockExpnenseButton":{
-    "Expense Lock for":"נעילת הוצאות לחודש"
+  "lockExpnenseButton": {
+    "Expense Lock for": "נעילת הוצאות לחודש"
   },
-  "previousExpenses":{
+  "previousExpenses": {
     "Month": "חודש",
     "Expenses Amount": "סכום ההוצאות",
-    "Select a Year":"בחר שנה"
+    "Select a Year": "בחר שנה"
   },
-  "insertRefundAmount":{
-    "insert refund amount":"הכנס סכום לקופה",
-    "refund amount":"סכום"
+  "insertRefundAmount": {
+    "insert refund amount": "הכנס סכום לקופה",
+    "refund amount": "סכום"
   },
-  "registerUser":{
-    "Add New User":"משתמש חדש",
-    "username":"*שם משתמש",
-    "password":"*סיסמא",
-    "email":"*אימייל",
-    "phoneNumber":"טלפון",
-    "Please enter username":"הכנס שם משתמש",
-    "Password must be at least 6 characters long and include both letters and numbers":"הסיסמ חייבת להיות בעלת 6 תווים לפחות ולכלול אותיות ומספרים",
-    "Invalid email format":"כתובת אימייל לא תקינה"
+  "registerUser": {
+    "Add New User": "משתמש חדש",
+    "username": "*שם משתמש",
+    "password": "*סיסמא",
+    "email": "*אימייל",
+    "phoneNumber": "טלפון",
+    "Please enter username": "הכנס שם משתמש",
+    "Password must be at least 6 characters long and include both letters and numbers": "הסיסמ חייבת להיות בעלת 6 תווים לפחות ולכלול אותיות ומספרים",
+    "Invalid email format": "כתובת אימייל לא תקינה"
   },
-  "addDepartment":{
-    "Department name": "שם",
-    "Department code": "קוד",
+  "addDepartment": {
+    "New Department": "מחלקה חדשה",
+    "Department name": "שם מחלקה",
+    "Department code": "קוד מחלקה",
     "Department head first name": "שם מנהל",
     "Department head last name": "שם משפחה מנהל",
     "Department phone number": "מספר טלפון",
@@ -159,6 +160,36 @@
     "Please enter department phone number": "אנא הזן מספר טלפון למחלקה (7 digits)",
     "Please enter department descreption": "אנא הזן תיאור למחלקה",
     "Add department": "הוסף מחלקה"
-}
-
+  },
+  "addExpenseCategory": {
+    "New Expense Category": "קטגוריית הוצאה חדשה",
+    "Add Expense Category": "הוסף קטגוריית הוצאה",
+    "existingExpensesCategory": "קטגוריות הוצאה קיימות",
+    "Expense category type": "סוג קטגורית הוצאה",
+    "Please enter expense category type": "אנא הכנס סוג קטגורית הוצאה",
+    "Expense category name - english": "שם קטגורית הוצאה - אנגלית",
+    "Please enter expense category name - english": "אנא הכנס שם קטגורית הוצאה - אנגלית",
+    "Expense category name - hebrew": "שם קטגורית הוצאה - עברית",
+    "Please enter expense category name - hebrew": "אנא הכנס שם קטגורית הוצאה - עברית",
+    "Expense category account code": "קוד חשבון קטגוריית הוצאה",
+    "Please enter expense category account code": "אנא הכנס קוד חשבון קטגוריית הוצאה"
+  },
+  "addEventCategory": {
+    "New Event Category": "קטגוריית אירוע חדשה",
+    "Add Event Category": "הוסף קטגוריית אירוע",
+    "existingEventsCategory": "קטגוריות אירוע קיימות",
+    "Event category name - english": "שם קטגורית אירוע - אנגלית",
+    "Please enter event category name - english": "אנא הכנס שם קטגורית אירוע - אנגלית",
+    "Event category name - hebrew": "שם קטגורית אירוע - עברית",
+    "Please enter event category name - hebrew": "אנא הכנס שם קטגורית אירוע - עברית"
+  },
+  "addBuyer": {
+    "New Buyer": "קונה חדש",
+    "Add Buyer": "הוסף קונה",
+    "existingBuyers": "קונים קיימים",
+    "Buyer name - english": "שם הקונה - אנגלית",
+    "Please enter buyer name - english": "אנא הכנס שם הקונה - אנגלית",
+    "Buyer name - hebrew": "שם הקונה - עברית",
+    "Please enter buyer name - hebrew": "אנא הכנס שם הקונה - עברית"
+  }
 }
