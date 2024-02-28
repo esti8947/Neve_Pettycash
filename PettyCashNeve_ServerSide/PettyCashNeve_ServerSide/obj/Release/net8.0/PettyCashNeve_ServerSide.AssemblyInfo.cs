@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PettyCashNeve_ServerSide")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+563001500ee32fe3e33e9fa68fc58b5a1854549f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5beef531f4b34266084c59a9393efafb46acca53")]
 [assembly: System.Reflection.AssemblyProductAttribute("PettyCashNeve_ServerSide")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PettyCashNeve_ServerSide")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { BudgetTypeService } from 'src/app/services/budgetType-service/budget-type.service';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 
@@ -18,21 +20,28 @@ interface CustomMenuItem extends MenuItem {
 })
 export class DynamicNavbarComponent implements OnInit {
   navbarItems: CustomMenuItem[] = [];
+  budgetTypes:any[] = [];
   currentUser: any;
   selectedDepartment: any;
 
-  formGroup!: FormGroup;
-  validForm: boolean = true;
+  addAmountForm!:FormGroup;
+  newYearFormGroup!:FormGroup;
+  // validForm: boolean = true;
   addingAmountDialog:boolean = false;
+  newYearDialog:boolean = false;
+
+  addAmountFormSubmitted = false;
+  newYearFromSubmitted = false;
 
   constructor(
     private authService: AuthService,
     private departmentService: DepartmentService,
+    private budgetTypeService:BudgetTypeService,
     private router: Router,
-
     private formBuilder: FormBuilder,
     private additionalActionsService: AdditionalActionsService,
     private customMessageService:CustomMessageService,
+    private translateService:TranslateService,
 
   ) { }
 
@@ -40,7 +49,7 @@ export class DynamicNavbarComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
     this.selectedDepartment = this.departmentService.getSelectedDepartment();
     this.initializeNavbarItems();
-    this.initializeForm();
+    this.initializeForms();
 
   }
 
@@ -74,10 +83,23 @@ export class DynamicNavbarComponent implements OnInit {
       this.authService.doLogout();
     }
   }
-  initializeForm() {
-    this.formGroup = this.formBuilder.group({
-      amountToAdd: new FormControl<number | null>(null, Validators.required)
+
+  initializeForms(){
+    this.addAmountForm = this.formBuilder.group({
+      amountToAdd: new FormControl<number | null>(null, Validators.required)      
     });
+
+    this.newYearFormGroup = this.formBuilder.group({
+      newYear: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]], // 8 digits pattern (e.g., 20232024)
+      budgetType: ['', Validators.required],
+      annualBudgetAmount: [''],
+      monthlyBudgetAmount: ['']
+    });
+  }
+
+  isInvalid(controlName: string, formGroup: FormGroup, formSubmitted: boolean): boolean {
+    const control: AbstractControl | null = formGroup.get(controlName);
+    return control ? (control.touched || formSubmitted) && control.invalid : false;
   }
 
   openAddingAmountDialog() {
@@ -85,14 +107,16 @@ export class DynamicNavbarComponent implements OnInit {
   }
 
   addingAmountToBudget(){
-    this.validForm = !this.formGroup.invalid;
-    if (this.validForm) {
-      const amoutnToAdd = this.formGroup.value.amountToAdd;
+    this.addAmountFormSubmitted = true;
+
+    if (this.addAmountForm.valid) {
+      const amoutnToAdd = this.addAmountForm.value.amountToAdd;
       const departmentId = this.selectedDepartment.departmentId;
       this.additionalActionsService.addAmountToBudget(departmentId, amoutnToAdd).subscribe(
         (response) =>{
           console.log('insert refund amount succeddfull: ', response);
-          this.formGroup.reset();
+          this.addAmountForm.reset();
+          this.addAmountFormSubmitted = false;
           this.addingAmountDialog = false;
           this.router.navigate(['navbar']);
           this.customMessageService.showSuccessMessage("add amount to budget is successfull.");
@@ -102,6 +126,30 @@ export class DynamicNavbarComponent implements OnInit {
           this.customMessageService.showErrorMessage("'An error occurred while add amount");
         }
       )
+    }
+  }
+
+  getOptionLabel(){
+    return this.translateService.currentLang === 'en-US'? 'budgetTypeName':'budgetTypeNameHeb';
+  }
+
+  openNewYearDialog(){
+    this.budgetTypeService.getBudgetTypes().subscribe(
+      (data) => {
+        this.budgetTypes = data.data;
+        console.log("eventcategories",this.budgetTypes);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      },
+    );
+    this.newYearDialog = true;
+  }
+
+  openNewYear(){
+    this.newYearFromSubmitted = true;
+    if(this.newYearFormGroup.valid){
+
     }
   }
 }

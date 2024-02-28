@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExpenseService } from 'src/app/services/expense-service/expense.service';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ExpenseReportInfoService } from 'src/app/services/expense-service/expense-report-info.service';
 import { ExpenseCategory } from 'src/app/models/expenseCategory';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -135,7 +135,7 @@ export class ExpenseReportComponent implements OnInit {
     return '';
   }
 
-  confirmExpenses() {
+  confirmExpenses(event: Event) {
     const year = this.year || 0;
     const month = this.month || 0;
     if (this.currentUser.isManager) {
@@ -163,18 +163,31 @@ export class ExpenseReportComponent implements OnInit {
         // return;
       }
       else {
-        this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
-          (respose) => {
-            console.log(respose);
-            this.customMessageService.showSuccessMessage("expenses approved successfully")
-            this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
-            this.router.navigate(['/navbar/home-department']);
+        this.confirmationService.confirm({
+          target: event.target as EventTarget,
+          message: this.translateService.instant('messages.confirmExpenseMessage'),
+          icon: 'pi pi-info-circle',
+          acceptButtonStyleClass: ' p-button-sm',
+          accept: () => {
+            this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
+              (respose) => {
+                console.log(respose);
+                this.customMessageService.showSuccessMessage("expenses approved successfully")
+                this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
+                this.customMessageService.showSuccessMessage(this.translateService.instant('messages.expenseDeleted'));
+                this.router.navigate(['/navbar/home-department']);
+              },
+              (error) => {
+                console.error('An error occurred while approve expenses: ', error);
+                this.customMessageService.showErrorMessage('An error occurred while approve expenses');
+              }
+            )
           },
-          (error) => {
-            console.error('An error occurred while approve expenses: ', error);
-            this.customMessageService.showErrorMessage('An error occurred while approve expenses');
+          reject: () => {
+            // this.customMessageService.showRejectedMessage('You have rejected');
           }
-        )
+        });
+     
       }
     }
   }

@@ -33,7 +33,7 @@ export class AddExpenseComponent implements OnInit {
   currentMonth:number | undefined;
   minDateValue: Date = new Date();
   maxDateValue: Date = new Date();
-  defalutDate:Date = new Date();
+  // defalutDate:Date = new Date();
 
   constructor(
     private readonly translateService:TranslateService,
@@ -145,7 +145,7 @@ export class AddExpenseComponent implements OnInit {
       const newExpenseModel: NewExpenseModel = {
         expenseId: 0,
         buyerId: selectedBuyer?.buyerId,
-        eventsId: selectedEvent?.eventId || 2,
+        eventsId: selectedEvent?.eventId || 33,
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,
