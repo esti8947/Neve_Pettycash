@@ -4,7 +4,7 @@
   <button pButton class="confirmButton"
     *ngIf="!currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === false 
     || currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
-    (click)="confirmExpenses($event)" translate>expenseDtails.confirm
+    (click)="displayConfirmExpensesDialog()" translate>expenseDtails.confirm
   </button>
   <button
     *ngIf="currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
@@ -146,4 +146,13 @@
         amount' | translate }}</button>
     </div>
   </form>
+</p-dialog>
+<p-dialog [(visible)]="confirmExpensesDialog" [modal]="true" [style]="{ width: '30vw' }" styleClass="p-fluid">
+  <h4 translate>globalForm.Notice <i class="pi pi-info-circle" ></i></h4>
+  <p translate>
+    messages.confirmExpenseMessage
+  </p>
+  <div class="div" translate>messages.confirmExpenseMessageQuestion</div>
+  <button pButton class="submitButton" translate (click)="confirmExpenses()">globalForm.Yes</button>
+  <button pButton class="cancelButton" translate (click)="hideConfirmExpensesDialog()">globalForm.No</button>
 </p-dialog>

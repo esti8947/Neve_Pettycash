@@ -1,59 +1,91 @@
 @import'../../../../styles.scss';
 
-#expensesReport{
-margin-top: 1rem;
+#expensesReport {
+  margin-top: 1rem;
 }
 
-p{
+p {
   color: $bluegray-700;
   font-weight: bold;
 }
-small{
+
+small {
   color: $bluegray-700;
 }
+
 h4 {
-  margin: 1rem 1rem 0; 
+  margin: 1rem 1rem 0;
 }
-.form-group{
+
+.form-group {
   margin-bottom: 20px;
-  input{
-    width:100%;
+
+  input {
+    width: 100%;
   }
-  ::ng-deep{
-    p-inputNumber{
+
+  ::ng-deep {
+    p-inputNumber {
       width: 100% !important;
     }
   }
-  label{
+
+  label {
     font-weight: bold;
-    color:  #808080 ;
+    color: #808080;
     margin-bottom: 4px;
   }
 }
+
 .ui-datepicker {
   z-index: 10000;
 }
-.p-button{
+
+.p-button {
   width: 30%;
   font-weight: bold;
   margin: 10px;
   color: $bluegray-600;
 }
-.editButtons{
+
+.editButtons {
   display: flex;
 }
-.confirmButton{
+
+.confirmButton {
   justify-content: center;
-  margin:2rem 2rem 0rem 5rem;
+  margin: 2rem 2rem 0rem 5rem;
   font-weight: bolder;
   background-color: #fff;
   color: $bluegray-600;
   // border:solid 3px $orange-300;
   border-radius: 25px;
 }
-.button{
+
+.button {
   justify-content: center;
   color: #fff !important;
   width: 100%;
   margin: 0;
+}
+
+.confirmExpensesDialog {
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep {
+  p-dialog {
+    p {
+      color: $bluegray-700;
+      margin: 10px;
+      padding: 5px;
+    }
+    .div {
+      color: $bluegray-600;
+      font-weight: 300;
+      font-size: 18px;
+      margin: 10px;
+    }
+  }
 }

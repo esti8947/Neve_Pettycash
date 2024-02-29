@@ -19,7 +19,10 @@
     "Expense Details": "פרטי הוצאה"
   },
   "globalForm": {
-    "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים"
+    "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים",
+    "Yes":"כן",
+    "No":"לא",
+    "Notice":"שים לב"
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
@@ -27,7 +30,8 @@
     "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
     "eventDeleted": "הפעילות נמחקה",
     "eventUpdateError": "אין אפשרות למחוק פעילות שקיימות לה הוצאות",
-    "confirmExpenseMessage":"אישור ההואצות נועל את האפשרות להכניס הוצאות נוספות, לערוך הוצאות ולמחוק הוצאות לחודש הנוכחי. האם אתה בטוח שברצונך לנעול את החודש?"
+    "confirmExpenseMessage":"אישור ההוצאות נועל את האפשרות להכניס הוצאות נוספות, לערוך הוצאות ולמחוק הוצאות לחודש הנוכחי.",
+    "confirmExpenseMessageQuestion":"האם אתה בטוח שברצונך לנעול את החודש?"
   },
   "MONTHS": {
     "January": "ינואר",

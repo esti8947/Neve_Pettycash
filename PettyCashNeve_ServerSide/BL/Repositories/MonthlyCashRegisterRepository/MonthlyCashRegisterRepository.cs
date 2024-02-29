@@ -119,7 +119,7 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
             try
             {
                 // Get the current monthly cash register
-                var currentMonthlyCashRegister = await _context.MonthlyCashRegisters.FirstOrDefaultAsync(m => m.UpdatedBy == userId);
+                var currentMonthlyCashRegister = await _context.MonthlyCashRegisters.FirstOrDefaultAsync(m => m.UpdatedBy == userId && m.IsActive);
 
                 if (currentMonthlyCashRegister != null)
                 {

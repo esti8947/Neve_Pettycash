@@ -29,6 +29,7 @@ export class ExpenseReportComponent implements OnInit {
   expense: any;
   selectedExpense: any;
   expenseDialog: boolean = false;
+  confirmExpensesDialog:boolean = false;
   submitted: boolean = false;
   expensesCategory: ExpenseCategory[] = [];
   events: any[] = [];
@@ -135,7 +136,14 @@ export class ExpenseReportComponent implements OnInit {
     return '';
   }
 
-  confirmExpenses(event: Event) {
+  displayConfirmExpensesDialog(){
+    this.confirmExpensesDialog = true;
+  }
+  hideConfirmExpensesDialog(){
+    this.confirmExpensesDialog =false;
+  }
+
+  confirmExpenses() {
     const year = this.year || 0;
     const month = this.month || 0;
     if (this.currentUser.isManager) {
@@ -163,31 +171,20 @@ export class ExpenseReportComponent implements OnInit {
         // return;
       }
       else {
-        this.confirmationService.confirm({
-          target: event.target as EventTarget,
-          message: this.translateService.instant('messages.confirmExpenseMessage'),
-          icon: 'pi pi-info-circle',
-          acceptButtonStyleClass: ' p-button-sm',
-          accept: () => {
             this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
               (respose) => {
                 console.log(respose);
                 this.customMessageService.showSuccessMessage("expenses approved successfully")
                 this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
                 this.customMessageService.showSuccessMessage(this.translateService.instant('messages.expenseDeleted'));
+                this.confirmExpensesDialog = false;
                 this.router.navigate(['/navbar/home-department']);
               },
               (error) => {
                 console.error('An error occurred while approve expenses: ', error);
                 this.customMessageService.showErrorMessage('An error occurred while approve expenses');
               }
-            )
-          },
-          reject: () => {
-            // this.customMessageService.showRejectedMessage('You have rejected');
-          }
-        });
-     
+            )     
       }
     }
   }
@@ -267,7 +264,7 @@ export class ExpenseReportComponent implements OnInit {
       const updatedExpense: NewExpenseModel = {
         expenseId: expenseToUpdate.expenseId,
         buyerId: selectedBuyer?.buyerId,
-        eventsId: selectedEvent?.eventId || 2,
+        eventsId: selectedEvent?.eventId || 34,
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { MonthlyCashRegister } from 'src/app/models/monthlyCashRegister';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
@@ -15,13 +16,21 @@ export class HomeDepartmentComponent implements OnInit {
 
   constructor(
     private monthlyCashRegisterService: MontlyCashRegisterService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private router:Router,) { }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn) {
-      this.currentUser = this.authService.getCurrentUser();
-      this.loadCurrentMonthlyCashRegister();
-    }
+    this.currentUser = this.authService.getCurrentUser();
+    this.loadCurrentMonthlyCashRegister();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.authService.isLoggedIn) {
+          this.currentUser = this.authService.getCurrentUser();
+          this.loadCurrentMonthlyCashRegister();
+        }
+      }
+    });
   }
   
   loadCurrentMonthlyCashRegister() {
@@ -63,6 +72,7 @@ export class HomeDepartmentComponent implements OnInit {
       );
     }
   }
+
   reloadMonthlyRegisters() {
     this.monthlyRegisters = []; // Clear existing data
     this.loadCurrentMonthlyCashRegister(); // Reload data

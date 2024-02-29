@@ -145,7 +145,7 @@ export class AddExpenseComponent implements OnInit {
       const newExpenseModel: NewExpenseModel = {
         expenseId: 0,
         buyerId: selectedBuyer?.buyerId,
-        eventsId: selectedEvent?.eventId || 33,
+        eventsId: selectedEvent?.eventId || 34,
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,
@@ -167,7 +167,7 @@ export class AddExpenseComponent implements OnInit {
         (response) =>{
           console.log("expense added successfully", response);
           this.customMessageService.showSuccessMessage('Expense is added');
-          this.formGroup.reset();
+          this.resetForm();
         },
         (error)=>{
           console.error('An error occurred while add the expense:', error);
@@ -193,5 +193,15 @@ export class AddExpenseComponent implements OnInit {
       selectedBuyer: new FormControl<any | null>(null),
       notes: new FormControl<string | null>(null),
     });
+  }
+  resetForm(): void {
+    // Reset form controls except for expenseDate
+    this.formGroup.get('selectedBuyer')?.reset();
+    this.formGroup.get('selectedEvent')?.reset();
+    this.formGroup.get('selectedExpenseCategory')?.reset();
+    this.formGroup.get('expenseAmount')?.reset();
+    this.formGroup.get('storeName')?.reset();
+    this.formGroup.get('notes')?.reset();
+    // You can leave expenseDate as it is
   }
 }
