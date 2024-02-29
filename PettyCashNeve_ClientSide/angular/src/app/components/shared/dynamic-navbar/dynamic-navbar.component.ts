@@ -3,6 +3,9 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
+import { AnnualBudget } from 'src/app/models/annualBudget';
+import { MonthlyBudget } from 'src/app/models/monthlyBudget';
+import { NewYear } from 'src/app/models/newYear';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetTypeService } from 'src/app/services/budgetType-service/budget-type.service';
@@ -21,6 +24,7 @@ interface CustomMenuItem extends MenuItem {
 export class DynamicNavbarComponent implements OnInit {
   navbarItems: CustomMenuItem[] = [];
   budgetTypes:any[] = [];
+  months:any[]=[];
   currentUser: any;
   selectedDepartment: any;
 
@@ -32,6 +36,8 @@ export class DynamicNavbarComponent implements OnInit {
 
   addAmountFormSubmitted = false;
   newYearFromSubmitted = false;
+
+  budgetTypeId:number = 0;
 
   constructor(
     private authService: AuthService,
@@ -93,13 +99,29 @@ export class DynamicNavbarComponent implements OnInit {
       newYear: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]], // 8 digits pattern (e.g., 20232024)
       budgetType: ['', Validators.required],
       annualBudgetAmount: [''],
-      monthlyBudgetAmount: ['']
+      monthlyBudgetAmount: [''],
+      MonthlyBudgetMonth:['']
     });
   }
 
   isInvalid(controlName: string, formGroup: FormGroup, formSubmitted: boolean): boolean {
     const control: AbstractControl | null = formGroup.get(controlName);
     return control ? (control.touched || formSubmitted) && control.invalid : false;
+  }
+
+  loadMonths() {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+  
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    this.months = Array.from({ length: 12 }, (_, index) => ({
+      value: index + 1, // Months are 1-based in JavaScript Date object
+      name: monthNames[index]
+    }));
   }
 
   openAddingAmountDialog() {
@@ -146,10 +168,75 @@ export class DynamicNavbarComponent implements OnInit {
     this.newYearDialog = true;
   }
 
-  openNewYear(){
+  openNewYear() {
     this.newYearFromSubmitted = true;
-    if(this.newYearFormGroup.valid){
+    if (this.newYearFormGroup.valid) {
+      let { newYear, budgetType, annualBudgetAmount, monthlyBudgetAmount, MonthlyBudgetMonth} = this.newYearFormGroup.value;
+  
+      // Format newYear to remove the dash
+      newYear = newYear.replace('-', '');
+      const departmentId = this.selectedDepartment.departmentId;
 
+      const annualBudgetModel:AnnualBudget={
+        id: 0,
+        currentYear: newYear,
+        annualBudgetCeiling: annualBudgetAmount,
+        isActive: true,
+        departmentId: departmentId,
+      }
+      const monthlyBudgetModel:MonthlyBudget = {
+        id: 0,
+        currentYear: newYear,
+        isActive: true,
+        departmentId: departmentId,
+        monthNumber: MonthlyBudgetMonth.value,
+        monthlyBudgetCeiling: monthlyBudgetAmount,
+      }
+
+      const newYearModel:NewYear ={
+        newYear: newYear,
+        departmentId: departmentId,
+        budgetTypeId: budgetType.budgetTypeId,
+        annaulBudget: annualBudgetModel,
+        monthlyBudget: monthlyBudgetModel
+      }
+  
+      this.additionalActionsService.openNewYear(newYearModel).subscribe(
+        () => {
+          // Handle success if needed
+        },
+        (error) => {
+          console.error('An error occurred:', error);
+          // Handle error if needed
+        }
+      );
+    }
+  }
+
+  onBudgetTypeChange(selectedBudgetTypeId: number) {
+    this.budgetTypeId = selectedBudgetTypeId;
+    if (selectedBudgetTypeId === 1) {
+      // Show input for annual budget amount
+      this.newYearFormGroup.get('annualBudgetAmount')?.setValidators(Validators.required);
+      this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
+
+      // Hide input for monthly budget amount
+      this.newYearFormGroup.get('monthlyBudgetAmount')?.clearValidators();
+      this.newYearFormGroup.get('monthlyBudgetAmount')?.updateValueAndValidity();
+      this.newYearFormGroup.get('MonthlyBudgetMonth')?.clearValidators();
+      this.newYearFormGroup.get('MonthlyBudgetMonth')?.updateValueAndValidity();
+    } else if (selectedBudgetTypeId === 2) {
+      this.loadMonths();
+      // Show input for monthly budget amount
+      this.newYearFormGroup.get('monthlyBudgetAmount')?.setValidators(Validators.required);
+      this.newYearFormGroup.get('monthlyBudgetAmount')?.updateValueAndValidity();
+      this.newYearFormGroup.get('MonthlyBudgetMonth')?.setValidators(Validators.required);
+      this.newYearFormGroup.get('MonthlyBudgetMonth')?.updateValueAndValidity();
+
+
+      // Hide input for annual budget amount
+      this.newYearFormGroup.get('annualBudgetAmount')?.clearValidators();
+      this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
     }
   }
 }

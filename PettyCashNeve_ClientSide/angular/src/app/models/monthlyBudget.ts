@@ -5,5 +5,4 @@ export class MonthlyBudget {
   departmentId: number | undefined;
   monthNumber: number | undefined;
   monthlyBudgetCeiling: number | undefined;
-  department: string | undefined;
 }

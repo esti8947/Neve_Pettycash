@@ -39,11 +39,13 @@
             <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
                 formControlName="amountToAdd"
                 [placeholder]="'insertRefundAmount.refund amount'|translate"></p-inputNumber>
-            <p *ngIf="isInvalid('amountToAdd', addAmountForm, addAmountFormSubmitted)" translate>globalForm.Please fill in all required fields</p>
+            <p *ngIf="isInvalid('amountToAdd', addAmountForm, addAmountFormSubmitted)" translate>globalForm.Please fill
+                in all required fields</p>
         </div>
         <div>
             <button class="button" pButton type="button" (click)="addingAmountToBudget()">{{ 'insertRefundAmount.insert
-                refund amount' | translate }}</button>
+                refund amount' | translate }}
+            </button>
         </div>
     </form>
 </p-dialog>
@@ -52,24 +54,46 @@
     <form [formGroup]="newYearFormGroup">
         <div class="form-group">
             <label for="newYear" translate>openNewYear.New Year</label>
-            <input type="text" formControlName="newYear" class="form-control" placeholder="2023-2024">
-            <div *ngIf="isInvalid('newYear', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback">New Year is required and must be in the format YYYY-YYYY.</div>
+            <input type="text" pInputText formControlName="newYear" placeholder="YYYY-YYYY">
+            <div *ngIf="isInvalid('newYear', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback"
+                translate>
+                openNewYear.New Year is required and must be in the format YYYY-YYYY</div>
         </div>
         <div class="form-group">
-            <label for="budgetType" translate>openNewYear.select budget type</label>
-            <p-dropdown formControlName="budgetType" [options]="budgetTypes"
-                [optionLabel]="getOptionLabel()" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
-            <div *ngIf="isInvalid('budgetType', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback">Budget Type is required.</div>
+            <!-- <label for="budgetType" translate>openNewYear.select budget type</label> -->
+            <p-dropdown formControlName="budgetType" [options]="budgetTypes" [optionLabel]="getOptionLabel()" [placeholder]="'openNewYear.select budget type'|translate"
+                appendTo="body" [style]="{'width':'100%'}"
+                (onChange)="onBudgetTypeChange($event.value.budgetTypeId)"></p-dropdown>
+            <div *ngIf="isInvalid('budgetType', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback"
+                translate>
+                openNewYear.Budget Type is required</div>
         </div>
-        <div *ngIf="newYearFormGroup.get('budgetType')?.value === 1" class="form-group"> <!-- Show if Annual Budget selected -->
-            <label for="annualBudgetAmount" translate>Annual Budget Amount</label>
-            <input type="number" formControlName="annualBudgetAmount" class="form-control">
-            <div *ngIf="isInvalid('annualBudgetAmount', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback">Annual Budget Amount is required.</div>
+
+        <div *ngIf="budgetTypeId == 1" class="form-group">
+            <!-- Show if Annual Budget selected -->
+            <label for="annualBudgetAmount" translate>openNewYear.Annual Budget Amount</label>
+            <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
+                formControlName="annualBudgetAmount" [showButtons]="false"></p-inputNumber>
+            <div *ngIf="isInvalid('annualBudgetAmount', newYearFormGroup, newYearFromSubmitted)"
+                class="invalid-feedback" translate>openNewYear.Annual Budget Amount is required</div>
         </div>
-        <div *ngIf="newYearFormGroup.get('budgetType')?.value === 2" class="form-group"> <!-- Show if Monthly Budget selected -->
-            <label for="monthlyBudgetAmount" translate>Monthly Budget Amount for September</label>
-            <input type="number" formControlName="monthlyBudgetAmount" class="form-control">
-            <div *ngIf="isInvalid('monthlyBudgetAmount', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback">Monthly Budget Amount is required.</div>
+        <div *ngIf="budgetTypeId == 2" class="form-group">
+            <!-- Show if Monthly Budget selected -->
+            <div class="form-group">
+                <label for="monthlyBudgetAmount" translate>openNewYear.Monthly Budget Amount for first month</label>
+                <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
+                    formControlName="monthlyBudgetAmount" [showButtons]="false"></p-inputNumber>
+                <div *ngIf="isInvalid('monthlyBudgetAmount', newYearFormGroup, newYearFromSubmitted)"
+                    class="invalid-feedback" translate>openNewYear.Monthly Budget Amount is required
+                </div>
+            </div>
+            <div class="form-group">
+                <p-dropdown formControlName="MonthlyBudgetMonth" [options]="months" [placeholder]="'Select Month'|translate"
+                    optionLabel="name" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+                    <div *ngIf="isInvalid('MonthlyBudgetMonth', newYearFormGroup, newYearFromSubmitted)"
+                    class="invalid-feedback" translate>openNewYear.Month is required
+                </div>
+            </div>
         </div>
         <div>
             <button class="button" pButton type="button" (click)="openNewYear()">
@@ -78,23 +102,3 @@
         </div>
     </form>
 </p-dialog>
-
-<!-- <p-dialog [(visible)]="newYearDialog" [style]="{ width: '450px' }" [header]="'openNewYear.New Year' | translate"
-    [modal]="true" styleClass="p-fluid">
-    <form [formGroup]="newYearFormGroup">
-        <div class="form-group">
-            <label for="newYear" translate>openNewYear.New Year</label>
-            <input type="text" formControlName="newYear" class="form-control" placeholder="2023 - 2024">
-        </div>
-        <div class="form-group">
-            <label for="budgetType" translate>openNewYear.select budget type</label>
-            <p-dropdown formControlName="budgetType" [options]="budgetTypes"
-                [optionLabel]="getOptionLabel()" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
-        </div>
-        <div>
-            <button class="button" pButton type="button" (click)="addingAmountToBudget()">
-                {{ 'openNewYear.Open new year' | translate }}
-            </button>
-        </div>
-    </form>
-</p-dialog> -->

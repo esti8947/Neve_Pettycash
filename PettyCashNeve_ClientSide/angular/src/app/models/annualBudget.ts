@@ -4,5 +4,4 @@ export class AnnualBudget {
   annualBudgetCeiling: number | undefined;
   isActive: boolean | undefined;
   departmentId: number | undefined;
-  department: string | undefined;
 }

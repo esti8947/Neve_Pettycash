@@ -20,9 +20,10 @@
   },
   "globalForm": {
     "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים",
-    "Yes":"כן",
-    "No":"לא",
-    "Notice":"שים לב"
+    "Yes": "כן",
+    "No": "לא",
+    "Notice": "שים לב",
+    "Select Month":"בחר חודש"
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
@@ -30,8 +31,10 @@
     "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
     "eventDeleted": "הפעילות נמחקה",
     "eventUpdateError": "אין אפשרות למחוק פעילות שקיימות לה הוצאות",
-    "confirmExpenseMessage":"אישור ההוצאות נועל את האפשרות להכניס הוצאות נוספות, לערוך הוצאות ולמחוק הוצאות לחודש הנוכחי.",
-    "confirmExpenseMessageQuestion":"האם אתה בטוח שברצונך לנעול את החודש?"
+    "confirmExpenseMessage": "אישור ההוצאות נועל את האפשרות להכניס הוצאות נוספות, לערוך הוצאות ולמחוק הוצאות לחודש הנוכחי.",
+    "confirmExpenseMessageQuestion": "האם אתה בטוח שברצונך לנעול את החודש?",
+    "Cannot add events before setting up a kupa": "אין אפשרות להוסיף אירועים לפני פתיחת קופה חודשית",
+    "Cannot add expenses before setting up a monthly cash register": "אין אפשרות להוסיף הוצאות לפני פתיחת קופה חודשית"
   },
   "MONTHS": {
     "January": "ינואר",
@@ -196,5 +199,17 @@
     "Please enter buyer name - english": "אנא הכנס שם הקונה - אנגלית",
     "Buyer name - hebrew": "שם הקונה - עברית",
     "Please enter buyer name - hebrew": "אנא הכנס שם הקונה - עברית"
+  },
+  "openNewYear": {
+    "New Year": "שנה חדשה",
+    "New Year is required and must be in the format YYYY-YYYY": "שנה חדשה חייבת להיות בפורמט YYYY-YYYY",
+    "select budget type": "בחר סוג תקציב",
+    "Budget Type is required": "יש להכניס סוג התקציב ",
+    "Annual Budget Amount": "סכום תקציב שנתי",
+    "Annual Budget Amount is required": "יש להכניס סכום תקציב",
+    "Monthly Budget Amount for first month": "סכום תקציב חודשי לחודש הראשון",
+    "Monthly Budget Amount is required": "יש להכניס סכום תקציב חודשי",
+    "Month is required":"יש לבחור חודש",
+    "Open new year": "פתיחת שנה חדשה"
   }
 }

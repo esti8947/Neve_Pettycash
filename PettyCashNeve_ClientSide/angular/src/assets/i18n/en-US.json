@@ -23,7 +23,8 @@
   "Please fill in all required fields":"Please fill in all required fields",
   "Yes":"Yes",
   "No":"No",
-  "Notice":"Notice"
+  "Notice":"Notice",
+  "Select Month":"Select Month"
   },
   "messages": {
     "deleteExpenseConfirmation": "Do you want to delete this expense?",
@@ -32,7 +33,9 @@
     "eventDeleted":"Event is deleted",
     "eventUpdateError":"Cannot delete event with associated expenses",
     "confirmExpenseMessage":"The approval of expenses locks the ability to add additional expenses, edit expenses, and delete expenses for the current month.",
-    "confirmExpenseMessageQuestion":"Are you sure you want to lock this month?"
+    "confirmExpenseMessageQuestion":"Are you sure you want to lock this month?",
+    "Cannot add events before setting up a kupa":"Cannot add events before setting up a kupa",
+    "Cannot add expenses before setting up a monthly cash register":"Cannot add expenses before setting up a kupa"
   },
   "MONTHS": {
     "January": "January",
@@ -197,5 +200,17 @@
     "Please enter buyer name - english":"Please enter buyer name - english",
     "Buyer name - hebrew":"Buyer name - hebrew",
     "Please enter buyer name - hebrew":"Please enter buyer name - hebrew"
+  },
+  "openNewYear":{
+    "New Year":"New Year",
+    "New Year is required and must be in the format YYYY-YYYY":"New Year is required and must be in the format YYYY-YYYY",
+    "select budget type":"select budget type",
+    "Budget Type is required":"Budget Type is required",
+    "Annual Budget Amount":"Annual Budget Amount",
+    "Annual Budget Amount is required":"Annual Budget Amount is required",
+    "Monthly Budget Amount for first month":"Monthly Budget Amount for first month",
+    "Monthly Budget Amount is required":"Monthly Budget Amount is required",
+    "Month is required":"Month is required",
+    "Open new year":"Open new year"
   }
 }
