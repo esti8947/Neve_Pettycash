@@ -56,12 +56,11 @@ import { PreviousExpensesComponent } from './components/shared/previous-expenses
 import { CustomMessageService } from './services/customMessage-service/custom-message.service';
 import { AddMonthlyCashRegisterComponent } from './components/secretary/add-monthly-cash-register/add-monthly-cash-register.component';
 import { ChooseDepartmentComponent } from './components/manager/choose-department/choose-department/choose-department.component';
-import { AddDepartmentComponent } from './components/manager/add-department/add-department/add-department.component';
-import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
+import { DepartmentInformationComponent } from './components/manager/department-information/department-information/department-information.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -84,12 +83,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     PreviousExpensesComponent,
     AddMonthlyCashRegisterComponent,
     ChooseDepartmentComponent,
-    AddDepartmentComponent,
-    AddExpenseCategoryComponent,
     DynamicNavbarComponent,
     LockExpensesButtonComponent,
     UsersOfDepartmentComponent,
     PhoneNumberPipe,
+    DepartmentInformationComponent,
     
   ],
   imports: [

@@ -1,0 +1,38 @@
+<div class="departmentsCard">
+    <div *ngFor="let department of departmentsArray" class="card-container">
+        <div (click)="selectDepartment(department)">
+            <div>
+                <h1>{{ department.departmentName }}</h1>
+                <ng-container
+                    *ngIf="department.budgetType === 'annualBudget' && department.budgetInformation?.annualBudget">
+                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
+                        department.budgetInformation?.annualBudget.annualBudgetCeiling | number }}</h2>
+                </ng-container>
+                <ng-container
+                    *ngIf="department.budgetType === 'monthlyBudget' && department.budgetInformation?.monthlyBudget">
+                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
+                        department.budgetInformation?.monthlyBudget.monthlyBudgetCeiling | number }}</h2>
+                </ng-container>
+                <ng-container
+                    *ngIf="department.budgetType === 'refundBudget' && department.budgetInformation?.totalAmount">
+                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
+                        department.budgetInformation?.totalAmount
+                        | number }}</h2>
+                </ng-container>
+                <div *ngIf="department.monthlyCashRegister != undefined">
+                    <h3>{{ getMonthName(department.monthlyCashRegister.monthlyCashRegisterMonth)}}
+                        {{department.monthlyCashRegister.monthlyCashRegisterYear}} ₪{{department.totalExpensesAmount |
+                        number}}</h3>
+                    <h5 [ngClass]="{
+                        'orange-text': getSpentPercentage(department.amountWastedForCalculatingPercentages?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) <= 90,
+                        'red-text': getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 90
+                        }">
+                        {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }}
+                        {{ getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0,
+                        department.monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

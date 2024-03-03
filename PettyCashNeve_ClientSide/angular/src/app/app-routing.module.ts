@@ -12,7 +12,7 @@ import { PreviousExpensesComponent } from './components/shared/previous-expenses
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
-import { AddExpenseCategoryComponent } from './components/manager/add-expenseCategory/add-expense-category/add-expense-category.component';
+import { DepartmentInformationComponent } from './components/manager/department-information/department-information/department-information.component';
 
 const routes: Routes = [
   // { path: '', component: HomeManagerComponent },
@@ -22,7 +22,8 @@ const routes: Routes = [
   {
     path: 'home-manager', component: HomeManagerComponent,
     children: [
-      { path: 'add-expense-category', component: AddExpenseCategoryComponent },
+      { path: '', redirectTo: 'department-information', pathMatch: 'full'},
+      { path: 'department-information', component: DepartmentInformationComponent },
     ]
   },
   {

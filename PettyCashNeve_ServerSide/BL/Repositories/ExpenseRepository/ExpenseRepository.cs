@@ -376,6 +376,20 @@ namespace BL.Repositories.ExpenseRepository
             }
         }
 
+        public async Task<decimal> GetExpensesAmountForMonthByDepartmentId(int month, int year, int departmentId)
+        {
+            try
+            {
+                List<Expenses> expensesList = await GetActiveExpensesByDepartmentIdAndDate(month, year, departmentId);
+                var totalAmount = expensesList.Sum(e => e.ExpenseAmount);
+                return totalAmount;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
 
         private async Task<bool> UserBelongsToDepartment(string userId, int departmentId)
         {

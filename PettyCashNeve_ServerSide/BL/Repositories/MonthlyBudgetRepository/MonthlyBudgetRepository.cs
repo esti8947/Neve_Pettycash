@@ -22,6 +22,15 @@ namespace BL.Repositories.MonthlyBudgetRepository
 
             try
             {
+                var departmentId  = monthlyBudget.DepartmentId;
+                var activeNonthlyBudget = await _context.MonthlyBudgets
+                    .FirstOrDefaultAsync(ab => ab.DepartmentId == departmentId && ab.IsActive == true);
+                if(activeNonthlyBudget != null)
+                {
+                    activeNonthlyBudget.IsActive = false;
+                }
+
+
                 _context.MonthlyBudgets.Add(monthlyBudget);
                 await _context.SaveChangesAsync();
                 return monthlyBudget;

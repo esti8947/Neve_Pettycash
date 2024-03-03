@@ -1,8 +1,8 @@
 export class MonthlyBudget {
-  id: number | undefined;
-  currentYear: number | undefined;
+  monthlyBudgetId:number = 0;
+  monthlyBudgetYear: number | undefined;
   isActive: boolean | undefined;
   departmentId: number | undefined;
-  monthNumber: number | undefined;
+  monthlyBudgetMonth: number | undefined;
   monthlyBudgetCeiling: number | undefined;
 }

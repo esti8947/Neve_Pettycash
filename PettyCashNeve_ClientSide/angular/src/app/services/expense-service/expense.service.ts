@@ -38,6 +38,16 @@ export class ExpenseService {
     );
   }
 
+  getExpensesAmountOfDepartmentByYearandMonth(month:number, year:number, departmentId:number): Observable<any> {
+    const url = `${this.baseUrlExpens}/GetExpensesAmountForMonthByDepartmentId/${month}/${year}/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) =>{
+        console.error('Error in getExpensesAmountOfDepartmentByYearandMonth function', error)
+        return throwError(error)
+      }),
+    );
+  }
+
   GetUnapprovedExpensesByUserAsync(): Observable<any> {
     const url = `${this.baseUrlExpens}/GetUnapprovedExpensesByUserAsync`;
     return this.http.get<any>(url).pipe(

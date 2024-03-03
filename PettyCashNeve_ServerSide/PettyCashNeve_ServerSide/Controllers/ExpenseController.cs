@@ -222,5 +222,14 @@ namespace PettyCashNeve_ServerSide.Controllers
             var serviceResponse = await _expenseService.GetExpensesAmountForMonth(month, year, userId);
             return HandleResponse(serviceResponse);
         }
+
+        [HttpGet("getExpensesAmountForMonthByDepartmentId/{month}/{year}/{departmentId}")]
+        [Authorize (Roles = "Admin")]
+
+        public async Task<IActionResult> GetExpensesAmountForMonthByDepartmentId(int month, int year, int departmentId)
+        {
+            var serviceResponse = await _expenseService.GetExpensesAmountForMonthByDepartmentId(month, year, departmentId);
+            return HandleResponse(serviceResponse);
+        }
     }
 }

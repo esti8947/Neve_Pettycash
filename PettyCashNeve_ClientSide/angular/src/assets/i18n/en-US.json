@@ -140,7 +140,7 @@
   },
   "insertRefundAmount":{
     "insert refund amount":"Enter amount into the kupa ",
-    "refund amount":"Amount"
+    "refund amount":"Amount to add"
   },
   "registerUser":{
     "Add New User":"Add New User",

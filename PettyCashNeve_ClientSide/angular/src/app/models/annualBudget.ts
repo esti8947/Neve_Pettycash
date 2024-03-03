@@ -1,6 +1,6 @@
 export class AnnualBudget {
-  id: number | undefined;
-  currentYear: number | undefined;
+  annualBudgetId: number | undefined;
+  annualBudgetYear: number | undefined;
   annualBudgetCeiling: number | undefined;
   isActive: boolean | undefined;
   departmentId: number | undefined;

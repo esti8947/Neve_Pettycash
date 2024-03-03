@@ -23,6 +23,7 @@ namespace BL.Services.ExpenseService
         Task<ServiceResponse<bool>> LockExpenses(int month, int year, int departmentId);
         Task<ServiceResponse<List<ExpenseDto>>> GetExpensesOfDepartmentAsync(int departmentId);
         Task<ServiceResponse<decimal>> GetExpensesAmountForMonth(int month, int year, string userId);
+        Task<ServiceResponse<decimal>> GetExpensesAmountForMonthByDepartmentId(int month, int year, int departmentId);
         Task<ServiceResponse<bool>> IsExpensesLockedAndApprovedForDepartmentAsync(int departmentId, int yearRange);
 
 

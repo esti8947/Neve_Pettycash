@@ -5,6 +5,6 @@ export class NewYear{
     newYear:number | undefined;
     departmentId:number | undefined;
     budgetTypeId:number | undefined;
-    annaulBudget:AnnualBudget | undefined;
+    annualBudget:AnnualBudget | undefined;
     monthlyBudget:MonthlyBudget | undefined;
 }

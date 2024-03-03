@@ -58,7 +58,7 @@ export class MonthlyCashRegisterComponent implements OnInit {
         this.expenseService.getExpensesAmountOfUserByYearandMonth(month - 1, year),
       ]).subscribe(
         ([result1, result2, result3, result4]) => {
-          console.log(result1, result2, result3, result4);
+          // console.log(result1, result2, result3, result4);
           if (month % 2 === 0) {
             // Even month
             this.monthlyAmountForCalculatingPercentages = result1.data + result2.data;

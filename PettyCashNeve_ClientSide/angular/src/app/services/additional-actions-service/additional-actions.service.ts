@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
+import { AnnualBudget } from 'src/app/models/annualBudget';
+import { MonthlyBudget } from 'src/app/models/monthlyBudget';
 import { NewYear } from 'src/app/models/newYear';
 
 @Injectable({
@@ -38,18 +40,20 @@ export class AdditionalActionsService {
     return this.http.get<any>(url).pipe(
       catchError((error) => {
         console.error('Error in getUsersOfDepartment function', error);
-        return (error);
+        return throwError(error);
       })
     )
   }
 
-  openNewYear(newYear:NewYear): Observable<any> {
-    let url = `${this.baseUrlOrchestration}/closeLastYearAndOpenNewYearActivities`;
-    return this.http.post<any>(url, newYear).pipe(
+  openNewYear(newYearModel: NewYear): Observable<any> {
+    console.log("newYearModel", newYearModel)
+    const url = `${this.baseUrlOrchestration}/closeLastYearAndOpenNewYearActivities`;
+    return this.http.post<NewYear>(url, newYearModel).pipe(
       catchError((error) => {
         console.error('Error in openNewYear function', error);
-        return (error);
+        return throwError(error);
       })
-    )
+    );
   }
+
 }

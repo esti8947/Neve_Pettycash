@@ -45,7 +45,6 @@ export class HomeDepartmentComponent implements OnInit {
             // Handle the case where data is incorrect
             this.isMonthlyRegister = false;
           }
-          console.log('currentMonthlyCashRegister', this.isMonthlyRegister);
         },
         (error) => {
           console.error('Error loading currentMonthlyCashRegister', error);

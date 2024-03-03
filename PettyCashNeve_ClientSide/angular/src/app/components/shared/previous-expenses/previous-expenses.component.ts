@@ -24,7 +24,7 @@ export class PreviousExpensesComponent implements OnInit {
   ];
   monthNamesHeb: string[] = [
     'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי',
-    'אוגוס', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
+    'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
   ];
 
   constructor(

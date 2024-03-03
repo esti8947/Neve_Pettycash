@@ -2,6 +2,9 @@
 using BL.Services.EventService;
 using BL.Services.ExpenseService;
 using BL.Services.MonthlyBudgetService;
+using DAL.Models;
+using Entities.Models_Dto;
+using Entities.Models_Dto.BudgetDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -106,12 +109,13 @@ namespace PettyCashNeve_ServerSide.Controllers
             return BadRequest("One or more actions failed.");
         }
 
-        [HttpGet("closeLastYearAndOpenNewYearActivities/{departmentId}/{newYear}/{budgetTypeId}")]
+        [HttpPost("closeLastYearAndOpenNewYearActivities")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CloseLastYearAndOpenNewYearActivities(int departmentId, int newYear, int budgetTypeId)
-        {
+        public async Task<IActionResult> CloseLastYearAndOpenNewYearActivities([FromBody] NewYearModel newYearModel)
+            {
             try
             {
+                var departmentId = newYearModel.DepartmentId;
                 var departmentResponse = await _departmentService.GetDepartmentByIdAsync(departmentId);
                 var department = departmentResponse.Data;
 
@@ -130,9 +134,22 @@ namespace PettyCashNeve_ServerSide.Controllers
                     return BadRequest("One or more actions failed");
                 }
 
-                department.CurrentBudgetTypeId = budgetTypeId;
+                department.CurrentBudgetTypeId = newYearModel.BudgetTypeId;
 
                 var updateResponse = await _departmentService.UpdateDepartmentAsync(department);
+
+                if (updateResponse.Success)
+                {
+                    if(department.CurrentBudgetTypeId == 1)
+                    {
+                        var addAnnualAmount = await _annualBudgetService.CreateAnnualBudgetAsync(newYearModel.AnnualBudget);
+                    }
+                    if(department.CurrentBudgetTypeId == 2)
+                    {
+                        var addMonthlyBudget = await _monthlyBudgetService.CreateMonthlyBudgetAsync(newYearModel.MonthlyBudget); 
+                    }
+                }
+                
 
                 return HandleResponse(updateResponse);
             }
