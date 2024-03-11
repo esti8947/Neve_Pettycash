@@ -1,7 +1,7 @@
 <div class="card flex justify-content-center">
   <p >{{getBudgetType()}}</p>
   <p-card>
-    <ng-container *ngIf="budgetType === 'annualBudget'">
+    <ng-container *ngIf="budgetType === 'annualBudget' && budgetInformation.annualBudget != null">
       <h1>{{getBudgetTypeName()}}   ₪{{budgetInformation.annualBudget.annualBudgetCeiling | number}}</h1>
       <h4>
         {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
@@ -18,7 +18,7 @@
         ₪{{ ((budgetInformation.annualBudget.annualBudgetCeiling ?? 0)) - (budgetInformation.totalAmount ?? 0)|number}}
       </h4>    
     </ng-container>
-    <ng-container *ngIf="budgetType === 'monthlyBudget'">
+    <ng-container *ngIf="budgetType === 'monthlyBudget' && budgetInformation.monthlyBudget != null">
       <h1>{{getMonthName()}}</h1>
       <h1>{{getBudgetTypeName()}}   ₪{{budgetInformation.monthlyBudget.monthlyBudgetCeiling | number}}</h1>
       <h4>
@@ -29,7 +29,7 @@
         ₪{{ ((budgetInformation.monthlyBudget.monthlyBudgetCeiling ?? 0)) - (budgetInformation.totalAmount ?? 0) | number}}
       </h4>
     </ng-container>
-    <ng-container *ngIf="budgetType === 'refundBudget'">
+    <ng-container *ngIf="budgetType === 'refundBudget' && budgetInformation.refundBudget != null">
       <h4>
         {{ 'budgetInformation.So far you have spent' | translate }} ₪{{ budgetInformation?.totalAmount | number}}
       </h4>

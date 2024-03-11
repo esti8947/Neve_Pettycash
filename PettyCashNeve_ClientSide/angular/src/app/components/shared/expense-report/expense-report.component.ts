@@ -17,6 +17,9 @@ import { AdditionalActionsService } from 'src/app/services/additional-actions-se
 import { formatDate } from '@angular/common';
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 import { ExportService } from 'src/app/services/export-service/export.service';
+import * as XLSX from 'xlsx';
+import { DepartmentService } from 'src/app/services/department-service/department.service';
+
 
 @Component({
   selector: 'expense-report',
@@ -25,11 +28,12 @@ import { ExportService } from 'src/app/services/export-service/export.service';
 })
 export class ExpenseReportComponent implements OnInit {
   currentUser: any;
+  selectedDepartment: any;
   expenses: any[] = [];
   expense: any;
   selectedExpense: any;
   expenseDialog: boolean = false;
-  confirmExpensesDialog:boolean = false;
+  confirmExpensesDialog: boolean = false;
   submitted: boolean = false;
   expensesCategory: ExpenseCategory[] = [];
   events: any[] = [];
@@ -55,7 +59,8 @@ export class ExpenseReportComponent implements OnInit {
     private eventService: EventService,
     private monthNameService: MonthNameService,
     private additionalActionsService: AdditionalActionsService,
-    private exportService:ExportService,
+    private departmentService: DepartmentService,
+    private exportService: ExportService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -63,6 +68,7 @@ export class ExpenseReportComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
+    this.selectedDepartment = this.departmentService.getSelectedDepartment();
     this.route.queryParams.subscribe(params => {
       this.year = params['selectedYear'];
       this.month = params['selectedMonth'];
@@ -136,11 +142,11 @@ export class ExpenseReportComponent implements OnInit {
     return '';
   }
 
-  displayConfirmExpensesDialog(){
+  displayConfirmExpensesDialog() {
     this.confirmExpensesDialog = true;
   }
-  hideConfirmExpensesDialog(){
-    this.confirmExpensesDialog =false;
+  hideConfirmExpensesDialog() {
+    this.confirmExpensesDialog = false;
   }
 
   confirmExpenses() {
@@ -155,6 +161,7 @@ export class ExpenseReportComponent implements OnInit {
         (respose) => {
           console.log(respose);
           this.customMessageService.showSuccessMessage("expenses locked successfully")
+          this.confirmExpensesDialog = false;
           this.loadExpensesByYearAndMonth(year, month);
         },
         (error) => {
@@ -171,28 +178,45 @@ export class ExpenseReportComponent implements OnInit {
         // return;
       }
       else {
-            this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
-              (respose) => {
-                console.log(respose);
-                this.customMessageService.showSuccessMessage("expenses approved successfully")
-                this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
-                this.customMessageService.showSuccessMessage(this.translateService.instant('messages.expenseDeleted'));
-                this.confirmExpensesDialog = false;
-                this.router.navigate(['/navbar/home-department']);
-              },
-              (error) => {
-                console.error('An error occurred while approve expenses: ', error);
-                this.customMessageService.showErrorMessage('An error occurred while approve expenses');
-              }
-            )     
+        this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
+          (respose) => {
+            console.log(respose);
+            this.customMessageService.showSuccessMessage("expenses approved successfully")
+            this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
+            this.confirmExpensesDialog = false;
+            this.router.navigate(['/navbar/home-department']);
+          },
+          (error) => {
+            console.error('An error occurred while approve expenses: ', error);
+            this.customMessageService.showErrorMessage('An error occurred while approve expenses');
+          }
+        )
       }
     }
   }
 
   exportToExcel(): void {
-    // Assuming expenses is an array containing expense data
-    this.exportService.exportToExcel(this.expenses, 'expenses');
-  }
+    const data = this.expenses.map((item: { buyerName: any; eventCategoryName: any; eventName: any; expense: { expenseId: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; }; expenseCategoryName: any; expenseCategoryNameHeb: any; }) => ({
+      buyerName: item.buyerName,
+      eventCategoryName: item.eventCategoryName,
+      eventName: item.eventName,
+      'expense.expenseId': item.expense.expenseId,
+      // 'expense.expenseCategoryId': item.expense.expenseCategoryId,
+      // 'expense.eventsId': item.expense.eventsId,
+      // 'expense.departmentId': item.expense.departmentId,
+      // 'expense.updatedBy': item.expense.updatedBy,
+      expenseCategoryName: item.expenseCategoryName,
+      expenseCategoryNameHeb: item.expenseCategoryNameHeb,
+      departmentName:this.selectedDepartment.departmentName 
+    }));
+    console.log("data",data);
+
+    const columns = Object.keys(data[0]);
+    const worksheet = XLSX.utils.json_to_sheet(data, { header: columns });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, 'data.xlsx');
+  }  
 
   deleteExpense(event: MouseEvent, expense: any) {
     const expenseIdToDelete = expense.expense.expenseId;

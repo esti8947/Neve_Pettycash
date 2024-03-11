@@ -166,6 +166,29 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
+        [Route("~/api/GetUsernameByUserId/{userId}")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUsernameByUserId(string userId)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                return Ok(user.UserName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while retrieving the username: {ex.Message}");
+            }
+        }
+
+
 
         [Route("~/api/GetDepartments")]
         [HttpGet]

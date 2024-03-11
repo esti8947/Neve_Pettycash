@@ -91,6 +91,25 @@ namespace BL.Repositories.AnnualBudgetRepository
             }
         }
 
+        public async Task<bool> deactivateAnnualBudget(int departmentId)
+        {
+            try
+            {
+                var annualBudget = await GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                if (annualBudget != null)
+                {
+                    annualBudget.IsActive = false;
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> DeleteAnnualBudgetAsync(int annualBudgetId)
         {
             try

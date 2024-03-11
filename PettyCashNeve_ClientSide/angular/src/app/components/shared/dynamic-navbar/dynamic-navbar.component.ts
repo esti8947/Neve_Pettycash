@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, numberAttribute } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { AnnualBudget } from 'src/app/models/annualBudget';
 import { MonthlyBudget } from 'src/app/models/monthlyBudget';
 import { NewYear } from 'src/app/models/newYear';
+import { RefundBudget } from 'src/app/models/refundBudget';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetTypeService } from 'src/app/services/budgetType-service/budget-type.service';
@@ -59,6 +60,7 @@ export class DynamicNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.selectedDepartment = this.departmentService.getSelectedDepartment();
+    console.log("selectedDepartment", this.selectedDepartment);
     this.initializeNavbarItems();
     this.initializeForms();
     this.loadMonths();
@@ -103,13 +105,13 @@ export class DynamicNavbarComponent implements OnInit {
     this.newYearFormGroup = this.formBuilder.group({
       newYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]), // 8 digits pattern (e.g., 20232024)
       budgetType: new FormControl<number | null>(null, Validators.required),
-      annualBudgetAmount: new FormControl<number | null>(null, Validators.required),
-      monthlyBudgetAmount: new FormControl<number | null>(null, Validators.required),
-      MonthlyBudgetMonth: new FormControl<number | null>(null, Validators.required)
+      annualBudgetAmount: new FormControl<number | null>(0), // Initial validator based on budget type
+      monthlyBudgetAmount: new FormControl<number | null>(0), // Initial validator based on budget type
+      MonthlyBudgetMonth: new FormControl<number | null>(9)
     });
 
     this.addMonthlyBudgetForm = this.formBuilder.group({
-      monthlyBudgetYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]), // 8 digits pattern (e.g., 20232024)
+      monthlyBudgetYear: new FormControl<number | null>(this.selectedDepartment?.budgetInformation?.monthlyBudget?.monthlyBudgetYear),
       monthlyBudgetAmount: new FormControl<number | null>(null, Validators.required),
       MonthlyBudgetMonth: new FormControl<number | null>(null, Validators.required)
     })
@@ -142,6 +144,23 @@ export class DynamicNavbarComponent implements OnInit {
   openAddMothnlyBudgetDialog() {
     this.AddMothnlyBudgetDialog = true;
   }
+
+  getCurrentBudgetAmount() {
+    if (this.selectedDepartment && this.selectedDepartment.budgetInformation) {
+      let budgetAmount = 0;
+      if (this.selectedDepartment.budgetInformation.budgetType.budgetTypeId === 1) {
+        budgetAmount = this.selectedDepartment.budgetInformation.annualBudget.annualBudgetCeiling
+      } else if (this.selectedDepartment.budgetInformation.budgetType.budgetTypeId === 2) {
+        // If budget type is Monthly Budget
+        budgetAmount = this.selectedDepartment.budgetInformation.monthlyBudget.monthlyBudgetCeiling
+      }
+      return this.translateService.currentLang === 'en-US' ?
+        `Current budget ₪${budgetAmount}` :
+        `תקציב נוכחי ₪${budgetAmount}`;
+    }
+    return 'No budget information available';
+  }
+
 
   addingAmountToBudget() {
     this.addAmountFormSubmitted = true;
@@ -204,18 +223,25 @@ export class DynamicNavbarComponent implements OnInit {
         monthlyBudgetYear: newYear,
         isActive: true,
         departmentId: departmentId,
-        monthlyBudgetMonth: MonthlyBudgetMonth.value,
+        monthlyBudgetMonth: 9,
         monthlyBudgetCeiling: monthlyBudgetAmount,
       };
+      const refundBudgetModel: RefundBudget = {
+        refundBudgetId: 0,
+        departmentId: departmentId,
+        refundBudgetYear: newYear,
+        isActive: true
+      }
 
       const newYearModel: NewYear = {
         newYear: newYear,
         departmentId: departmentId,
         budgetTypeId: budgetType.budgetTypeId,
         annualBudget: annualBudgetModel,
-        monthlyBudget: monthlyBudgetModel
+        monthlyBudget: monthlyBudgetModel,
+        refundBudget: refundBudgetModel
       };
-     
+
       this.additionalActionsService.openNewYear(newYearModel).subscribe(
         (response) => {
           console.log("open new year is successfull", response);
@@ -223,6 +249,16 @@ export class DynamicNavbarComponent implements OnInit {
           this.newYearFormGroup.reset();
           this.newYearFromSubmitted = false;
           this.newYearDialog = false;
+          this.departmentService.getDepartmentById(departmentId).subscribe(
+            (data) => {
+              this.selectedDepartment = data.data;
+              this.selectedDepartment = this.departmentService.getSelectedDepartment();
+            },
+            (error) => {
+              console.error('An error occurred:', error);
+            },
+          );
+          console.log("selectedDepartment", this.selectedDepartment)
           this.router.navigate(['navbar']);
         },
         (error) => {
@@ -235,36 +271,35 @@ export class DynamicNavbarComponent implements OnInit {
 
   onBudgetTypeChange(selectedBudgetTypeId: number) {
     this.budgetTypeId = selectedBudgetTypeId;
+
+    // Reset validators for all controls
+    this.newYearFormGroup.get('annualBudgetAmount')?.clearValidators();
+    this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
+    this.newYearFormGroup.get('monthlyBudgetAmount')?.clearValidators();
+    this.newYearFormGroup.get('monthlyBudgetAmount')?.updateValueAndValidity();
+    this.newYearFormGroup.get('MonthlyBudgetMonth')?.clearValidators();
+    this.newYearFormGroup.get('MonthlyBudgetMonth')?.updateValueAndValidity();
+
     if (selectedBudgetTypeId === 1) {
       // Show input for annual budget amount
       this.newYearFormGroup.get('annualBudgetAmount')?.setValidators(Validators.required);
       this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
-
-      // Hide input for monthly budget amount
-      this.newYearFormGroup.get('monthlyBudgetAmount')?.clearValidators();
-      this.newYearFormGroup.get('monthlyBudgetAmount')?.updateValueAndValidity();
-      this.newYearFormGroup.get('MonthlyBudgetMonth')?.clearValidators();
-      this.newYearFormGroup.get('MonthlyBudgetMonth')?.updateValueAndValidity();
     } else if (selectedBudgetTypeId === 2) {
       // Show input for monthly budget amount
       this.newYearFormGroup.get('monthlyBudgetAmount')?.setValidators(Validators.required);
       this.newYearFormGroup.get('monthlyBudgetAmount')?.updateValueAndValidity();
       this.newYearFormGroup.get('MonthlyBudgetMonth')?.setValidators(Validators.required);
       this.newYearFormGroup.get('MonthlyBudgetMonth')?.updateValueAndValidity();
-
-
-      // Hide input for annual budget amount
-      this.newYearFormGroup.get('annualBudgetAmount')?.clearValidators();
-      this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
     }
+    // For selectedBudgetTypeId === 3, no need to set any validators
   }
+
 
   addMonthlyBudget() {
     this.addAmountFormSubmitted = true;
     if (this.addMonthlyBudgetForm.valid) {
 
       let { monthlyBudgetYear, monthlyBudgetAmount, MonthlyBudgetMonth } = this.addMonthlyBudgetForm.value;
-      monthlyBudgetYear = monthlyBudgetYear.replace('-', '');
 
       const monthlyBudget: MonthlyBudget = {
         monthlyBudgetId: 0,

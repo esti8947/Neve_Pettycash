@@ -1,7 +1,9 @@
-﻿using BL.Services.AnnualBudgetService;
+﻿using BL.Services;
+using BL.Services.AnnualBudgetService;
 using BL.Services.EventService;
 using BL.Services.ExpenseService;
 using BL.Services.MonthlyBudgetService;
+using BL.Services.RefundBudgetService;
 using DAL.Models;
 using Entities.Models_Dto;
 using Entities.Models_Dto.BudgetDto;
@@ -24,8 +26,9 @@ namespace PettyCashNeve_ServerSide.Controllers
         private readonly IDepartmentService _departmentService;
         private readonly IAnnualBudgetService _annualBudgetService;
         private readonly IMonthlyBudgetService _monthlyBudgetService;
+        private readonly IRefundBudgetService _refundBudgetService;
         public OrchestrationController(IEventService eventService, IExpenseService expenseService, IMonthlyCashRegisterService monthlyCashRegisterService,
-                                        IDepartmentService departmentService, IAnnualBudgetService annualBudgetService, IMonthlyBudgetService monthlyBudgetService)
+                                        IDepartmentService departmentService, IAnnualBudgetService annualBudgetService, IMonthlyBudgetService monthlyBudgetService, IRefundBudgetService refundBudgetService)
         {
             _eventService = eventService;
             _expenseService = expenseService;
@@ -33,6 +36,7 @@ namespace PettyCashNeve_ServerSide.Controllers
             _departmentService = departmentService;
             _annualBudgetService = annualBudgetService;
             _monthlyBudgetService = monthlyBudgetService;
+            _refundBudgetService = refundBudgetService;
         }
 
         [HttpGet("closeMonthlyActivities/{year}/{month}")]
@@ -69,18 +73,18 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpGet("resettingBudget/{departmentId}")]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ResettingBudget(int departmentId)
         {
             var department = await _departmentService.GetDepartmentByIdAsync(departmentId);
             var budgetTypeCode = department.Data.CurrentBudgetTypeId;
-           
-            if(budgetTypeCode == 1)
+
+            if (budgetTypeCode == 1)
             {
                 var serviceResponse = await _annualBudgetService.resettingAnnualBudget(departmentId);
                 return HandleResponse(serviceResponse);
             }
-            else if(budgetTypeCode == 2)
+            else if (budgetTypeCode == 2)
             {
                 var serviceResponse = await _monthlyBudgetService.resettingMonthlyBudget(departmentId);
                 return HandleResponse(serviceResponse);
@@ -89,7 +93,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpGet("addAmountToBudget/{departmentId}/{amountToAdd}")]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> AddAmountToBudget(int departmentId, decimal amountToAdd)
         {
@@ -109,10 +113,14 @@ namespace PettyCashNeve_ServerSide.Controllers
             return BadRequest("One or more actions failed.");
         }
 
+
+
         [HttpPost("closeLastYearAndOpenNewYearActivities")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CloseLastYearAndOpenNewYearActivities([FromBody] NewYearModel newYearModel)
-            {
+        {
+            
+            var serviceResponse = new ServiceResponse<bool>();
             try
             {
                 var departmentId = newYearModel.DepartmentId;
@@ -123,35 +131,54 @@ namespace PettyCashNeve_ServerSide.Controllers
                 {
                     return NotFound("Department not found");
                 }
-
-                int yearToClose =  _departmentService.GetYearByDepartmentId(departmentId).Result.Data;
-
-                var checkRegistersResponse = await _monthlyCashRegisterService.CheckAllMonthlyCashRegistersInactiveForYearAsync(departmentId, yearToClose);
-                var checkExpensesResponse = await _expenseService.IsExpensesLockedAndApprovedForDepartmentAsync(departmentId, yearToClose);
-
-                if (!checkRegistersResponse.Success || !checkExpensesResponse.Success)
+                var yaerToCloseResult = _departmentService.GetYearByDepartmentId(departmentId).Result;
+                int yearToClose = yaerToCloseResult.Data;
+                if (yearToClose == newYearModel.NewYear)
                 {
-                    return BadRequest("One or more actions failed");
+                    return BadRequest("It is not possible to open a new year on a year that already exists.");
                 }
+
+                if (yearToClose != 0)
+                {
+                    var checkRegistersResponse = await _monthlyCashRegisterService.CheckAllMonthlyCashRegistersInactiveForYearAsync(departmentId, yearToClose);
+                    var checkExpensesResponse = await _expenseService.IsExpensesLockedAndApprovedForDepartmentAsync(departmentId, yearToClose);
+
+                    if (!checkRegistersResponse.Success || !checkExpensesResponse.Success)
+                    {
+                        return BadRequest("One or more actions failed");
+                    }
+                }
+
 
                 department.CurrentBudgetTypeId = newYearModel.BudgetTypeId;
 
                 var updateResponse = await _departmentService.UpdateDepartmentAsync(department);
 
-                if (updateResponse.Success)
+                if (!updateResponse.Success)
                 {
-                    if(department.CurrentBudgetTypeId == 1)
-                    {
-                        var addAnnualAmount = await _annualBudgetService.CreateAnnualBudgetAsync(newYearModel.AnnualBudget);
-                    }
-                    if(department.CurrentBudgetTypeId == 2)
-                    {
-                        var addMonthlyBudget = await _monthlyBudgetService.CreateMonthlyBudgetAsync(newYearModel.MonthlyBudget); 
-                    }
+                    return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the department.");
+                }
+                var deactivateBudget = await _departmentService.deactivateBudget(departmentId);
+
+                switch (department.CurrentBudgetTypeId)
+                {
+                    case 1:
+                        await _annualBudgetService.CreateAnnualBudgetAsync(newYearModel.AnnualBudget);
+                        break;
+                    case 2:
+                        await _monthlyBudgetService.CreateMonthlyBudgetAsync(newYearModel.MonthlyBudget);
+                        break;
+                    case 3:
+                        await _refundBudgetService.CreateRefundBudgetAsync(newYearModel.RefundBudget);
+                        break;
                 }
                 
 
-                return HandleResponse(updateResponse);
+                serviceResponse.Success = true;
+                serviceResponse.Data = true;
+                serviceResponse.Message = "New year activities successfully opened.";
+
+                return HandleResponse(serviceResponse);
             }
             catch (Exception ex)
             {
@@ -160,7 +187,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         }
 
         [HttpGet("getUsersOfDepartment/{departmentId}")]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsersOfDepartment(int departmentId)
         {
             var serviceResponse = await _departmentService.GetUsersByDepartmentId(departmentId);

@@ -16,7 +16,8 @@
     "invice scan": "חשבונית",
     "Notes": "הערות",
     "deleteExpenseConfirmation": "האם אתה בטוח שברצונך למחוק הוצאה זו?",
-    "Expense Details": "פרטי הוצאה"
+    "Expense Details": "פרטי הוצאה",
+    "Kupa":"קופה"
   },
   "globalForm": {
     "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים",
@@ -59,6 +60,7 @@
     "AdditionalActionsDropdown": {
       "Additional Actions": "פעולות נוספות",
       "Adding an Amount to the Budget": "הוספת סכום לתקציב",
+      "Add Monthly Budget":"הוספת תקציב חודשי",
       "Resetting the Budget": "איפוס תקציב",
       "Users for Current Department": "משתתמשים למחלקה הנוכחית",
       "Closing the Year": "סגירת שנה",
@@ -207,9 +209,15 @@
     "Budget Type is required": "יש להכניס סוג התקציב ",
     "Annual Budget Amount": "סכום תקציב שנתי",
     "Annual Budget Amount is required": "יש להכניס סכום תקציב",
-    "Monthly Budget Amount for first month": "סכום תקציב חודשי לחודש הראשון",
+    "Monthly Budget Amount for first month": "סכום תקציב חודשי לחודש ספטמבר",
     "Monthly Budget Amount is required": "יש להכניס סכום תקציב חודשי",
     "Month is required":"יש לבחור חודש",
     "Open new year": "פתיחת שנה חדשה"
+  },
+  "AddMothnlyBudgetDialog":{
+    "year":"שנה",
+    "Add Monthly Budget":"הוספת תקציב חודשי",
+    "Add Monthly Budget Amount":"הוסף סכום תקציב חודשי",
+    "Amount to added":"סכום להוספה"
   }
 }

@@ -442,7 +442,7 @@ namespace BL.Repositories.ExpenseRepository
                 bool allApprovedAndLocked = expensesList.All(expense => expense.IsApproved && expense.IsLocked);
 
                 //return allApprovedAndLocked;
-                return true;
+                return allApprovedAndLocked;
 
             }
             catch (Exception ex)

@@ -164,16 +164,34 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             var serviceResponse = new ServiceResponse<int>();
             try
             {
-                var year = await _departmentRepository.GetYearByDepartmentId(departmentId);
-                if(year != 0)
-                {
-                    serviceResponse.Success = true;
-                    serviceResponse.Data = year;
-                }
+                int year = await _departmentRepository.GetYearByDepartmentId(departmentId);
+                serviceResponse.Success = true;
+                serviceResponse.Data = year;
             }
             catch (Exception ex)
             {
                 serviceResponse.Success=false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> deactivateBudget(int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _departmentRepository.deactivateBudget(departmentId);
+                serviceResponse.Data = result;
+                serviceResponse.Success = result;               
+                if (!result)
+                {
+                    serviceResponse.Message = "Deactivete Budget failed";
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
             return serviceResponse;

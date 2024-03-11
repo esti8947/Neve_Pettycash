@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetImformationService } from 'src/app/services/budget-information-service/budget-imformation.service';
@@ -21,11 +22,21 @@ export class BudgetInformationComponent implements OnInit{
     private translateService:TranslateService,
     private authService:AuthService,
     private monthNameService:MonthNameService,
+    private router:Router,
   ){}
 
   async ngOnInit(): Promise<void> {
     this.currentUser = await this.authService.getCurrentUser();
     this.getBudgetInformation();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.authService.isLoggedIn) {
+          this.currentUser = this.authService.getCurrentUser();
+          this.getBudgetInformation();
+        }
+      }
+    });
   }
 
   getBudgetInformation(){

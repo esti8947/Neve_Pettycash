@@ -14,5 +14,6 @@ namespace Entities.Models_Dto
         public int BudgetTypeId { get; set; }
         public AnnualBudgetDto AnnualBudget { get; set; }
         public MonthlyBudgetDto MonthlyBudget { get; set; }
+        public RefundBudgetDto RefundBudget { get; set; }
     }
 }

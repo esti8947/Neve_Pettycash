@@ -75,7 +75,7 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             }
         }
 
-        public async Task UpdateDepartmentAsync(Department updatedDepartment)
+        public async Task<bool> UpdateDepartmentAsync(Department updatedDepartment)
         {
             try
             {
@@ -97,6 +97,7 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
 
 
                 await _context.SaveChangesAsync();
+                return true;
 
             }
             catch (Exception ex)
@@ -136,36 +137,45 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             }
         }
 
+        private async Task<int> GetBudgetTypeIdByDepartmentId(int departmentId)
+        {
+            var department = await GetDepartmentByIdAsync(departmentId);
+            int budgetTypeId = department.CurrentBudgetTypeId;
+            return budgetTypeId;
+        }
+
         public async Task<int> GetYearByDepartmentId(int departmentId)
         {
             int year = 0;
             try
             {
-                var department = GetDepartmentByIdAsync(departmentId);
-                var budgetTypeId = department.Result.CurrentBudgetTypeId;
+                var budgetTypeId = await GetBudgetTypeIdByDepartmentId(departmentId);
                 if (budgetTypeId != null || budgetTypeId != 0)
                 {
                     switch (budgetTypeId)
                     {
                         case 1:
                             var annualBudgetResponse = await _annualBudgetRepository.GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
-                            year = annualBudgetResponse.AnnualBudgetYear;
-                            annualBudgetResponse.IsActive = false;
-                            await _context.SaveChangesAsync();
+                            if (annualBudgetResponse != null)
+                            {
+                                year = annualBudgetResponse.AnnualBudgetYear;
+                            }
                             break;
 
                         case 2:
                             var monthlyBudgetResponse = await _monthlyBudgetRepository.GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
-                            year = monthlyBudgetResponse.MonthlyBudgetYear;
-                            monthlyBudgetResponse.IsActive = false;
-                            await _context.SaveChangesAsync();
+                            if (monthlyBudgetResponse != null)
+                            {
+                                year = monthlyBudgetResponse.MonthlyBudgetYear;
+                            }
                             break;
                         case 3:
                             var refundBudgetResponse = await _refundBudgetRepository.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
-                            year = refundBudgetResponse.RefundBudgetYear;
-                            refundBudgetResponse.IsActive = false;
-                            await _context.SaveChangesAsync();
-                        break;
+                            if (refundBudgetResponse != null)
+                            {
+                                year = refundBudgetResponse.RefundBudgetYear;
+                            }
+                            break;
                     }
                 }
                 return year;
@@ -174,6 +184,41 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             {
                 throw;
             }
+        }
+
+        public async Task<bool> deactivateBudget(int departmentId)
+        {
+            bool issucceed = false;
+            var budgetTypeId = await GetBudgetTypeIdByDepartmentId(departmentId);
+            if (budgetTypeId != null || budgetTypeId != 0)
+            {
+                switch (budgetTypeId)
+                {
+                    case 1:
+                        var annualBudgetResponse = await _annualBudgetRepository.GetAnnualBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (annualBudgetResponse != null)
+                        {
+                            issucceed = await _annualBudgetRepository.deactivateAnnualBudget(departmentId);
+                        }
+                        break;
+
+                    case 2:
+                        var monthlyBudgetResponse = await _monthlyBudgetRepository.GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (monthlyBudgetResponse != null)
+                        {
+                            issucceed = await _monthlyBudgetRepository.deactivateMonthlyBudget(departmentId);
+                        }
+                        break;
+                    case 3:
+                        var refundBudgetResponse = await _refundBudgetRepository.GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                        if (refundBudgetResponse != null)
+                        {
+                            issucceed = await _refundBudgetRepository.deactivateRefundBudget(departmentId);
+                        }
+                        break;
+                }
+            }
+            return issucceed;
         }
     }
 }

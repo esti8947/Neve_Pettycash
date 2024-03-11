@@ -60,6 +60,7 @@
     "AdditionalActionsDropdown":{
       "Additional Actions":"Additional Actions",
       "Adding an Amount to the Budget":"Adding an Amount to the Budget",
+      "Add Monthly Budget":"Add Monthly Budget",
       "Resetting the Budget":"Resetting the Budget",
       "Users for Current Department":"Users for Current Department",
       "Closing the Year":"Closing the Year",
@@ -208,9 +209,15 @@
     "Budget Type is required":"Budget Type is required",
     "Annual Budget Amount":"Annual Budget Amount",
     "Annual Budget Amount is required":"Annual Budget Amount is required",
-    "Monthly Budget Amount for first month":"Monthly Budget Amount for first month",
+    "Monthly Budget Amount for first month":"Monthly Budget Amount for september month",
     "Monthly Budget Amount is required":"Monthly Budget Amount is required",
     "Month is required":"Month is required",
     "Open new year":"Open new year"
+  },
+  "AddMothnlyBudgetDialog":{
+    "year":"Year",
+    "Add Monthly Budget":"Add Monthly Budget",
+    "Add Monthly Budget Amount":"Add Monthly Budget Amount",
+    "Amount to added":"Amount to added"
   }
 }

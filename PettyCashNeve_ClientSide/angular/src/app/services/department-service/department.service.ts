@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
 import { Department } from 'src/app/models/department';
 
@@ -12,9 +12,9 @@ export class DepartmentService {
 
   private baseUrlDepartment = `${this.baseUrl}/Department`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  saveSelectedDepartmentToLocalStorage(response:any){
+  saveSelectedDepartmentToLocalStorage(response: any) {
     const responseString = JSON.stringify(response);
     localStorage.setItem('selected_department', responseString)
   }
@@ -31,10 +31,10 @@ export class DepartmentService {
     return null;
   }
 
-  getAllDepartments():Observable<any>{
+  getAllDepartments(): Observable<any> {
     const url = `${this.baseUrlDepartment}/getDepartments`;
     return this.http.get<any>(url).pipe(
-      catchError((error) =>{
+      catchError((error) => {
         console.error('Error in getAllDepartments function', error);
         return throwError(error);
       }),
@@ -43,13 +43,24 @@ export class DepartmentService {
 
   getDepartmentById(id: number): Observable<any> {
     const url = `${this.baseUrlDepartment}/GetDepartmentById/${id}`;
-    return this.http.get(url);
+    return this.http.get(url).pipe(
+      tap((response: any) => {
+        if (response && response.data) {
+          this.saveSelectedDepartmentToLocalStorage(response.data); // Save response.data to local storage
+        }
+      }),
+      catchError((error) => {
+        console.error('Error in getDepartmentById function', error);
+        return throwError(error);
+      })
+    );
   }
-  
-  addDepartment(newDepartment:Department):Observable<any>{
+
+
+  addDepartment(newDepartment: Department): Observable<any> {
     const url = `${this.baseUrlDepartment}/createDepartment`;
     return this.http.post<Department>(url, newDepartment).pipe(
-      catchError((error)=>{
+      catchError((error) => {
         console.error('Error in addDepartment function', error);
         return throwError(error)
       }),

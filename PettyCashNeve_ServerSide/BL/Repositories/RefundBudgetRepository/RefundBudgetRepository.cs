@@ -58,7 +58,7 @@ namespace BL.Repositories.RefundBudgetRepository
                     .FirstOrDefaultAsync(ab => ab.DepartmentId == departmentId && ab.IsActive == true);
                 if (refundBudget == null)
                 {
-                    throw new NotFoundException("Annual budget not found or not active");
+                    return null;
                 }
                 return refundBudget;
             }
@@ -69,7 +69,25 @@ namespace BL.Repositories.RefundBudgetRepository
             }
         }
 
-        
+        public async Task<bool> deactivateRefundBudget(int departmentId)
+        {
+            try
+            {
+                var refundBudget = await GetRefundBudgetByDepartmentIdAndIsActiveAsync(departmentId);
+                if(refundBudget != null)
+                {
+                    refundBudget.IsActive = false;
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
 
         public async Task<bool> DeleteRefundBudgetAsync(int refundBudgetId)
         {

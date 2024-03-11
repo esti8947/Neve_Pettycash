@@ -30,6 +30,7 @@ export class AddExpenseComponent implements OnInit {
   isEvents: boolean = false;
   selectedEventParams:Event | undefined;
   isMonthlyCashRegister:boolean = false;
+  currentMonthlyCash:any;
   currentMonth:number | undefined;
   minDateValue: Date = new Date();
   maxDateValue: Date = new Date();
@@ -70,14 +71,15 @@ export class AddExpenseComponent implements OnInit {
     const isMonthlyRegisterSet = this.monthlyCashRegisterService.getCurrentMothlyRegister();
     if(isMonthlyRegisterSet)
     this.isMonthlyCashRegister = true;
-    this.currentMonth = isMonthlyRegisterSet.monthlyCashRegisterMonth;
+    this.currentMonthlyCash = isMonthlyRegisterSet;
+    // this.currentMonth = isMonthlyRegisterSet.monthlyCashRegisterMonth;
     this.setMinMaxDates();
   }
   
   setMinMaxDates() {
-    if (this.currentMonth) {
-      const year = new Date().getFullYear();
-      const month = this.currentMonth;
+    if (this.currentMonthlyCash.monthlyCashRegisterMonth) {
+      const year = this.currentMonthlyCash.monthlyCashRegisterYear;
+      const month = this.currentMonthlyCash.monthlyCashRegisterMonth;
       const firstDayOfMonth = new Date(Number(year), Number(month) - 1, 1);
       const lastDayOfMonth = new Date(Number(year), Number(month), 0);
       this.minDateValue = firstDayOfMonth;

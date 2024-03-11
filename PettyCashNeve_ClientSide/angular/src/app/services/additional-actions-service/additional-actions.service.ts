@@ -46,7 +46,6 @@ export class AdditionalActionsService {
   }
 
   openNewYear(newYearModel: NewYear): Observable<any> {
-    console.log("newYearModel", newYearModel)
     const url = `${this.baseUrlOrchestration}/closeLastYearAndOpenNewYearActivities`;
     return this.http.post<NewYear>(url, newYearModel).pipe(
       catchError((error) => {

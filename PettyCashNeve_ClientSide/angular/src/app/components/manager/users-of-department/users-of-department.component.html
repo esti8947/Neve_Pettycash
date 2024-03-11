@@ -11,29 +11,29 @@
         <div class="form-group">
         </div>
         <div class="form-group">
-          <label for="userName" translate=>registerUser.username</label>
+          <label class="label" for="userName" translate=>registerUser.username</label>
           <input type="text" pInputText formControlName="userName">
           <div>
-            <small *ngIf="isInvalid('userName', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Please enter username</small>
+            <small class="small" *ngIf="isInvalid('userName', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Please enter username</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="passwordHash" translate=>registerUser.password</label>
+          <label class="label" for="passwordHash" translate=>registerUser.password</label>
           <input type="text" pInputText formControlName="passwordHash">
           <div>
-            <small *ngIf="isInvalid('passwordHash', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Password must be at least 6 characters long and
+            <small class="small" *ngIf="isInvalid('passwordHash', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Password must be at least 6 characters long and
               include both letters and numbers</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="email" translate=>registerUser.email</label>
+          <label class="label" for="email" translate=>registerUser.email</label>
           <input type="text" pInputText formControlName="email">
           <div>
-            <small *ngIf="isInvalid('email', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Invalid email format</small>
+            <small class="small" *ngIf="isInvalid('email', registerUserForm, registerFormFormSubmitted)" translate>registerUser.Invalid email format</small>
           </div>
         </div>
         <div class="form-group">
-          <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
+          <label class="label" for="phoneNumber" translate=>registerUser.phoneNumber</label>
           <input type="text" pInputText mask="99-999999" formControlName="phoneNumber">
         </div>
         <!-- <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p> -->
@@ -71,21 +71,21 @@
   [resizable]="false">
   <form [formGroup]="updateUserForm">
     <div class="form-group">
-      <label for="userName" translate=>registerUser.username</label>
+      <label class="label" for="userName" translate=>registerUser.username</label>
       <input type="text" pInputText formControlName="userName">
       <div>
-        <small *ngIf="isInvalid('userName', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Please enter username</small>
+        <small class="small" *ngIf="isInvalid('userName', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Please enter username</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="email" translate=>registerUser.email</label>
+      <label class="label" for="email" translate=>registerUser.email</label>
       <input type="text" pInputText formControlName="email">
       <div>
-        <small *ngIf="isInvalid('email', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Invalid email format</small>
+        <small class="small" *ngIf="isInvalid('email', updateUserForm, updateFormFormSubmitted)" translate>registerUser.Invalid email format</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="phoneNumber" translate=>registerUser.phoneNumber</label>
+      <label class="label" for="phoneNumber" translate=>registerUser.phoneNumber</label>
       <input type="text" pInputText formControlName="phoneNumber">
     </div>
     <button pButton type="button" (click)="updateUser()" class="centered-button">Save</button>

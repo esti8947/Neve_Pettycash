@@ -9,10 +9,6 @@ p {
   font-weight: bold;
 }
 
-small {
-  color: $bluegray-700;
-}
-
 h4 {
   margin: 1rem 1rem 0;
 }
@@ -28,12 +24,6 @@ h4 {
     p-inputNumber {
       width: 100% !important;
     }
-  }
-
-  label {
-    font-weight: bold;
-    color: #808080;
-    margin-bottom: 4px;
   }
 }
 

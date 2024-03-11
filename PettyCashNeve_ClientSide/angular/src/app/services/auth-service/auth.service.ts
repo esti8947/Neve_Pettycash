@@ -58,6 +58,16 @@ export class AuthService {
     return userJson ? JSON.parse(userJson) : null;
   }
 
+  getUsernameByUserId(userId: string){
+    const url = `${this.endpoint}/GetUsernameByUserId/${userId}`;
+    return this.http.get<string>(url).pipe(
+      catchError((error) => {
+        console.error('Error in getUsernameByUserId function:', error);
+        return throwError(error);
+      })
+    );
+  }  
+
   updateCurrentUserDepartmentId(departmentId: number) {
     const currentUserJson = localStorage.getItem('current_user');
     if (currentUserJson) {

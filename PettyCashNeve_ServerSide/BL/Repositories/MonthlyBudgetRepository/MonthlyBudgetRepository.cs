@@ -23,6 +23,14 @@ namespace BL.Repositories.MonthlyBudgetRepository
             try
             {
                 var departmentId  = monthlyBudget.DepartmentId;
+
+                bool isDuplicate = await checkDuplicateMonthlyBudgetByDate(monthlyBudget);
+
+                if (!isDuplicate)
+                {
+                    throw new Exception("Cannot create monthly budget for the same month and year.");
+                }
+
                 var activeNonthlyBudget = await _context.MonthlyBudgets
                     .FirstOrDefaultAsync(ab => ab.DepartmentId == departmentId && ab.IsActive == true);
                 if(activeNonthlyBudget != null)
@@ -67,7 +75,7 @@ namespace BL.Repositories.MonthlyBudgetRepository
                     .FirstOrDefaultAsync(ab => ab.DepartmentId == departmentId && ab.IsActive == true);
                 if (monthlyBudget == null)
                 {
-                    throw new NotFoundException("Monthly budget not found or not active");
+                    return null;
                 }
                 return monthlyBudget;
             }
@@ -99,6 +107,26 @@ namespace BL.Repositories.MonthlyBudgetRepository
                 throw;
             }
         }
+
+        public async Task<bool> deactivateMonthlyBudget(int departmentId)
+        {
+            try
+            {
+                var monthlyBudget = await GetMonthlyBudgetsByDepartmentIdAndIsActiveAsync(departmentId);
+                if (monthlyBudget != null)
+                {
+                    monthlyBudget.IsActive = false;
+                    await _context.SaveChangesAsync();
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
 
         public async Task<bool> DeleteMonthlyBudgetAsync(int monthlyBudgetId)
         {
@@ -161,6 +189,21 @@ namespace BL.Repositories.MonthlyBudgetRepository
                 throw;
             }
         }
+        private async Task<bool> checkDuplicateMonthlyBudgetByDate(MonthlyBudget monthlyBudget)
+        {
+            var monthlyBudgetList = await GetMonthlyBudgetsByDepartmentIdAsync(monthlyBudget.DepartmentId);
+
+            foreach (var budget in monthlyBudgetList)
+            {
+                if (monthlyBudgetList != null && budget.MonthlyBudgetMonth == monthlyBudget.MonthlyBudgetMonth && budget.MonthlyBudgetYear == monthlyBudget.MonthlyBudgetYear)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
     }
 }

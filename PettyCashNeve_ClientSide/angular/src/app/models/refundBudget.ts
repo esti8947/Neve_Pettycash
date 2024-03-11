@@ -1,7 +1,6 @@
 export class RefundBudget {
-  id: number | undefined;
-  departmentId: undefined;
-  currentYear: number | undefined;
-  isActive: boolean | undefined;
-  department: string | undefined;
+  refundBudgetId: number = 0;
+  departmentId:number | undefined;
+  refundBudgetYear: number | undefined;
+  isActive: boolean  = true;
 }

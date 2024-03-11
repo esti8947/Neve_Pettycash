@@ -17,5 +17,16 @@ export class PhoneNumberPipe implements PipeTransform {
   
     return newStr + number.substr(i * 2);
   }
+}
+
+  @Pipe({
+    name: 'budgetYearFormat'
+  })
+  export class BudgetYearFormatPipe implements PipeTransform {
   
+    transform(number: any) {
+      // Format the number as 0000-0000
+      // Assuming number is a string of length 8
+      return number.slice(0, 4) + '-' + number.slice(4);
+    }
 } 

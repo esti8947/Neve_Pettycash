@@ -7,13 +7,13 @@
   <div id="addEventForm">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <label for="selectedEventCategory" translate>addEventForm.select event category</label>
+        <label class="label" for="selectedEventCategory" translate>addEventForm.select event category</label>
         <p-dropdown formControlName="selectedEventCategory" [options]="eventCategories"
           [optionLabel]="getOptionLabel()"
           appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
       </div>
       <div class="form-group">
-        <label for="eventName" translate=>addEventForm.event name</label>
+        <label class="label" for="eventName" translate=>addEventForm.event name</label>
         <input type="text" pInputText formControlName="eventName">
       </div>
       <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>

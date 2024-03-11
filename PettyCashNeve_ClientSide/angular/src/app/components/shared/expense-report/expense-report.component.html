@@ -6,8 +6,8 @@
     || currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
     (click)="displayConfirmExpensesDialog()" translate>expenseDtails.confirm
   </button>
-  <button
-    *ngIf="currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
+  <button pButton class="confirmButton"
+    *ngIf="currentUser?.isManager && expenses && expenses.length > 0"
     (click)="exportToExcel()">Export to Excel</button>
   <h4>{{formatMonthYear()}}</h4>
 
@@ -72,7 +72,7 @@
   <div *ngIf="formGroup">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <label for="eventName" translate>addExpenseForm.select an event</label>
+        <label class="label" for="eventName" translate>addExpenseForm.select an event</label>
         <div class="input">
           <p-dropdown formControlName="selectedEvent" [options]="events" optionLabel="eventName" appendTo="body"
             [style]="{'width':'100%'}" placeholder="'"></p-dropdown>
@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
+        <label class="label" for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
         <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory"
           [optionLabel]="getOptionLabel('expenseCategory')" appendTo="body" [style]="{'width':'100%'}" placeholder="'">
         </p-dropdown>
@@ -92,14 +92,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="storeName" translate>addExpenseForm.Store name</label>
+        <label class="label" for="storeName" translate>addExpenseForm.Store name</label>
         <input type="text" pInputText formControlName="storeName">
         <div>
           <small *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
         </div>
       </div>
       <div class="form-group">
-        <label for="expenseAmount" translate>addExpenseForm.Expense amount</label>
+        <label class="label" for="expenseAmount" translate>addExpenseForm.Expense amount</label>
         <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
           formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
         <div>
@@ -107,7 +107,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="expenseDate" translate>addExpenseForm.Expense date</label>
+        <label class="label" for="expenseDate" translate>addExpenseForm.Expense date</label>
         <p-calendar formControlName="expenseDate" dateFormat="dd/mm/yy" appendTo="body"
           [style]="{'width':'100%'}"></p-calendar>
         <div>
@@ -115,12 +115,12 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="selectedBuyer" translate>addExpenseForm.buyer</label>
+        <label class="label" for="selectedBuyer" translate>addExpenseForm.buyer</label>
         <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body" placeholder="'"
           [optionLabel]="getOptionLabel('buyer')" [style]="{'width':'100%'}"></p-dropdown>
       </div>
       <div class="form-group">
-        <label for="notes" translate>addExpenseForm.Notes</label>
+        <label class="label" for="notes" translate>addExpenseForm.Notes</label>
         <input type="text" pInputText formControlName="notes">
       </div>
       <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p>

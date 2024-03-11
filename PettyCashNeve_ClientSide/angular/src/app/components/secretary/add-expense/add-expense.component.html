@@ -6,56 +6,56 @@
   <p-toast></p-toast>
   <form [formGroup]="formGroup">
     <div class="form-group" *ngIf="isEvents">
-      <label for="eventName" translate>addExpenseForm.select an event</label>
+      <label class="label" for="eventName" translate>addExpenseForm.select an event</label>
       <div class="input">
         <p-dropdown formControlName="selectedEvent" [options]="events" optionLabel="eventName" appendTo="body"
            [style]="{'width':'100%'}" placeholder="'"></p-dropdown>
         <div>
-          <small *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
+          <small class="small" *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
         </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
+      <label class="label" for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
       <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory"
         [optionLabel]="getOptionLabel('expenseCategory')"
         appendTo="body" [style]="{'width':'100%'}" placeholder="'">
       </p-dropdown>
       <div>
-        <small *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense
+        <small class="small" *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense
           category.</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="storeName" translate>addExpenseForm.Store name</label>
+      <label class="label" for="storeName" translate>addExpenseForm.Store name</label>
       <input type="text" pInputText formControlName="storeName">
       <div>
-        <small *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
+        <small class="small" *ngIf="isInvalid('storeName')" translate>addExpenseForm.Please enter a store name.</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="expenseAmount" translate>addExpenseForm.Expense amount</label>
+      <label class="label" for="expenseAmount" translate>addExpenseForm.Expense amount</label>
       <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL" formControlName="expenseAmount" [showButtons]="false"></p-inputNumber>
       <div>
-        <small *ngIf="isInvalid('expenseAmount')" translate>addExpenseForm.Please enter an expense amount.</small>
+        <small class="small" *ngIf="isInvalid('expenseAmount')" translate>addExpenseForm.Please enter an expense amount.</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="expenseDate" translate>addExpenseForm.Expense date</label>
+      <label class="label" for="expenseDate" translate>addExpenseForm.Expense date</label>
       <p-calendar [(ngModel)]="minDateValue" [defaultDate]="minDateValue" [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate"
         dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'100%'}"></p-calendar>
       <div>
-        <small *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>
+        <small class="small" *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>
       </div>
     </div>
     <div class="form-group">
-      <label for="selectedBuyer" translate>addExpenseForm.buyer</label>
+      <label class="label" for="selectedBuyer" translate>addExpenseForm.buyer</label>
       <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body"
         placeholder="'" [optionLabel]="getOptionLabel('buyer')"
         [style]="{'width':'100%'}"></p-dropdown>
     </div>
     <div class="form-group">
-      <label for="notes" translate>addExpenseForm.Notes</label>
+      <label class="label" for="notes" translate>addExpenseForm.Notes</label>
       <input type="text" pInputText formControlName="notes">
     </div>
     <p *ngIf="!validForm">Please fill in all required fields</p>

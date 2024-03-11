@@ -14,7 +14,7 @@ namespace BL.Repositories.RefundBudgetRepository
         Task<List<RefundBudget>> GetRefundBudgetsByDepartmentIdAsync(int departmentId);
 
         Task<RefundBudget> GetRefundBudgetByDepartmentIdAndIsActiveAsync(int departmentId);
-
+        Task<bool> deactivateRefundBudget(int departmentId);
         Task<bool> DeleteRefundBudgetAsync(int refundBudgetId);
     }
 }
