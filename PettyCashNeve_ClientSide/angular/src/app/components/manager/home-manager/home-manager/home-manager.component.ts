@@ -292,7 +292,7 @@ export class HomeManagerComponent implements OnInit {
     const expenseCategoryIdToDelete = expenseCategory.expenseCategoryId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this expense category?',
+      message: this.translateService.instant('messages.deleteExpenseCategoryConfirmation'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: ' p-button-sm',
       accept: () => {
@@ -316,7 +316,7 @@ export class HomeManagerComponent implements OnInit {
     const eventCategoryIdToDelete = eventCategory.eventCategoryId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this event category?',
+      message: this.translateService.instant('messages.deleteEventCategoryConfirmation'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: ' p-button-sm',
       accept: () => {
@@ -340,7 +340,7 @@ export class HomeManagerComponent implements OnInit {
     const buyerIdToDelete = buyer.buyerId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: 'Do you want to delete this buyer category?',
+      message: this.translateService.instant('messages.deleteBuyerCategoryConfirmation'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-sm',
       accept: () => {

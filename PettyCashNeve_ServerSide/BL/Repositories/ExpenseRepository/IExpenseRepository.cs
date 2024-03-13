@@ -29,6 +29,7 @@ namespace BL.Repositories.ExpenseRepository
         Task<decimal> GetTotalAmountByYearRangeAndDepartmentAsync(int yearRange, int departmentId);
         Task<List<Expenses>> GetExpensesByYearRangeAndDepartmentAsync(int yearRange, int departmentId);
         Task<decimal> GetExpensesAmountForMonth(int month, int year, string userId);
+        Task<decimal> GetExpensesAmountForAcademicYear(int month, int year, int departmentId);
         Task<decimal> GetExpensesAmountForMonthByDepartmentId(int month, int year, int departmentId);
         Task<bool> IsExpensesLockedAndApprovedForDepartmentAsync(int departmentId, int yearRange);
 

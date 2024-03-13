@@ -231,5 +231,15 @@ namespace PettyCashNeve_ServerSide.Controllers
             var serviceResponse = await _expenseService.GetExpensesAmountForMonthByDepartmentId(month, year, departmentId);
             return HandleResponse(serviceResponse);
         }
+
+
+        [HttpGet("getExpensesAmountForAcademicYearAndMonthOfDepartment/{month}/{year}/{departmentId}")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> GetExpensesAmountForAcademicYearAndMonthOfDepartment(int month, int year, int departmentId)
+        {
+            var serviceResponse = await _expenseService.GetExpensesAmountForAcademicYear(month, year, departmentId);
+            return HandleResponse(serviceResponse);
+        }
     }
 }

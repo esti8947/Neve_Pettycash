@@ -20,9 +20,14 @@
                         | number }}</h2>
                 </ng-container>
                 <div *ngIf="department.monthlyCashRegister != undefined">
-                    <h3 translate>kupa {{ getMonthName(department.monthlyCashRegister.monthlyCashRegisterMonth)}}
-                        {{department.monthlyCashRegister.monthlyCashRegisterYear}} ₪{{department.totalExpensesAmount |
-                        number}}</h3>
+                    <h3 translate>Kupa 
+                        <span>
+                            <!-- {{ getMonthName(department.monthlyCashRegister.monthlyCashRegisterMonth)}} -->
+                            {{department.monthlyCashRegister.monthlyCashRegisterMonth}}/{{department.monthlyCashRegister.monthlyCashRegisterYear}} - ₪{{department.totalExpensesAmount | number}}
+                    </span>
+                    </h3>
+                    <!-- <h6>{{getDisplayPercentages(department.departmentId || 0)}}</h6>-->
+                    <div class="table-container" [innerHTML]="getDisplayPercentages(department.departmentId)"></div>
                     <h5 [ngClass]="{
                         'orange-text': getSpentPercentage(department.amountWastedForCalculatingPercentages?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) <= 90,
                         'red-text': getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 90

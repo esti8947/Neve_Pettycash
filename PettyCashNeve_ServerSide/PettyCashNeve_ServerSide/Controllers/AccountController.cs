@@ -94,7 +94,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             NdbUser appUser = await _userManager.FindByNameAsync(model.Username);
-            if (appUser == null)
+            if (appUser == null || appUser.IsActive == false)
                 return BadRequest();
 
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);

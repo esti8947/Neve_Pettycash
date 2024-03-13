@@ -55,8 +55,9 @@
         </div>
     </form>
 </p-dialog>
-<p-dialog [(visible)]="newYearDialog" [style]="{ width: '450px' }" [header]="'openNewYear.New Year' | translate"
+<p-dialog [(visible)]="newYearDialog" [style]="{ width: '650px' }" [header]="'openNewYear.New Year' | translate"
     [modal]="true" styleClass="p-fluid">
+    <div class="warning" translate><i class="pi pi-info-circle" ></i> openNewYear.To open a new year, please ensure that all cash registers are approved and all expenses are locked</div>
     <form [formGroup]="newYearFormGroup">
         <div class="form-group">
             <label class="label" for="newYear" translate>openNewYear.New Year</label>
@@ -110,7 +111,7 @@
         </div>
     </form>
 </p-dialog>
-<p-dialog [(visible)]="AddMothnlyBudgetDialog" [style]="{ width: '450px' }"
+<p-dialog [(visible)]="AddMothnlyBudgetDialog" [style]="{ width: '550px' }"
     [header]="'AddMothnlyBudgetDialog.Add Monthly Budget' | translate" [modal]="true" styleClass="p-fluid">
     <form [formGroup]="addMonthlyBudgetForm">
         <div class="form-group">

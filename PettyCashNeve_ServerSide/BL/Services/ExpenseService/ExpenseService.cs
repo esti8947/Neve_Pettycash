@@ -350,6 +350,25 @@ namespace BL.Services.ExpenseService
             }
             return serviceResponse;
         }
+        public async Task<ServiceResponse<decimal>> GetExpensesAmountForAcademicYear(int month, int year, int departmentId)
+        {
+            var serviceResponse = new ServiceResponse<decimal>();
+            try
+            {
+                var totalAmount = await _expenseRepository.GetExpensesAmountForAcademicYear(month, year, departmentId);
+                if (totalAmount != null)
+                {
+                    serviceResponse.Data = totalAmount;
+                    serviceResponse.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
 
         public async Task<ServiceResponse<bool>> IsExpensesLockedAndApprovedForDepartmentAsync(int departmentId, int yearRange)
         {
@@ -367,5 +386,7 @@ namespace BL.Services.ExpenseService
             }
             return serviceResponse;
         }
+
+       
     }
 }

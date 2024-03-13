@@ -28,6 +28,9 @@
   },
   "messages": {
     "deleteExpenseConfirmation": "Do you want to delete this expense?",
+    "deleteExpenseCategoryConfirmation":"Do you want to delete this expense category?",
+    "deleteEventCategoryConfirmation":"Do you want to delete this event category?",
+    "deleteBuyerCategoryConfirmation":"Do you want to delete this buyer category?",
     "expenseDeleted": "Expense is deleted",
     "deleteEventConfirmation":"Do you want to delete this event?",
     "eventDeleted":"Event is deleted",
@@ -212,12 +215,17 @@
     "Monthly Budget Amount for first month":"Monthly Budget Amount for september month",
     "Monthly Budget Amount is required":"Monthly Budget Amount is required",
     "Month is required":"Month is required",
-    "Open new year":"Open new year"
+    "Open new year":"Open new year",
+    "To open a new year, please ensure that all cash registers are approved and all expenses are locked":"To open a new year, please ensure that all cash registers are approved and all expenses are locked."
   },
   "AddMothnlyBudgetDialog":{
     "year":"Year",
     "Add Monthly Budget":"Add Monthly Budget",
     "Add Monthly Budget Amount":"Add Monthly Budget Amount",
     "Amount to added":"Amount to added"
+  },
+  "departmentInformation":{
+    "Expenses until":"Expenses until",
+    "Expenses months":"Expenses months"
   }
 }

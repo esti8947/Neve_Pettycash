@@ -391,6 +391,35 @@ namespace BL.Repositories.ExpenseRepository
             }
         }
 
+        public async Task<decimal> GetExpensesAmountForAcademicYear(int month, int year, int departmentId)
+        {
+            try
+            {
+                // Calculate academic year range
+                int academicYearStartYear = month >= 9 ? year : year - 1;
+
+                // Determine start and end months for calculating expenses
+                int startMonth = month >= 9 ? 9 : 1;
+                int endMonth = month >= 9 ? month : 12;
+
+                decimal totalAmount = 0;
+
+                // Calculate total expenses amount for the academic year
+                for (int m = startMonth; m <= endMonth; m++)
+                {
+                    totalAmount += await GetExpensesAmountForMonthByDepartmentId(m, academicYearStartYear, departmentId);
+                }
+
+                return totalAmount;
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception as needed
+                throw;
+            }
+        }
+
+
         private async Task<bool> UserBelongsToDepartment(string userId, int departmentId)
         {
             var user = await _userManager.FindByIdAsync(userId);

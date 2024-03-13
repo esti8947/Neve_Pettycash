@@ -115,7 +115,7 @@ export class UsersOfDepartmentComponent implements OnInit {
     const usernameToDelete = user.username;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: this.translateService.instant('messages.deleteExpenseConfirmation'),
+      message: this.translateService.instant('messages.deleteUserConfirmation'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: ' p-button-sm',
       accept: () => {
@@ -123,13 +123,8 @@ export class UsersOfDepartmentComponent implements OnInit {
           (data) => {
             console.error('An error occurred:', data);
             this.customMessageService.showErrorMessage('An error occurred while deleting the user');
-            // console.log('user is deleted', data);
-            // this.customMessageService.showSuccessMessage(this.translateService.instant('messages.userDeleted'));
-            // this.usersList = this.usersList.filter((val) => val.userName !== usernameToDelete);
           },
           (error) => {
-            // console.error('An error occurred:', error);
-            // this.customMessageService.showErrorMessage('An error occurred while deleting the user');
             console.log('user is deleted', error);
             this.customMessageService.showSuccessMessage(this.translateService.instant('messages.userDeleted'));
             this.loadUsers();

@@ -5,6 +5,8 @@
   "Log in": "התחבר",
   "username": "שם משתמש",
   "password": "סיסמא",
+  "Kupa":"קופה",
+  "Year":"שנה",
   "expenseDtails": {
     "confirm": "אשר הוצאות לחודש זה",
     "Category": "קטגוריה",
@@ -16,8 +18,7 @@
     "invice scan": "חשבונית",
     "Notes": "הערות",
     "deleteExpenseConfirmation": "האם אתה בטוח שברצונך למחוק הוצאה זו?",
-    "Expense Details": "פרטי הוצאה",
-    "Kupa":"קופה"
+    "Expense Details": "פרטי הוצאה"
   },
   "globalForm": {
     "Please fill in all required fields": "אנא מלא את כל השדות הנדרשים",
@@ -28,6 +29,10 @@
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
+    "deleteExpenseCategoryConfirmation":"האם ברצונך למחוק את קטגורית ההוצאה?",
+    "deleteEventCategoryConfirmation":"האם ברצונך למחוק את קטגורית האירוע?",
+    "deleteBuyerCategoryConfirmation":"האם ברצונך למחוק קונה זה?",
+    "deleteUserConfirmation": "האם ברצונך למחוק משתמש זה?",
     "expenseDeleted": "הוצאה נמחקה",
     "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
     "eventDeleted": "הפעילות נמחקה",
@@ -212,12 +217,17 @@
     "Monthly Budget Amount for first month": "סכום תקציב חודשי לחודש ספטמבר",
     "Monthly Budget Amount is required": "יש להכניס סכום תקציב חודשי",
     "Month is required":"יש לבחור חודש",
-    "Open new year": "פתיחת שנה חדשה"
+    "Open new year": "פתיחת שנה חדשה",
+    "To open a new year, please ensure that all cash registers are approved and all expenses are locked":"על מנת לפתוח שנה חדשה, יש לבדוק שכל הקופות מאושרות וכל ההוצאות נעולות."
   },
   "AddMothnlyBudgetDialog":{
     "year":"שנה",
     "Add Monthly Budget":"הוספת תקציב חודשי",
     "Add Monthly Budget Amount":"הוסף סכום תקציב חודשי",
     "Amount to added":"סכום להוספה"
+  },
+  "departmentInformation":{
+    "Expenses until":"סכום הוצאות עד",
+    "Expenses months":"סכום הוצאות לחודשים"
   }
 }
