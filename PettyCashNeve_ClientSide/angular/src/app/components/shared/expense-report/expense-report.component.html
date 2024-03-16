@@ -6,10 +6,17 @@
     || currentUser?.isManager && expenses && expenses.length > 0 && expenses[0]?.expense && expenses[0]?.expense.isApproved === true && expenses[0]?.expense.isLocked === false"
     (click)="displayConfirmExpensesDialog()" translate>expenseDtails.confirm
   </button>
-  <button pButton class="confirmButton"
-    *ngIf="currentUser?.isManager && expenses && expenses.length > 0"
-    (click)="exportToExcel()">Export to Excel</button>
-  <h4>{{formatMonthYear()}}</h4>
+
+  <div class="expensesReportHeaders">
+    <h4>{{formatMonthYear()}}</h4>
+
+    <div class="flex" *ngIf="currentUser?.isManager && expenses && expenses.length > 0">
+      <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportToExcel()"
+        class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+      <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportToPDF()" class="p-button-warning mr-2"
+        pTooltip="PDF" tooltipPosition="bottom"></button>
+    </div>
+  </div>
 
   <div id="expensesReport">
     <p-table [value]="expenses" [paginator]="true" styleClass="p-datatable-striped"
@@ -148,7 +155,7 @@
   </form>
 </p-dialog>
 <p-dialog [(visible)]="confirmExpensesDialog" [modal]="true" [style]="{ width: '30vw' }" styleClass="p-fluid">
-  <h4 class="confirmExpensesTytle" translate>globalForm.Notice <i class="pi pi-info-circle" ></i></h4>
+  <h4 class="confirmExpensesTytle" translate>globalForm.Notice <i class="pi pi-info-circle"></i></h4>
   <p translate>
     messages.confirmExpenseMessage
   </p>

@@ -66,4 +66,14 @@ export class DepartmentService {
       }),
     );
   }
+
+  deleteDepartment(departmentId:number):Observable<any>{
+    const url = `${this.baseUrlDepartment}/deleteDepartmentAndAssociatedData/${departmentId}`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) => {
+        console.error('Error in deleteDepartment function', error);
+        return throwError(error);
+      }),
+    );
+  }
 }

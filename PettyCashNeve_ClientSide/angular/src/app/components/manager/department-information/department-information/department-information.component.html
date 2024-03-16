@@ -1,30 +1,34 @@
 <div class="departmentsCard">
     <div *ngFor="let department of departmentsArray" class="card-container">
-        <div (click)="selectDepartment(department)">
+        <div class="card flex justify-content-center">
+            <p-toast></p-toast>
+            <p-menu #menu [model]="items" [popup]="true"></p-menu>
+            <button pButton class="menuButton" type="button" (click)="menu.toggle($event)" icon="pi pi-bars"></button>
+        </div>
+        <div (click)="selectDepartment(department)" class="departmentCard">
             <div>
                 <h1>{{ department.departmentName }}</h1>
-                <ng-container
-                    *ngIf="department.budgetType === 'annualBudget'">
+                <ng-container *ngIf="department.budgetType === 'annualBudget'">
                     <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
                         department.budgetInformation?.annualBudget.annualBudgetCeiling | number }}</h2>
                 </ng-container>
-                <ng-container
-                    *ngIf="department.budgetType === 'monthlyBudget'">
-                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} {{ getMonthName(department.budgetInformation?.monthlyBudget?.monthlyBudgetMonth)}} ₪{{
+                <ng-container *ngIf="department.budgetType === 'monthlyBudget'">
+                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} {{
+                        getMonthName(department.budgetInformation?.monthlyBudget?.monthlyBudgetMonth)}} ₪{{
                         department.budgetInformation?.monthlyBudget.monthlyBudgetCeiling | number }}</h2>
                 </ng-container>
-                <ng-container
-                    *ngIf="department.budgetType === 'refundBudget'">
+                <ng-container *ngIf="department.budgetType === 'refundBudget'">
                     <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
                         department.budgetInformation?.totalAmount
                         | number }}</h2>
                 </ng-container>
                 <div *ngIf="department.monthlyCashRegister != undefined">
-                    <h3 translate>Kupa 
+                    <h3 translate>Kupa
                         <span>
                             <!-- {{ getMonthName(department.monthlyCashRegister.monthlyCashRegisterMonth)}} -->
-                            {{department.monthlyCashRegister.monthlyCashRegisterMonth}}/{{department.monthlyCashRegister.monthlyCashRegisterYear}} - ₪{{department.totalExpensesAmount | number}}
-                    </span>
+                            {{department.monthlyCashRegister.monthlyCashRegisterMonth}}/{{department.monthlyCashRegister.monthlyCashRegisterYear}}
+                            - ₪{{department.totalExpensesAmount | number}}
+                        </span>
                     </h3>
                     <!-- <h6>{{getDisplayPercentages(department.departmentId || 0)}}</h6>-->
                     <div class="table-container" [innerHTML]="getDisplayPercentages(department.departmentId)"></div>

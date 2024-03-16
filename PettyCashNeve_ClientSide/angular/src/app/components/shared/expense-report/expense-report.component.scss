@@ -1,7 +1,7 @@
 @import'../../../../styles.scss';
-
-#expensesReport {
-  margin-top: 1rem;
+.expensesReportHeaders{
+  display: flex;
+  justify-content: space-between;
 }
 
 p {

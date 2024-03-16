@@ -12,6 +12,7 @@ import { ExpenseService } from 'src/app/services/expense-service/expense.service
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-department-information',
@@ -21,6 +22,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class DepartmentInformationComponent implements OnInit {
   departmentsArray: DepartmentMoreInfo[] = [];
   tableRowStyle = 'font-size: 14px; padding-left: 8px;';
+  items: MenuItem[] | undefined;
 
   constructor(
     private departmentService: DepartmentService,
@@ -35,7 +37,26 @@ export class DepartmentInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDepartments();
+    this.loadMenuItems();
   }
+
+
+  loadMenuItems() {
+    this.items = [
+      {
+        label: '<span class="text-sm font-bold">Update</span>',
+        escape: false,
+        command: () => this.updateDepartment()
+      },
+      {
+        label: '<span class="text-sm font-bold">Delete</span>',
+        escape: false,
+        command: () => this.deleteDepartment()
+
+      }
+    ];
+  }
+
 
   loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
@@ -246,5 +267,10 @@ export class DepartmentInformationComponent implements OnInit {
     return this.monthNameService.getMonthName(monthNumber);
   }
 
+  updateDepartment(){
+  }
 
+  deleteDepartment(){
+
+  }
 }

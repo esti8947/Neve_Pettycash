@@ -19,6 +19,12 @@ import { MonthNameService } from 'src/app/services/month-name/month-name.service
 import { ExportService } from 'src/app/services/export-service/export.service';
 import * as XLSX from 'xlsx';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import 'jspdf-autotable';
+
+import { PDFDocument, rgb } from 'pdf-lib';
+
 
 
 @Component({
@@ -207,16 +213,79 @@ export class ExpenseReportComponent implements OnInit {
       // 'expense.updatedBy': item.expense.updatedBy,
       expenseCategoryName: item.expenseCategoryName,
       expenseCategoryNameHeb: item.expenseCategoryNameHeb,
-      departmentName:this.selectedDepartment.departmentName 
+      departmentName: this.selectedDepartment.departmentName
     }));
-    console.log("data",data);
+    console.log("data", data);
 
     const columns = Object.keys(data[0]);
     const worksheet = XLSX.utils.json_to_sheet(data, { header: columns });
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     XLSX.writeFile(workbook, 'data.xlsx');
-  }  
+  }
+
+  exportToPDF() {
+    const doc = new jsPDF();
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(12);
+
+    const data = this.expenses.map((item) => [
+      item.expense.expenseId,
+      item.expense.expenseAmount,
+      this.convertToUnicode(item.expense.storeName),
+      this.convertToUnicode(this.selectedDepartment.departmentName),
+      this.convertToUnicode(item.eventName),
+      item.expenseCategoryName,
+      this.convertToUnicode(item.expenseCategoryNameHeb),
+      item.eventCategoryName,
+      this.convertToUnicode(item.eventCategoryNameHeb),
+      item.buyerName,
+    ]);
+
+    autoTable(doc, {
+      head: [['Expense ID','Expense Amount','Store Name','Department Name', 'Event Name', 'Expense Category Name', 'Expense Category Name Heb','Event Category Name','Event Category NameHeb','Buyer Name' ]],
+      body: data,
+      didDrawPage: (dataArg) => {
+        doc.text('PAGE', dataArg.settings.margin.left, 10);
+      }
+    });
+
+    const expenseCategories: number[] = [...new Set(this.expenses.map(expense => expense.expense.expenseCategoryId))];
+    let verticalPosition = doc.internal.pageSize.height - 10;
+    expenseCategories.forEach(categoryId => {
+        const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
+        const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
+        
+        doc.text(`Total Expenses Amount for ${categoryName}: ${totalByCategory}`, 14, verticalPosition);
+        
+        verticalPosition -= 10; 
+    });
+
+    const totalExpensesAmount = this.calculateTotalExpensesAmount().toFixed(2);
+    verticalPosition -= 10; 
+    doc.setFontSize(16)
+    doc.text(`Total Expenses Amount: ${totalExpensesAmount}`, 14, verticalPosition);
+    
+
+    doc.save('expenses.pdf');
+  }
+
+  convertToUnicode(text: string): string {
+    return unescape(encodeURIComponent(text));
+  }
+
+  calculateTotalExpensesAmount(): number {
+    return this.expenses.reduce((total, expense) => total + expense.expense.expenseAmount, 0);
+  }
+
+  calculateTotalExpensesByCategory(expenseCategoryId: number): number {
+    return this.expenses
+      .filter(expense => expense.expense.expenseCategoryId === expenseCategoryId)
+      .reduce((total, expense) => total + expense.expense.expenseAmount, 0);
+  }
+  
+
 
   deleteExpense(event: MouseEvent, expense: any) {
     const expenseIdToDelete = expense.expense.expenseId;

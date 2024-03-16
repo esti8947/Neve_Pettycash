@@ -9,8 +9,8 @@
     .card-container {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        width: 400px;
+        align-items: start;
+        width: 450px;
         border: solid 1px $secondaryColor;
         border-radius: 10px;
         margin: 10px;
@@ -18,6 +18,16 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease-in-out;
         cursor: pointer;
+        .menuButton{
+            background-color: #fff;
+            border: none;
+            color: $secondaryColor;
+            margin-top: 10px;
+        }
+        departmentCard{
+            display: flex;
+            justify-content: space-between;
+        }
         h2{
             font-size: 24px;
             font-weight: 300;

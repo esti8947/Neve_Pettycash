@@ -36,6 +36,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { TooltipModule } from 'primeng/tooltip';
 import { DataViewModule } from 'primeng/dataview';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MenuModule } from 'primeng/menu';
 
 
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
@@ -118,6 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TooltipModule,
     DataViewModule,
     ConfirmDialogModule,
+    MenuModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
