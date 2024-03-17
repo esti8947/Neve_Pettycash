@@ -5,6 +5,9 @@ using DAL.Data;
 using BL.Repositories.AnnualBudgetRepository;
 using BL.Repositories.MonthlyBudgetRepository;
 using BL.Repositories.RefundBudgetRepository;
+using BL.Repositories.ExpenseRepository;
+using BL.Repositories.EventRepository;
+using PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository;
 
 namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
 {
@@ -14,12 +17,19 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
         private readonly IAnnualBudgetRepository _annualBudgetRepository;
         private readonly IMonthlyBudgetRepository _monthlyBudgetRepository;
         private readonly IRefundBudgetRepository _refundBudgetRepository;
-        public DepartmentRepository(PettyCashNeveDbContext context, IAnnualBudgetRepository annualBudgetRepository, IMonthlyBudgetRepository monthlyBudgetRepository, IRefundBudgetRepository refundBudgetRepository)
+        private readonly IExpenseRepository _expenseRepository;
+        private readonly IEventRepository _eventRepository;
+        private readonly IMonthlyCashRegisterRepository _monthlyCashRegisterRepository;
+        public DepartmentRepository(PettyCashNeveDbContext context, IAnnualBudgetRepository annualBudgetRepository, IMonthlyBudgetRepository monthlyBudgetRepository, IRefundBudgetRepository refundBudgetRepository
+            ,IExpenseRepository expenseRepository, IEventRepository eventRepository, IMonthlyCashRegisterRepository monthlyCashRegisterRepository)
         {
             _context = context;
             _annualBudgetRepository = annualBudgetRepository;
             _monthlyBudgetRepository = monthlyBudgetRepository;
             _refundBudgetRepository = refundBudgetRepository;
+            _expenseRepository = expenseRepository;
+            _eventRepository = eventRepository;
+            _monthlyCashRegisterRepository = monthlyCashRegisterRepository;
         }
 
         public async Task<List<Department>> GetDepartmentsAsync()
@@ -220,5 +230,71 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             }
             return issucceed;
         }
+
+        public async Task<bool> DeleteDepartmentAndAssociatedDataAsync(int departmentId)
+        {
+            try
+            {
+                var department = await _context.Departments.FirstOrDefaultAsync(d => d.DepartmentId == departmentId);
+
+
+                if (department == null)
+                {
+                    throw new NotFoundException("Department not found or not active");
+                }
+
+                var expenses = await _expenseRepository.GetExpensesOfDepartment(departmentId);
+                if (expenses != null && expenses.Any())
+                {
+                    _context.Expenses.RemoveRange(expenses);
+                }
+
+                var events = await _eventRepository.GetEventsByDepartmentId(departmentId);
+                if (events != null && events.Any())
+                {
+                    _context.Events.RemoveRange(events);
+                }
+
+                var monthlyCashRegisters = await _monthlyCashRegisterRepository.GetAllMonthlyCashRegisterByDepartmenId(departmentId);
+                if (monthlyCashRegisters != null && monthlyCashRegisters.Any())
+                {
+                    _context.MonthlyCashRegisters.RemoveRange(monthlyCashRegisters);
+                }
+
+                var annualBudgets = await _annualBudgetRepository.GetAnnualBudgetsByDepartmentIdAsync(departmentId);
+                if (annualBudgets != null && annualBudgets.Any())
+                {
+                    _context.AnnualBudgets.RemoveRange(annualBudgets);
+                }
+
+                var monthlyBudgets = await _monthlyBudgetRepository.GetMonthlyBudgetsByDepartmentIdAsync(departmentId);
+                if (monthlyBudgets != null && monthlyBudgets.Any())
+                {
+                    _context.MonthlyBudgets.RemoveRange(monthlyBudgets);
+                }
+
+                var refundBudgets = await _refundBudgetRepository.GetRefundBudgetsByDepartmentIdAsync(departmentId);
+                if (refundBudgets != null && refundBudgets.Any())
+                {
+                    _context.RefundBudgets.RemoveRange(refundBudgets);
+                }
+
+                var users = await GetUsersByDepartmentId(departmentId);
+                if (users != null && users.Any())
+                {
+                    _context.Users.RemoveRange(users);
+                }
+
+                _context.Departments.Remove(department);
+
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
+
 }
