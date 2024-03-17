@@ -11,6 +11,7 @@ namespace BL.Repositories.EventRepository
     {
         Task<string> GetEventNameById(int id);
         Task<Events> GetEventById(int id);
+        Task<List<Events>> GetEventsByDepartmentId(int departmentId);
         Task<bool> DeleteEventById(int id);
         Task<bool> UpdateEvent(Events updatedEvent);
         Task<bool> CreateEvent(Events newEvent);

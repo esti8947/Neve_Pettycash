@@ -85,6 +85,11 @@ $secondaryColor:#d6dbeb;
 .submitButton:hover {
   background-color: darken($primaryColor, 10%);
 }
+.saveButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .label {
   font-weight: bold;
   color: #808080;

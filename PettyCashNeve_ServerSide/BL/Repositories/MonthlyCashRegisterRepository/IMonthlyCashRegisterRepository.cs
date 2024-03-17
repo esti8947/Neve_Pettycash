@@ -14,6 +14,7 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
         Task<bool> DeactivateMonthlyCashRegister(string userId);
         Task<bool> InsertRefundAmount(decimal refunatedAmount, string userId);
         Task<List<MonthlyCashRegister>> GetMonthlyCashRegisterByDepartmenId(int departmenId);
+        Task<List<MonthlyCashRegister>> GetAllMonthlyCashRegisterByDepartmenId(int departmenId);
         Task<bool> CheckAllMonthlyCashRegistersInactiveForYearAsync(int departmentId, int academicYear);
 
         //Task<bool> DeleteMonthlyCashRegisterAsync(int monthlyCashRegisterId);

@@ -37,6 +37,14 @@ namespace PettyCashNeve_ServerSide.Controllers
             return HandleResponse(serviceResponse);
         }
 
+        [HttpDelete("deleteDepartmentAndAssociatedData/{departmentId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteDepartmentAndAssociatedData(int departmentId)
+        {
+            var serviceResponse = await _departmentService.DeleteDepartmentAndAssociatedDataAsync(departmentId);
+            return HandleResponse(serviceResponse);
+        }
+
         [HttpPut("updateDepartment")]
         public async Task<IActionResult> UpdateDepartment([FromBody] DepartmentDto updatedDepartment)
         {

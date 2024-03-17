@@ -12,6 +12,7 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
         Task<ServiceResponse<DepartmentDto>> GetDepartmentByIdAsync(int departmentID);
         Task<ServiceResponse<bool>> UpdateDepartmentAsync(DepartmentDto updatedDepartment);
         Task<ServiceResponse<bool>> DeleteDepartmentAsync(int departmentId);
+        Task<ServiceResponse<bool>> DeleteDepartmentAndAssociatedDataAsync(int departmentId);
         Task<ServiceResponse<bool>> CreateDepartmentAsync(DepartmentDto departmentDto);
         Task<ServiceResponse<List<UserInfoModel>>> GetUsersByDepartmentId(int departmentId);
         Task<ServiceResponse<bool>> deactivateBudget(int departmentId);

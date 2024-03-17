@@ -202,18 +202,19 @@ export class ExpenseReportComponent implements OnInit {
   }
 
   exportToExcel(): void {
-    const data = this.expenses.map((item: { buyerName: any; eventCategoryName: any; eventName: any; expense: { expenseId: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; }; expenseCategoryName: any; expenseCategoryNameHeb: any; }) => ({
-      buyerName: item.buyerName,
-      eventCategoryName: item.eventCategoryName,
-      eventName: item.eventName,
-      'expense.expenseId': item.expense.expenseId,
-      // 'expense.expenseCategoryId': item.expense.expenseCategoryId,
-      // 'expense.eventsId': item.expense.eventsId,
-      // 'expense.departmentId': item.expense.departmentId,
+    const data = this.expenses.map((item: {
+      buyerName: any; eventName: any; expense: { expenseId: any; expenseAmount: any; storeName: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; }; expenseCategoryName: any;
+      expenseCategoryNameHeb: any;
+    }) => ({
+      'Expense ID': item.expense.expenseId,
+      'Department Name': this.selectedDepartment.departmentName,
       // 'expense.updatedBy': item.expense.updatedBy,
-      expenseCategoryName: item.expenseCategoryName,
-      expenseCategoryNameHeb: item.expenseCategoryNameHeb,
-      departmentName: this.selectedDepartment.departmentName
+      'Expense Amount':  `₪${item.expense.expenseAmount}`,
+      'Store Name': item.expense.storeName,
+      'Event Name': item.eventName,
+      'Buyer Name': item.buyerName,
+      'Expense Category Name': item.expenseCategoryName,
+      'Expense Category Name Heb': item.expenseCategoryNameHeb,
     }));
     console.log("data", data);
 
@@ -244,7 +245,7 @@ export class ExpenseReportComponent implements OnInit {
     ]);
 
     autoTable(doc, {
-      head: [['Expense ID','Expense Amount','Store Name','Department Name', 'Event Name', 'Expense Category Name', 'Expense Category Name Heb','Event Category Name','Event Category NameHeb','Buyer Name' ]],
+      head: [['Expense ID', 'Expense Amount', 'Store Name', 'Department Name', 'Event Name', 'Expense Category Name', 'Expense Category Name Heb', 'Event Category Name', 'Event Category NameHeb', 'Buyer Name']],
       body: data,
       didDrawPage: (dataArg) => {
         doc.text('PAGE', dataArg.settings.margin.left, 10);
@@ -254,19 +255,19 @@ export class ExpenseReportComponent implements OnInit {
     const expenseCategories: number[] = [...new Set(this.expenses.map(expense => expense.expense.expenseCategoryId))];
     let verticalPosition = doc.internal.pageSize.height - 10;
     expenseCategories.forEach(categoryId => {
-        const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
-        const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
-        
-        doc.text(`Total Expenses Amount for ${categoryName}: ${totalByCategory}`, 14, verticalPosition);
-        
-        verticalPosition -= 10; 
+      const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
+      const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
+
+      doc.text(`Total Expenses Amount for ${categoryName}: ${totalByCategory}`, 14, verticalPosition);
+
+      verticalPosition -= 10;
     });
 
     const totalExpensesAmount = this.calculateTotalExpensesAmount().toFixed(2);
-    verticalPosition -= 10; 
+    verticalPosition -= 10;
     doc.setFontSize(16)
     doc.text(`Total Expenses Amount: ${totalExpensesAmount}`, 14, verticalPosition);
-    
+
 
     doc.save('expenses.pdf');
   }
@@ -284,7 +285,7 @@ export class ExpenseReportComponent implements OnInit {
       .filter(expense => expense.expense.expenseCategoryId === expenseCategoryId)
       .reduce((total, expense) => total + expense.expense.expenseAmount, 0);
   }
-  
+
 
 
   deleteExpense(event: MouseEvent, expense: any) {

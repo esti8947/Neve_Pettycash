@@ -183,9 +183,9 @@ builder.Services.AddScoped<IExpenseMoreInfoService, ExpenseMoreInfoService>();
 
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
-builder.Services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();    
-builder.Services.AddScoped<IExpenseCategoryService,  ExpenseCategoryService>();
-builder.Services.AddScoped<IBudgetTypeRepository,  BudgetTypeRepository>();
+builder.Services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+builder.Services.AddScoped<IBudgetTypeRepository, BudgetTypeRepository>();
 builder.Services.AddScoped<IBudgetTypeService, BudgetTypeService>();
 
 builder.Services.Configure<IISServerOptions>(options =>

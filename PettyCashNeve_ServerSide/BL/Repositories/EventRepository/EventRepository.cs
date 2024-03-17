@@ -1,6 +1,8 @@
-﻿using DAL.Data;
+﻿using BL.Repositories.UserRepository;
+using DAL.Data;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using PettyCashNeve_ServerSide.Repositories.DepartmentRepository;
 using System;
 using System.Threading.Tasks;
 
@@ -9,10 +11,12 @@ namespace BL.Repositories.EventRepository
     public class EventRepository : IEventRepository
     {
         private readonly PettyCashNeveDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public EventRepository(PettyCashNeveDbContext context)
+        public EventRepository(PettyCashNeveDbContext context, IUserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         public async Task<string> GetEventNameById(int id)
@@ -62,6 +66,21 @@ namespace BL.Repositories.EventRepository
                 throw;
             }
         }
+
+      
+        public async Task<List<Events>> GetEventsByDepartmentId(int departmentId)
+        {
+            var usersList = await _userRepository.GetUsersOfDepartment(departmentId);
+
+            var userIds = usersList.Select(u => u.Id);
+
+            var events = await _context.Events
+                .Where(e => userIds.Contains(e.UpdatedBy))
+                .ToListAsync();
+
+            return events;
+        }
+
 
         public async Task<bool> DeleteEventById(int id)
         {
@@ -130,7 +149,7 @@ namespace BL.Repositories.EventRepository
             try
             {
                 var eventToUpdata = await GetEventById(updatedEvent.EventId);
-                if(eventToUpdata == null)
+                if (eventToUpdata == null)
                 {
                     throw new DirectoryNotFoundException("event to fount or not active");
                 }

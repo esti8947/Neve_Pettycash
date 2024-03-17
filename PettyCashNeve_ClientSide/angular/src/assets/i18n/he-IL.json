@@ -33,6 +33,7 @@
     "deleteEventCategoryConfirmation":"האם ברצונך למחוק את קטגורית האירוע?",
     "deleteBuyerCategoryConfirmation":"האם ברצונך למחוק קונה זה?",
     "deleteUserConfirmation": "האם ברצונך למחוק משתמש זה?",
+    "deleteDepartmentConfirmation":"האם ברצונך למחוק מחלקה זו?",
     "expenseDeleted": "הוצאה נמחקה",
     "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
     "eventDeleted": "הפעילות נמחקה",
@@ -174,7 +175,9 @@
     "Please enter department phonePerfix": "אנא הזן קידומת טלפון למחלקה (2 or 3 digits)",
     "Please enter department phone number": "אנא הזן מספר טלפון למחלקה (7 digits)",
     "Please enter department descreption": "אנא הזן תיאור למחלקה",
-    "Add department": "הוסף מחלקה"
+    "Add department": "הוסף מחלקה",
+    "Update Department":"עדכן מחלקה",
+    "Department Details":"פרטי מחלקה"
   },
   "addExpenseCategory": {
     "New Expense Category": "קטגוריית הוצאה חדשה",

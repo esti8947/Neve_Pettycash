@@ -196,5 +196,18 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             }
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<bool>> DeleteDepartmentAndAssociatedDataAsync(int departmentId)
+        {
+            try
+            {
+                var result = await _departmentRepository.DeleteDepartmentAndAssociatedDataAsync(departmentId);
+                return new ServiceResponse<bool> { Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool> { Success = false, Message = ex.Message };
+            }
+        }
     }
 }

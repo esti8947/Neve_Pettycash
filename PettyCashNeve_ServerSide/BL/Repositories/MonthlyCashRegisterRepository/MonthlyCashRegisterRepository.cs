@@ -6,6 +6,7 @@ using BL.Repositories.ExpenseCategoryRepository;
 using BL.Repositories.ExpenseRepository;
 using Entities.Models_Dto;
 using BL.Repositories.UserRepository;
+using PettyCashNeve_ServerSide.Repositories.DepartmentRepository;
 
 
 namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
@@ -15,7 +16,8 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
         private readonly PettyCashNeveDbContext _context;
         private readonly IExpenseRepository _expenseRepository;
         private readonly IUserRepository _userRepository;
-        public MonthlyCashRegisterRepository(PettyCashNeveDbContext context, IExpenseRepository expenseRepository, IUserRepository userRepository)
+        public MonthlyCashRegisterRepository(PettyCashNeveDbContext context, IExpenseRepository expenseRepository
+            , IUserRepository userRepository)
         {
             _context = context;
             _expenseRepository = expenseRepository;
@@ -176,11 +178,34 @@ namespace PettyCashNeve_ServerSide.Repositories.MonthlyCashRegisterRepository
                         monthlyRegistersList.Add(monthlyRegisters);
                 }
                 return monthlyRegistersList;
+
             }
             catch (Exception ex)
             {
                 throw;
             }
+        }
+
+        public async Task<List<MonthlyCashRegister>> GetAllMonthlyCashRegisterByDepartmenId(int departmentId)
+        {
+            try
+            {
+                var usersList = await _userRepository.GetUsersOfDepartment(departmentId);
+                var userIds = usersList.Select(u => u.Id);
+
+
+                var monthlyCashRegisters = await _context.MonthlyCashRegisters
+               .Where(m => userIds.Contains(m.UpdatedBy))
+               .ToListAsync();
+
+                return monthlyCashRegisters;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         public async Task<bool> CheckAllMonthlyCashRegistersInactiveForYearAsync(int departmentId, int academicYear)

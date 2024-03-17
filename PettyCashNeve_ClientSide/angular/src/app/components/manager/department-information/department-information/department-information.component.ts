@@ -12,7 +12,9 @@ import { ExpenseService } from 'src/app/services/expense-service/expense.service
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
 import { MontlyCashRegisterService } from 'src/app/services/montlyCashRegister-service/montly-cash-register.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-department-information',
@@ -21,8 +23,15 @@ import { MenuItem } from 'primeng/api';
 })
 export class DepartmentInformationComponent implements OnInit {
   departmentsArray: DepartmentMoreInfo[] = [];
+
+  updateDepartmentDialog: boolean = false;
+  departmentFormSubmitted = false;
+  departmentForm!: FormGroup;
+  departmentToUpdate: any;
+
+
   tableRowStyle = 'font-size: 14px; padding-left: 8px;';
-  items: MenuItem[] | undefined;
+  // items: MenuItem[] | undefined;
 
   constructor(
     private departmentService: DepartmentService,
@@ -33,31 +42,31 @@ export class DepartmentInformationComponent implements OnInit {
     private router: Router,
     private translateService: TranslateService,
     private monthNameService: MonthNameService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private confirmationService: ConfirmationService,
+    private customMessageService: CustomMessageService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.loadDepartments();
-    this.loadMenuItems();
+    this.initializeForm();
+    // this.loadMenuItems();
   }
 
-
-  loadMenuItems() {
-    this.items = [
-      {
-        label: '<span class="text-sm font-bold">Update</span>',
-        escape: false,
-        command: () => this.updateDepartment()
-      },
-      {
-        label: '<span class="text-sm font-bold">Delete</span>',
-        escape: false,
-        command: () => this.deleteDepartment()
-
-      }
-    ];
-  }
-
-
+  // loadMenuItems() {
+  //   this.items = [
+  //     {
+  //       label: '<span class="text-sm font-bold">Update</span>',
+  //       escape: false,
+  //       command: () => this.updateDepartment()
+  //     },
+  //     {
+  //       label: '<span class="text-sm font-bold">Delete</span>',
+  //       escape: false,
+  //       command: () => this.deleteDepartment()
+  //     }
+  //   ];
+  // }
   loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       (data) => {
@@ -267,10 +276,90 @@ export class DepartmentInformationComponent implements OnInit {
     return this.monthNameService.getMonthName(monthNumber);
   }
 
-  updateDepartment(){
+  deleteDepartment(event: Event, department: any) {
+    const departmentId = department.departmentId;
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: this.translateService.instant('messages.deleteDepartmentConfirmation'),
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass: 'p-button-sm',
+      accept: () => {
+        this.departmentService.deleteDepartment(departmentId).subscribe(
+          (data) => {
+            console.log('department deleted', data);
+            this.customMessageService.showSuccessMessage('department is deleted');
+            this.loadDepartments();
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.customMessageService.showErrorMessage('An error occurred while deleting the department');
+          }
+        );
+      },
+    });
   }
 
-  deleteDepartment(){
-
+  updateDepartment(department: Department) {
+    this.updateDepartmentDialog = true;
+    this.departmentForm.setValue({
+      departmentName: department.departmentName,
+      departmentCode: department.departmentCode,
+      deptHeadFirstName: department.deptHeadFirstName,
+      deptHeadLastName: department.deptHeadLastName,
+      phonePerfix: department.phonePrefix,
+      phoneNumber: department.phoneNumber,
+      descreption: department.description,
+    })
+    this.departmentToUpdate = department;
   }
+
+  isInvalid(controlName: string, formGroup: FormGroup, formSubmitted: boolean): boolean {
+    const control: AbstractControl | null = formGroup.get(controlName);
+    return control ? (control.touched || formSubmitted) && control.invalid : false;
+  }
+
+  saveDepartment() {
+    this.departmentFormSubmitted = true;
+    const formValues = this.departmentForm.value;
+
+    const updatedDepartment: Department = {
+      departmentId: this.departmentToUpdate.departmentId,
+      departmentCode: formValues.departmentCode,
+      departmentName: formValues.departmentName,
+      deptHeadFirstName: formValues.deptHeadFirstName,
+      deptHeadLastName: formValues.deptHeadLastName,
+      phonePrefix: formValues.phonePerfix,
+      phoneNumber: formValues.phoneNumber,
+      description:formValues.descreption,
+      isCurrent: true,
+      currentBudgetTypeId: this.departmentToUpdate.currentBudgetTypeId
+    }
+    if (this.departmentForm.valid) {
+      this.departmentService.updateDepartment(updatedDepartment).subscribe(
+        (data) => {
+          this.customMessageService.showSuccessMessage('Department is updated');
+          this.updateDepartmentDialog = false;
+          this.loadDepartments();
+        },
+        (error) => {
+          console.error('An error occurred while updating the department:', error);
+          this.customMessageService.showErrorMessage('An error occurred while updating the department')
+        }
+      );
+      this.departmentToUpdate = undefined;
+    }
+  }
+
+  initializeForm() {
+    this.departmentForm = this.formBuilder.group({
+      departmentName: ['', Validators.required],
+      departmentCode: ['', Validators.required],
+      deptHeadFirstName: ['', Validators.required],
+      deptHeadLastName: ['', Validators.required],
+      phonePerfix: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{7}$/)]],
+      descreption: [''],
+    });
+  }
+
 }

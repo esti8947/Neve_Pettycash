@@ -67,12 +67,22 @@ export class DepartmentService {
     );
   }
 
-  deleteDepartment(departmentId:number):Observable<any>{
-    const url = `${this.baseUrlDepartment}/deleteDepartmentAndAssociatedData/${departmentId}`;
-    return this.http.get<any>(url).pipe(
+  deleteDepartment(departmentId: number): Observable<any> {
+    const url = `${this.baseUrlDepartment}/DeleteDepartmentAndAssociatedData/${departmentId}`;
+    return this.http.delete(url).pipe(
       catchError((error) => {
         console.error('Error in deleteDepartment function', error);
         return throwError(error);
+      }),
+    );
+  }
+
+  updateDepartment(updatedDepartment: Department): Observable<any> {
+    const url = `${this.baseUrlDepartment}/updateDepartment`;
+    return this.http.put<Department>(url, updatedDepartment).pipe(
+      catchError((error)=>{
+        console.error('Error in updateDepartment function', error);
+        return throwError(error)
       }),
     );
   }
