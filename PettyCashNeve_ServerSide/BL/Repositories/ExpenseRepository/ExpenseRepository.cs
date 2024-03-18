@@ -392,16 +392,56 @@ namespace BL.Repositories.ExpenseRepository
             }
         }
 
+        //public async Task<decimal> GetExpensesAmountForAcademicYear(int month, int year, int departmentId)
+        //{
+        //    try
+        //    {
+        //        // Calculate academic year range
+        //        int academicYearStartYear = month >= 9 ? year : year - 1;
+        //        int ecademicYearEndYear = month >= 9 ? year+1 : year;
+
+        //        // Determine start and end months for calculating expenses
+        //        int startMonth = month >= 9 ? 9 : 1;
+        //        int endMonth = month >= 9 ? month : 12;
+
+        //        decimal totalAmount = 0;
+
+        //        // Calculate total expenses amount for the academic year
+        //        for (int m = startMonth; m <= endMonth; m++)
+        //        {
+        //            totalAmount += await GetExpensesAmountForMonthByDepartmentId(m, academicYearStartYear, departmentId);
+        //        }
+
+        //        return totalAmount;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle the exception as needed
+        //        throw;
+        //    }
+        //}
+
         public async Task<decimal> GetExpensesAmountForAcademicYear(int month, int year, int departmentId)
         {
             try
             {
                 // Calculate academic year range
                 int academicYearStartYear = month >= 9 ? year : year - 1;
+                int academicYearEndYear = month >= 9 ? year + 1 : year;
 
                 // Determine start and end months for calculating expenses
-                int startMonth = month >= 9 ? 9 : 1;
-                int endMonth = month >= 9 ? month : 12;
+                int startMonth, endMonth;
+
+                if (month >= 9)
+                {
+                    startMonth = 9;
+                    endMonth = month;
+                }
+                else
+                {
+                    startMonth = year == academicYearEndYear ? 9 : 1;
+                    endMonth = year == academicYearEndYear ? 12 : 9;
+                }
 
                 decimal totalAmount = 0;
 
@@ -409,6 +449,15 @@ namespace BL.Repositories.ExpenseRepository
                 for (int m = startMonth; m <= endMonth; m++)
                 {
                     totalAmount += await GetExpensesAmountForMonthByDepartmentId(m, academicYearStartYear, departmentId);
+                }
+
+                // If the month is less than 9, also include expenses from the next year
+                if (month < 9)
+                {
+                    for (int m = 1; m <= month; m++)
+                    {
+                        totalAmount += await GetExpensesAmountForMonthByDepartmentId(m, academicYearEndYear, departmentId);
+                    }
                 }
 
                 return totalAmount;
@@ -419,6 +468,8 @@ namespace BL.Repositories.ExpenseRepository
                 throw;
             }
         }
+
+
 
 
         private async Task<bool> UserBelongsToDepartment(string userId, int departmentId)

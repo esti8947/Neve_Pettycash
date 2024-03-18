@@ -144,7 +144,7 @@ export class DepartmentInformationComponent implements OnInit {
         // Fetch data for current month of the previous year
         this.expenseService.getExpensesAmountForAcademicYearAndMonthOfDepartment(month, year - 1, departmentId).subscribe(
           (data) => {
-            department.amountWastedForCalculatingPercentages = data.data;
+            department.monthlyAmountForCalculatingPercentages = data.data;
           },
           (error) => {
             console.error('An error occurred:', error);
@@ -154,7 +154,7 @@ export class DepartmentInformationComponent implements OnInit {
         // Fetch data for previous month of the current year
         this.expenseService.getExpensesAmountForAcademicYearAndMonthOfDepartment(month, year, departmentId).subscribe(
           (data) => {
-            department.monthlyAmountForCalculatingPercentages = data.data;
+            department.amountWastedForCalculatingPercentages = data.data;
           },
           (error) => {
             console.error('An error occurred:', error);

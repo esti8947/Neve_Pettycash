@@ -258,7 +258,7 @@ export class ExpenseReportComponent implements OnInit {
       const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
       const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
 
-      doc.text(`Total Expenses Amount for ${categoryName}: ${totalByCategory}`, 14, verticalPosition);
+      doc.text(`Total Expenses Amount for ${categoryName} ${categoryId}: ₪${totalByCategory}`, 14, verticalPosition);
 
       verticalPosition -= 10;
     });
