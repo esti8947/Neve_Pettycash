@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { Department } from 'src/app/models/department';
@@ -15,6 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DepartmentDataService } from 'src/app/services/department-service/department-data.service';
 
 @Component({
   selector: 'app-department-information',
@@ -35,6 +36,7 @@ export class DepartmentInformationComponent implements OnInit {
 
   constructor(
     private departmentService: DepartmentService,
+    private departmentDataService:DepartmentDataService,
     private budgetInformationService: BudgetImformationService,
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private expenseService: ExpenseService,
@@ -45,9 +47,13 @@ export class DepartmentInformationComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private confirmationService: ConfirmationService,
     private customMessageService: CustomMessageService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
+    // this.departmentDataService.departmentsArray$.subscribe(departments => {
+    //   this.departmentsArray = departments;
+    // });
     this.loadDepartments();
     this.initializeForm();
     // this.loadMenuItems();
@@ -330,7 +336,7 @@ export class DepartmentInformationComponent implements OnInit {
       deptHeadLastName: formValues.deptHeadLastName,
       phonePrefix: formValues.phonePerfix,
       phoneNumber: formValues.phoneNumber,
-      description:formValues.descreption,
+      description: formValues.descreption,
       isCurrent: true,
       currentBudgetTypeId: this.departmentToUpdate.currentBudgetTypeId
     }

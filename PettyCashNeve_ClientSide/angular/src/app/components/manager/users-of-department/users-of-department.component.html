@@ -37,8 +37,7 @@
           <input type="text" pInputText mask="99-999999" formControlName="phoneNumber">
         </div>
         <!-- <p *ngIf="!validForm" translate>globalForm.Please fill in all required fields</p> -->
-        <button pButton type="button" (click)="registerUser()" class="centered-button">{{'registerUser.Add New User'
-          |translate}}</button>
+        <button pButton type="button" (click)="registerUser()" class="centered-button" translate>globalForm.Add</button>
       </form>
     </p-dialog>
   </div>
@@ -67,7 +66,7 @@
   </div>
 </div>
 <!-- Modify the p-dialog to include a form for updating user details -->
-<p-dialog header="Edit User" [(visible)]="editUserDialog" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false"
+<p-dialog [header]="'registerUser.Edit User'|translate" [(visible)]="editUserDialog" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false"
   [resizable]="false">
   <form [formGroup]="updateUserForm">
     <div class="form-group">
@@ -88,6 +87,6 @@
       <label class="label" for="phoneNumber" translate=>registerUser.phoneNumber</label>
       <input type="text" pInputText formControlName="phoneNumber">
     </div>
-    <button pButton type="button" (click)="updateUser()" class="centered-button">Save</button>
+    <button pButton type="button" (click)="updateUser()" class="centered-button" translate>globalForm.Update</button>
   </form>
 </p-dialog>

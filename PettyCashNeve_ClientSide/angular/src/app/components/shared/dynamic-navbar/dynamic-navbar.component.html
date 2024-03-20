@@ -49,7 +49,7 @@
                 in all required fields</small>
         </div>
         <div>
-            <button class="button" pButton type="button" (click)="addingAmountToBudget()">{{ 'insertRefundAmount.insert
+            <button class="button saveButton" pButton type="button" (click)="addingAmountToBudget()">{{ 'insertRefundAmount.insert
                 refund amount' | translate }}
             </button>
         </div>
@@ -105,7 +105,7 @@
             </div> -->
         </div>
         <div>
-            <button class="button" pButton type="button" (click)="openNewYear()">
+            <button class="button saveButton" pButton type="button" (click)="openNewYear()">
                 {{ 'openNewYear.Open new year' | translate }}
             </button>
         </div>
@@ -131,14 +131,14 @@
             </small>
         </div>
         <div class="form-group">
-            <label class="label" for="MonthlyBudgetMonth" translate>Select Month</label>
+            <label class="label" for="MonthlyBudgetMonth" translate>globalForm.Select Month</label>
             <p-dropdown formControlName="MonthlyBudgetMonth" [options]="months" [placeholder]="'Select Month'|translate"
                 optionLabel="name" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
             <small class="small" *ngIf="isInvalid('MonthlyBudgetMonth', addMonthlyBudgetForm, addMonthlyBudgetSubmitted)"
                 class="invalid-feedback" translate>openNewYear.Month is required
             </small>
         </div>
-        <button class="button" pButton type="button" (click)="addMonthlyBudget()">
+        <button class="button saveButton" pButton type="button" (click)="addMonthlyBudget()">
             {{ 'AddMothnlyBudgetDialog.Add Monthly Budget' | translate }}
         </button>
     </form>

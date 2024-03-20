@@ -200,56 +200,68 @@ export class ExpenseReportComponent implements OnInit {
       }
     }
   }
-
   exportToExcel(): void {
     const data = this.expenses.map((item: {
-      buyerName: any; eventName: any; expense: { expenseId: any; expenseAmount: any; storeName: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; }; expenseCategoryName: any;
+      buyerName: any; eventName: any; expense: { expenseId: any; expenseAmount: any; storeName: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; notes:any }; expenseCategoryName: any;
       expenseCategoryNameHeb: any;
-    }) => ({
-      'Expense ID': item.expense.expenseId,
-      'Department Name': this.selectedDepartment.departmentName,
-      // 'expense.updatedBy': item.expense.updatedBy,
-      'Expense Amount':  `₪${item.expense.expenseAmount}`,
-      'Store Name': item.expense.storeName,
-      'Event Name': item.eventName,
-      'Buyer Name': item.buyerName,
-      'Expense Category Name': item.expenseCategoryName,
-      'Expense Category Name Heb': item.expenseCategoryNameHeb,
-    }));
+    }) => {
+      // Check if eventName is 'DefaultEvent', if yes, set it to empty string
+      const eventName = item.eventName === 'DefaultEvent' ? '' : item.eventName;
+      
+      return {
+        'Expense ID': item.expense.expenseId,
+        'Department Name': this.selectedDepartment.departmentName,
+        'Expense Amount':  `₪${item.expense.expenseAmount}`,
+        'Store Name': item.expense.storeName,
+        'Event Name': eventName, // Use the modified eventName
+        'Buyer Name': item.buyerName,
+        'Expense Category Name': item.expenseCategoryName,
+        'Expense Category Name Heb': item.expenseCategoryNameHeb,
+        "Notes": item.expense.notes,
+      };
+    });
+  
     console.log("data", data);
-
+  
     const columns = Object.keys(data[0]);
     const worksheet = XLSX.utils.json_to_sheet(data, { header: columns });
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
     XLSX.writeFile(workbook, 'data.xlsx');
   }
+  
 
-  exportToPDF() {
+  async exportToPDF() {
     const doc = new jsPDF();
 
-    doc.setFont('times', 'normal');
+    doc.setFont('Tahoma');
     doc.setFontSize(12);
 
-    const data = this.expenses.map((item) => [
-      item.expense.expenseId,
-      item.expense.expenseAmount,
-      this.convertToUnicode(item.expense.storeName),
-      this.convertToUnicode(this.selectedDepartment.departmentName),
-      this.convertToUnicode(item.eventName),
-      item.expenseCategoryName,
-      this.convertToUnicode(item.expenseCategoryNameHeb),
-      item.eventCategoryName,
-      this.convertToUnicode(item.eventCategoryNameHeb),
-      item.buyerName,
-    ]);
+    // const data = this.expenses.map((item) => [
+    //   item.expense.expenseId,
+    //   item.expense.expenseAmount,
+    //   this.convertToUnicode(item.expense.storeName),
+    //   this.convertToUnicode(this.selectedDepartment.departmentName),
+    //   this.convertToUnicode(item.eventName),
+    //   item.expenseCategoryName,
+    //   this.convertToUnicode(item.expenseCategoryNameHeb),
+    //   item.eventCategoryName,
+    //   this.convertToUnicode(item.eventCategoryNameHeb),
+    //   item.buyerName,
+    // ]);
 
-    autoTable(doc, {
-      head: [['Expense ID', 'Expense Amount', 'Store Name', 'Department Name', 'Event Name', 'Expense Category Name', 'Expense Category Name Heb', 'Event Category Name', 'Event Category NameHeb', 'Buyer Name']],
-      body: data,
-      didDrawPage: (dataArg) => {
-        doc.text('PAGE', dataArg.settings.margin.left, 10);
-      }
+    // autoTable(doc, {
+    //   head: [['Expense ID', 'Expense Amount', 'Store Name', 'Department Name', 'Event Name', 'Expense Category Name', 'Expense Category Name Heb', 'Event Category Name', 'Event Category NameHeb', 'Buyer Name']],
+    //   body: data,
+    //   didDrawPage: (dataArg) => {
+    //     doc.text('PAGE', dataArg.settings.margin.left, 10);
+    //   }
+    // });
+    await this.loadExpenseCategories();
+
+    const expenseCategoryAccountingCodes: { [categoryId: number]: string } = {};
+    this.expensesCategory.forEach(category => {
+      expenseCategoryAccountingCodes[category.expenseCategoryId] = category.accountingCode;
     });
 
     const expenseCategories: number[] = [...new Set(this.expenses.map(expense => expense.expense.expenseCategoryId))];
@@ -257,16 +269,18 @@ export class ExpenseReportComponent implements OnInit {
     expenseCategories.forEach(categoryId => {
       const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
       const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
+      const accountingCode = expenseCategoryAccountingCodes[categoryId] || ''; // Get accounting code for the category
+      doc.text(`Category: ${categoryName} (${accountingCode})`, 14, verticalPosition);
+      doc.text(`Total Expenses Amount: ${totalByCategory}`, 14, verticalPosition + 5);
 
-      doc.text(`Total Expenses Amount for ${categoryName} ${categoryId}: ₪${totalByCategory}`, 14, verticalPosition);
-
-      verticalPosition -= 10;
+      verticalPosition -= 15;
     });
+  
 
     const totalExpensesAmount = this.calculateTotalExpensesAmount().toFixed(2);
     verticalPosition -= 10;
     doc.setFontSize(16)
-    doc.text(`Total Expenses Amount: ${totalExpensesAmount}`, 14, verticalPosition);
+    doc.text(`Total Expenses Amount ${this.month}/${this.year}: ${totalExpensesAmount}`, 14, verticalPosition);
 
 
     doc.save('expenses.pdf');

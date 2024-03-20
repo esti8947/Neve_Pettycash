@@ -22,9 +22,7 @@
                         department.budgetInformation?.monthlyBudget.monthlyBudgetCeiling | number }}</h2>
                 </ng-container>
                 <ng-container *ngIf="department.budgetType === 'refundBudget'">
-                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }} ₪{{
-                        department.budgetInformation?.totalAmount
-                        | number }}</h2>
+                    <h2>{{ getBudgetTypeName(department.departmentId || 0) }}</h2>
                 </ng-container>
                 <div *ngIf="department.monthlyCashRegister != undefined">
                     <h3 translate>Kupa
@@ -35,28 +33,31 @@
                         </span>
                     </h3>
                     <!-- <h6>{{getDisplayPercentages(department.departmentId || 0)}}</h6>-->
-                    <div class="table-container" [innerHTML]="getDisplayPercentages(department.departmentId)"></div>
-                    <h5 [ngClass]="{
-                        'orange-text': getSpentPercentage(department.amountWastedForCalculatingPercentages?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) <= 90,
-                        'red-text': getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 90
-                        }">
-                        {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }}
-                        {{ getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0,
-                        department.monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
-                    </h5>
+                    <div *ngIf="department.budgetType != 'refundBudget'">
+                        <div class="table-container" [innerHTML]="getDisplayPercentages(department.departmentId)"></div>
+                        <h5 [ngClass]="{
+                            'orange-text': getSpentPercentage(department.amountWastedForCalculatingPercentages?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) <= 90,
+                            'red-text': getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0, department.monthlyAmountForCalculatingPercentages ?? 0) > 90
+                            }">
+                            {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }}
+                            {{ getSpentPercentage(department.amountWastedForCalculatingPercentages ?? 0,
+                            department.monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
+                        </h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<p-dialog [header]="'addDepartment.Department Details'|translate" [(visible)]="updateDepartmentDialog" [style]="{width:'600px'}" [modal]="true"
-    styleClass="p-fluid">
+<p-dialog [header]="'addDepartment.Department Details'|translate" [(visible)]="updateDepartmentDialog"
+    [style]="{width:'600px'}" [modal]="true" styleClass="p-fluid">
     <form [formGroup]="departmentForm">
         <div class="form-group">
             <label class="label" for="departmentName" translate>addDepartment.Department name</label>
             <input type="text" pInputText formControlName="departmentName">
             <div>
-                <small class="small" *ngIf="isInvalid('departmentName', departmentForm, departmentFormSubmitted)" translate>
+                <small class="small" *ngIf="isInvalid('departmentName', departmentForm, departmentFormSubmitted)"
+                    translate>
                     addDepartment.Please enter department name
                 </small>
             </div>

@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'department-information', component: DepartmentInformationComponent },
     ]
   },
+  
   {
     path: 'navbar', component: DynamicNavbarComponent,
     children: [

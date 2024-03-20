@@ -10,6 +10,7 @@ import { ExpenseCategory } from 'src/app/models/expenseCategory';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BuyerService } from 'src/app/services/buyer-service/buyer.service';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
+import { DepartmentDataService } from 'src/app/services/department-service/department-data.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 import { EventCategoryService } from 'src/app/services/event-service/event-category.service';
 import { ExpenseCategoryService } from 'src/app/services/expense-service/expense-category.service';
@@ -51,6 +52,7 @@ export class HomeManagerComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private departmentService: DepartmentService,
+    private departmentDataService: DepartmentDataService,
     private expenseCategoryService: ExpenseCategoryService,
     private eventCategoryService: EventCategoryService,
     private buyerService: BuyerService,
@@ -143,7 +145,10 @@ export class HomeManagerComponent implements OnInit {
           this.customMessageService.showSuccessMessage('Department is added');
           this.departmentForm.reset();
           this.departmentDialog = false;
-          this.loadDepartments();
+          this.loadDepartments(); 
+          // this.departmentDataService.updateDepartmentsArray(this.departments);
+          // this.router.navigate(['/home-manager/department-information']);
+
         },
         (error) => {
           console.error('Error saving department:', error);
@@ -368,7 +373,6 @@ export class HomeManagerComponent implements OnInit {
       this.router.navigate(['/navbar']);
     }
   }
-
   logOut() {
     this.authService.doLogout();
     this.loadDepartments();

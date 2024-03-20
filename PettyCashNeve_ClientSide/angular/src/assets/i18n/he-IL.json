@@ -25,7 +25,10 @@
     "Yes": "כן",
     "No": "לא",
     "Notice": "שים לב",
-    "Select Month":"בחר חודש"
+    "Select Month":"בחר חודש",
+    "Add":"הוסף",
+    "Update":"עדכן",
+    "Cancel":"ביטול"
   },
   "messages": {
     "deleteExpenseConfirmation": "האם ברצונך למחוק את ההוצאה הזו?",
@@ -157,7 +160,9 @@
     "phoneNumber": "טלפון",
     "Please enter username": "הכנס שם משתמש",
     "Password must be at least 6 characters long and include both letters and numbers": "הסיסמ חייבת להיות בעלת 6 תווים לפחות ולכלול אותיות ומספרים",
-    "Invalid email format": "כתובת אימייל לא תקינה"
+    "Invalid email format": "כתובת אימייל לא תקינה",
+    "Edit User":"עדכן פרטי משתמש"
+
   },
   "addDepartment": {
     "New Department": "מחלקה חדשה",
