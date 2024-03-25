@@ -31,7 +31,6 @@ export class LockExpensesButtonComponent implements OnInit {
     this.expenseService.GetUnlockedExpensesOfDepartment(departmentId).subscribe(
       (data) => {
         this.unlockedExpensesList = data.data || [];
-        console.log("unlockedExpensesList", this.unlockedExpensesList)
         this.extractUniqueMonthsAndYears();
       },
       (error) => {

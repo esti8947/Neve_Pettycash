@@ -122,7 +122,6 @@ export class HomeManagerComponent implements OnInit {
 
 
   saveDepartment() {
-    this.departmentFormSubmitted = true;
     if (this.departmentForm.valid) {
       const formValues = this.departmentForm.value;
 
@@ -138,7 +137,6 @@ export class HomeManagerComponent implements OnInit {
         isCurrent: true,
         currentBudgetTypeId: 1
       };
-      console.log(newDepartment);
 
       this.departmentService.addDepartment(newDepartment).subscribe(
         () => {
@@ -156,6 +154,7 @@ export class HomeManagerComponent implements OnInit {
         }
       );
     }
+    this.departmentFormSubmitted = true;
   }
 
   saveExpenseCategory() {
@@ -184,6 +183,7 @@ export class HomeManagerComponent implements OnInit {
         }
       );
     }
+    this.expenseCategoryFormSubmitted = true;
   }
 
   saveEventCategory() {
@@ -241,7 +241,6 @@ export class HomeManagerComponent implements OnInit {
     this.departmentService.getAllDepartments().subscribe(
       (data) => {
         this.departments = data.data;
-        console.log(this.departments)
       },
       (error) => {
         console.error('An error occurred', error)
@@ -253,7 +252,6 @@ export class HomeManagerComponent implements OnInit {
     this.expenseCategoryService.getAllExpenseCategories().subscribe(
       (data) => {
         this.existingExpensesCategory = data.data;
-        console.log(this.existingExpensesCategory);
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -305,7 +303,6 @@ export class HomeManagerComponent implements OnInit {
           (data) => {
             console.log('expense category is deleted', data);
             this.customMessageService.showSuccessMessage('Expense category is deleted');
-            // this.existingExpensesCategory = this.existingExpensesCategory.filter((val) => val.expenseCategory.expenseCategoryId !== expenseCategoryIdToDelete);
             this.loadExpensesCategory();
           },
           (error) => {

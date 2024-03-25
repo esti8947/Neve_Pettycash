@@ -42,7 +42,6 @@ export class AuthService {
         this._isManager = res.isManager;
         localStorage.setItem('access_token', res.token);
         localStorage.setItem('current_user', JSON.stringify(res));
-        console.log('currentUser', res);
         this._isManager?
         this.router.navigate(['home-manager']):
         this.router.navigate(['navbar']);

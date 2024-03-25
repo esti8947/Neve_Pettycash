@@ -32,7 +32,6 @@ export class DepartmentInformationComponent implements OnInit {
 
 
   tableRowStyle = 'font-size: 14px; padding-left: 8px;';
-  // items: MenuItem[] | undefined;
 
   constructor(
     private departmentService: DepartmentService,
@@ -51,28 +50,14 @@ export class DepartmentInformationComponent implements OnInit {
     private route: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    // this.departmentDataService.departmentsArray$.subscribe(departments => {
-    //   this.departmentsArray = departments;
-    // });
     this.loadDepartments();
     this.initializeForm();
-    // this.loadMenuItems();
+
+    this.departmentService.departmentAdded$.subscribe(() => {
+      this.loadDepartments();
+    });
   }
 
-  // loadMenuItems() {
-  //   this.items = [
-  //     {
-  //       label: '<span class="text-sm font-bold">Update</span>',
-  //       escape: false,
-  //       command: () => this.updateDepartment()
-  //     },
-  //     {
-  //       label: '<span class="text-sm font-bold">Delete</span>',
-  //       escape: false,
-  //       command: () => this.deleteDepartment()
-  //     }
-  //   ];
-  // }
   loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       (data) => {
@@ -135,7 +120,6 @@ export class DepartmentInformationComponent implements OnInit {
         }
       );
     });
-    console.log("departmentsArray", this.departmentsArray)
   }
 
   calculateExpensePercentageLastYear(monthlyCashRegister: any, departmentId: number, budgetInformation: any) {
@@ -176,26 +160,19 @@ export class DepartmentInformationComponent implements OnInit {
           ([result1, result2, result3, result4]) => {
             console.log(result1, result2, result3, result4);
             if (month % 2 === 0) {
-              // Even month
               department.monthlyAmountForCalculatingPercentages = result1.data + result2.data;
 
-              department.monthlyAmountForCalculatingPercentages = 8000;
               // department.amountWastedForCalculatingPercentages =
               //   monthlyCashRegister.amountInCashRegister + result4.data;
               department.amountWastedForCalculatingPercentages =
                 result4.data + budgetInformation.monthlyBudget.monthlyBudgetCeiling;
             } else {
-              // Odd month
               department.monthlyAmountForCalculatingPercentages = result1.data + result3.data;
               // department.amountWastedForCalculatingPercentages =
               //   monthlyCashRegister.amountInCashRegister;
               department.amountWastedForCalculatingPercentages =
                 budgetInformation.monthlyBudget.monthlyBudgetCeiling;
             }
-            console.log(
-              department.amountWastedForCalculatingPercentages,
-              department.monthlyAmountForCalculatingPercentages
-            );
           },
           (error) => {
             console.error('Error getting expenses data', error);
@@ -256,18 +233,6 @@ export class DepartmentInformationComponent implements OnInit {
     }
   }
 
-
-  //       return `Expenses amount for last year ${lastYearRange} unthil month ${monthName} is ₪${department.monthlyAmountForCalculatingPercentages}
-  //               Expenses amount for current year ${currentYearRange} unthil current month ${monthName} is ₪${department.amountWastedForCalculatingPercentages}`;
-  //     } else
-  //     if (department.currentBudgetTypeId == 2) {
-  //       if(month % 2 === 0){
-  //         return `Expenses amoutn for last year  ${lastYearRange} in monthes ${this.getMonthName(month - 1)} - ${monthName} is ₪${department.monthlyAmountForCalculatingPercentages}
-  //         Expenses amoutn for current year ${currentYearRange} in monthes ${this.getMonthName(month - 1)} - ${monthName} expnese amount for month ${this.getMonthName(month - 1)} and expense plan for month ${monthName} is ₪${department.amountWastedForCalculatingPercentages} `;
-  //       }else{
-  //         return `Expenses amoutn for last year  ${lastYearRange} in monthes ${monthName} - ${this.getMonthName(month + 1)} is ₪${department.monthlyAmountForCalculatingPercentages}
-  //         Expenses amoutn for current year ${currentYearRange} in monthes ${monthName} expnese plan for month ${monthName} is ₪${department.amountWastedForCalculatingPercentages}`;
-
   getBudgetTypeName(departmentId: number): string {
     const department = this.departmentsArray.find(dep => dep.departmentId === departmentId);
     if (department) {
@@ -292,7 +257,6 @@ export class DepartmentInformationComponent implements OnInit {
       accept: () => {
         this.departmentService.deleteDepartment(departmentId).subscribe(
           (data) => {
-            console.log('department deleted', data);
             this.customMessageService.showSuccessMessage('department is deleted');
             this.loadDepartments();
           },

@@ -4,11 +4,11 @@ export function passwordValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const password = control.value;
     if (!password || password.length < 6) {
-      return { 'invalidPasswordLength': true }; // Password should have at least 6 characters
+      return { 'invalidPasswordLength': true }; 
     }
     // Check if password contains at least one letter and one digit
     if (!/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
-      return { 'invalidPasswordFormat': true }; // Password should contain both letters and digits
+      return { 'invalidPasswordFormat': true };
     }
     return null;
   };
@@ -20,7 +20,7 @@ export function emailValidator(): ValidatorFn {
     // Regular expression for email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-      return { 'invalidEmailFormat': true }; // Invalid email format
+      return { 'invalidEmailFormat': true }; 
     }
     return null;
   };

@@ -5,6 +5,8 @@
   "Log in": "Log in",
   "username": "Username",
   "password": "Password",
+  "Kupa":"Kupa",
+  "Year":"Year",
   "expenseDtails": {
     "confirm": "Confirm expenses for this month",
     "Category": "Category",
@@ -23,14 +25,18 @@
     "Yes": "Yes",
     "No": "No",
     "Notice": "Notice",
-    "Select Month": "Select Month"
+    "Select Month": "Select Month",
+    "Add":"Add",
+    "Update":"Update",
+    "Cancel":"Cancel"
   },
   "messages": {
     "deleteExpenseConfirmation": "Do you want to delete this expense?",
     "deleteExpenseCategoryConfirmation": "Do you want to delete this expense category?",
     "deleteEventCategoryConfirmation": "Do you want to delete this event category?",
     "deleteBuyerCategoryConfirmation": "Do you want to delete this buyer category?",
-    "deleteDepartmentConfirmation": "Do you want to delete this department?",
+    "deleteDepartmentConfirmation": "Are you sure? This action will permanently delete the department and all associated data, including users and expenses.",
+    "deleteUserConfirmation": "Do you want to delete this user?",
     "expenseDeleted": "Expense is deleted",
     "deleteEventConfirmation": "Do you want to delete this event?",
     "eventDeleted": "Event is deleted",
@@ -154,7 +160,8 @@
     "phoneNumber": "PhoneNumber",
     "Please enter username": "Please enter username",
     "Password must be at least 6 characters long and include both letters and numbers": "Password must be at least 6 characters long and include both letters and numbers",
-    "Invalid email format": "Invalid email format"
+    "Invalid email format": "Invalid email format",
+    "Edit User":"Edit User"
   },
   "addDepartment": {
     "New Department": "New Department",

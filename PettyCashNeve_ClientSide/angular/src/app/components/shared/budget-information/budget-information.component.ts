@@ -41,13 +41,11 @@ export class BudgetInformationComponent implements OnInit{
 
   getBudgetInformation(){
     if(this.currentUser.isManager){
-      console.log(this.currentUser);
       this.departmentId = this.currentUser.departmentId;
     }
     this.budgetInformationService.getBudgetInformation(this.departmentId).subscribe(
       (data) => {
         this.budgetInformation = data.data;
-        console.log("budgetInformation",this.budgetInformation);
         this.currentLang = this.translateService.currentLang;
         if(this.budgetInformation.annualBudget != null){
           

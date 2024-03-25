@@ -36,7 +36,7 @@
     "deleteEventCategoryConfirmation":"האם ברצונך למחוק את קטגורית האירוע?",
     "deleteBuyerCategoryConfirmation":"האם ברצונך למחוק קונה זה?",
     "deleteUserConfirmation": "האם ברצונך למחוק משתמש זה?",
-    "deleteDepartmentConfirmation":"האם ברצונך למחוק מחלקה זו?",
+    "deleteDepartmentConfirmation":"בטוחים? פעולה זו תמחק לצמיתות את המחלקה וכל הנתונים שקשורים אליה כולל משתמשים והוצאות",
     "expenseDeleted": "הוצאה נמחקה",
     "deleteEventConfirmation": "האם ברצונך למחוק את הפעילות הזו",
     "eventDeleted": "הפעילות נמחקה",
@@ -162,7 +162,6 @@
     "Password must be at least 6 characters long and include both letters and numbers": "הסיסמ חייבת להיות בעלת 6 תווים לפחות ולכלול אותיות ומספרים",
     "Invalid email format": "כתובת אימייל לא תקינה",
     "Edit User":"עדכן פרטי משתמש"
-
   },
   "addDepartment": {
     "New Department": "מחלקה חדשה",
@@ -177,8 +176,8 @@
     "Please enter department code": "אנא הזן קוד מחלקה",
     "Please enter department head first name": "אנא הזן שם פרטי של מנהל המחלקה",
     "Please enter department head last name": "אנא הזן שם משפחה של המחלקה",
-    "Please enter department phonePerfix": "אנא הזן קידומת טלפון למחלקה (2 or 3 digits)",
-    "Please enter department phone number": "אנא הזן מספר טלפון למחלקה (7 digits)",
+    "Please enter department phonePerfix": "אנא הזן קידומת טלפון למחלקה (2 או 3 ספרות)",
+    "Please enter department phone number": "אנא הזן מספר טלפון למחלקה (7 ספרות)",
     "Please enter department descreption": "אנא הזן תיאור למחלקה",
     "Add department": "הוסף מחלקה",
     "Update Department":"עדכן מחלקה",
@@ -194,8 +193,8 @@
     "Please enter expense category name - english": "אנא הכנס שם קטגורית הוצאה - אנגלית",
     "Expense category name - hebrew": "שם קטגורית הוצאה - עברית",
     "Please enter expense category name - hebrew": "אנא הכנס שם קטגורית הוצאה - עברית",
-    "Expense category account code": "קוד חשבון קטגוריית הוצאה",
-    "Please enter expense category account code": "אנא הכנס קוד חשבון קטגוריית הוצאה"
+    "Expense category account code": "קוד הנהלת חשבונות",
+    "Please enter expense category account code": "אנא הכנס קוד הנהלת חשבונות"
   },
   "addEventCategory": {
     "New Event Category": "קטגוריית אירוע חדשה",

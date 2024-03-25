@@ -70,10 +70,6 @@ export class MonthlyCashRegisterComponent implements OnInit {
             this.amountWastedForCalculatingPercentages =
               this.MonthlyRegisterValue.amountInCashRegister;
           }
-          console.log(
-            this.amountWastedForCalculatingPercentages,
-            this.monthlyAmountForCalculatingPercentages
-          );
         },
         (error) => {
           console.error('Error getting expenses data', error);

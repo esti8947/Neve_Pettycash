@@ -44,7 +44,6 @@ export class PreviousExpensesComponent implements OnInit {
     });
 
     this.formGroup.get('selectedYear')?.valueChanges.subscribe((selectedYear: number) => {
-      // Call the function with the selected year
       this.getExpensesByYear(selectedYear);
     });
 
@@ -149,7 +148,6 @@ export class PreviousExpensesComponent implements OnInit {
     this.expenseService.getExpensesOfUserByYear(year, departmentId).subscribe(
       (data) => {
         this.expenses = data.data || [];
-        console.log(this.expenses);
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -169,7 +167,6 @@ export class PreviousExpensesComponent implements OnInit {
     }
 
     if (!isNaN(monthNumber)) {
-      console.log(monthNumber);
       if (this.currentUser.isManager) {
         this.router.navigate(['/navbar/expense-report'], {
           queryParams: { selectedYear, selectedMonth: monthNumber }

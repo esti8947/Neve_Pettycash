@@ -34,7 +34,6 @@ export class AddExpenseComponent implements OnInit {
   currentMonth:number | undefined;
   minDateValue: Date = new Date();
   maxDateValue: Date = new Date();
-  // defalutDate:Date = new Date();
 
   constructor(
     private readonly translateService:TranslateService,
@@ -53,7 +52,6 @@ export class AddExpenseComponent implements OnInit {
     this.activedRoute.queryParams.subscribe(params =>{
       const selectedEventString = params['selectedEvent'];
       this.selectedEventParams = selectedEventString ? JSON.parse(selectedEventString) : undefined;
-      console.log(this.selectedEventParams);
     })
     this.loadUser();
     this.loadEvents();
@@ -64,7 +62,6 @@ export class AddExpenseComponent implements OnInit {
   }
   loadUser(){
     this.currentUser = this.authService.getCurrentUser();
-    console.log(this.currentUser);
   }
 
   isMonthlyRegister(){
@@ -72,7 +69,6 @@ export class AddExpenseComponent implements OnInit {
     if(isMonthlyRegisterSet)
     this.isMonthlyCashRegister = true;
     this.currentMonthlyCash = isMonthlyRegisterSet;
-    // this.currentMonth = isMonthlyRegisterSet.monthlyCashRegisterMonth;
     this.setMinMaxDates();
   }
   
@@ -105,8 +101,6 @@ export class AddExpenseComponent implements OnInit {
     this.expenseCategoryService.getAllExpenseCategories().subscribe(
       (data) => {
         this.expensesCategory = data.data;
-
-        console.log("expensesCategory",this.expensesCategory)
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -118,7 +112,6 @@ export class AddExpenseComponent implements OnInit {
     this.buyerService.getBuyers().subscribe(
       (data) => {
         this.buyers = data.data;
-        console.log(this.buyers)
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -151,7 +144,6 @@ export class AddExpenseComponent implements OnInit {
         departmentId: this.currentUser.departmentId,
         expenseCategoryId: selectedExpenseCategory?.expenseCategoryId,
         expenseAmount,
-        // expenseDate: expenseDate?.toISOString(),
         expenseDate:formattedExpenseDate,
         storeName,
         notes: notes || "",
@@ -163,8 +155,6 @@ export class AddExpenseComponent implements OnInit {
         invoiceScan:""
       };
   
-      console.log("newExpenseModel", newExpenseModel);
-
       this.expenseService.addNewExpense(newExpenseModel).subscribe(
         (response) =>{
           console.log("expense added successfully", response);
@@ -197,13 +187,11 @@ export class AddExpenseComponent implements OnInit {
     });
   }
   resetForm(): void {
-    // Reset form controls except for expenseDate
     this.formGroup.get('selectedBuyer')?.reset();
     this.formGroup.get('selectedEvent')?.reset();
     this.formGroup.get('selectedExpenseCategory')?.reset();
     this.formGroup.get('expenseAmount')?.reset();
     this.formGroup.get('storeName')?.reset();
     this.formGroup.get('notes')?.reset();
-    // You can leave expenseDate as it is
   }
 }

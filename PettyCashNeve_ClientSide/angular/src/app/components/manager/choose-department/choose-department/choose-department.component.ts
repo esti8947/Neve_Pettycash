@@ -28,7 +28,6 @@ export class ChooseDepartmentComponent implements OnInit {
     this.departmentService.getAllDepartments().subscribe(
       (data) => {
         this.departments = data.data;
-        console.log(this.departments)
       },
       (error) => {
         console.error('An error occurred', error)
@@ -46,12 +45,8 @@ export class ChooseDepartmentComponent implements OnInit {
     const selectedDepartment = this.formGroup.get('selectedDepartment')?.value;
 
     if (selectedDepartment) {
-      // Save the selected department in localStorage using your service
       this.departmentService.saveSelectedDepartmentToLocalStorage(selectedDepartment);
       this.authService.updateCurrentUserDepartmentId(selectedDepartment.departmentId);
-      console.log(localStorage.selected_department);
-
-      // Navigate to the 'navbar-selected-department' route
       this.router.navigate(['/navbar']);
     }
   }

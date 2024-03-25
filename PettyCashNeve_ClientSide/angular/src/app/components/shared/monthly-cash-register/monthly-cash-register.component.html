@@ -18,10 +18,6 @@
     </ng-container>
 
     <h5><span translate>monthlyCashRegister.The refund amount is</span> &#8362;{{MonthlyRegisterValue.refundAmount}}</h5>
-    <!-- <div>
-      <p translate>monthlyCashRegister.Budget ceiling</p>
-      <p translate>monthlyCashRegister.youy ar at % of the budget</p>
-    </div> -->
     <ng-template pTemplate="footer">
       <div style="display: flex;">
         <p-button *ngIf="!currentUser.isManager" styleClass="p-button" (click)="navigateToAddExpense()" [label]="'monthlyCashRegister.Add New Expense'|translate"></p-button>

@@ -33,7 +33,6 @@ export class DynamicNavbarComponent implements OnInit {
   addAmountForm!: FormGroup;
   newYearFormGroup!: FormGroup;
   addMonthlyBudgetForm!: FormGroup;
-  // validForm: boolean = true;
   addingAmountDialog: boolean = false;
   newYearDialog: boolean = false;
   AddMothnlyBudgetDialog: boolean = false;
@@ -60,7 +59,6 @@ export class DynamicNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.selectedDepartment = this.departmentService.getSelectedDepartment();
-    console.log("selectedDepartment", this.selectedDepartment);
     this.initializeNavbarItems();
     this.initializeForms();
     this.loadMonths();
@@ -103,10 +101,10 @@ export class DynamicNavbarComponent implements OnInit {
     });
 
     this.newYearFormGroup = this.formBuilder.group({
-      newYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]), // 8 digits pattern (e.g., 20232024)
+      newYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]), 
       budgetType: new FormControl<number | null>(null, Validators.required),
-      annualBudgetAmount: new FormControl<number | null>(0), // Initial validator based on budget type
-      monthlyBudgetAmount: new FormControl<number | null>(0), // Initial validator based on budget type
+      annualBudgetAmount: new FormControl<number | null>(0), 
+      monthlyBudgetAmount: new FormControl<number | null>(0), 
       MonthlyBudgetMonth: new FormControl<number | null>(9)
     });
 
@@ -132,7 +130,7 @@ export class DynamicNavbarComponent implements OnInit {
     ];
 
     this.months = Array.from({ length: 12 }, (_, index) => ({
-      value: index + 1, // Months are 1-based in JavaScript Date object
+      value: index + 1, 
       name: monthNames[index]
     }));
   }
@@ -193,7 +191,6 @@ export class DynamicNavbarComponent implements OnInit {
     this.budgetTypeService.getBudgetTypes().subscribe(
       (data) => {
         this.budgetTypes = data.data;
-        console.log("eventcategories", this.budgetTypes);
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -258,7 +255,6 @@ export class DynamicNavbarComponent implements OnInit {
               console.error('An error occurred:', error);
             },
           );
-          console.log("selectedDepartment", this.selectedDepartment)
           this.router.navigate(['navbar']);
         },
         (error) => {
@@ -272,7 +268,6 @@ export class DynamicNavbarComponent implements OnInit {
   onBudgetTypeChange(selectedBudgetTypeId: number) {
     this.budgetTypeId = selectedBudgetTypeId;
 
-    // Reset validators for all controls
     this.newYearFormGroup.get('annualBudgetAmount')?.clearValidators();
     this.newYearFormGroup.get('annualBudgetAmount')?.updateValueAndValidity();
     this.newYearFormGroup.get('monthlyBudgetAmount')?.clearValidators();

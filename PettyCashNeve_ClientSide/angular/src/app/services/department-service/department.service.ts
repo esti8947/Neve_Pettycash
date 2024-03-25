@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
 import { Department } from 'src/app/models/department';
 
@@ -8,6 +8,10 @@ import { Department } from 'src/app/models/department';
   providedIn: 'root',
 })
 export class DepartmentService {
+  private departmentAddedSubject = new Subject<void>();
+
+  departmentAdded$ = this.departmentAddedSubject.asObservable();
+  
   private baseUrl = API_CONFIG.baseUrl;
 
   private baseUrlDepartment = `${this.baseUrl}/Department`;
@@ -64,6 +68,9 @@ export class DepartmentService {
         console.error('Error in addDepartment function', error);
         return throwError(error)
       }),
+      tap(() => {
+        this.departmentAddedSubject.next();
+      })
     );
   }
 

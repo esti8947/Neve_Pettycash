@@ -15,7 +15,6 @@ import { UsersOfDepartmentComponent } from './components/manager/users-of-depart
 import { DepartmentInformationComponent } from './components/manager/department-information/department-information/department-information.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeManagerComponent },
   { path: '', component: SignInComponent },
   { path: 'login', component: SignInComponent },
   { path: 'choose-language', component: ChooseLanguageComponent },

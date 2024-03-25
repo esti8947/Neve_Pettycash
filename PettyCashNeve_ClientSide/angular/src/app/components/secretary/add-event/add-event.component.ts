@@ -53,7 +53,6 @@ export class AddEventComponent implements OnInit {
     this.eventCategoryService.getEventsCategories().subscribe(
       (data) => {
         this.eventCategories = data.data;
-        console.log("eventcategories",this.eventCategories);
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -65,7 +64,6 @@ export class AddEventComponent implements OnInit {
     this.eventService.getEventsByUser().subscribe(
       (data) => {
         this.existingEvents = data.data;
-        console.log(this.existingEvents);
       },
       (error) => {
         console.error('An error occurred:', error);        
@@ -99,7 +97,6 @@ export class AddEventComponent implements OnInit {
       updatedBy: "string"
     };
 
-    console.log("New Event: ", newEvent);
     this.eventService.addNewEvent(newEvent).subscribe(
       (response) => {
         console.log('Event added successfully:', response);
@@ -119,13 +116,11 @@ export class AddEventComponent implements OnInit {
   };
 
   addExpenseToSelectedEvent(selectedEvent:Event){
-    console.log(selectedEvent);
     this.router.navigate(['/navbar/add-expense'], 
     { queryParams: { selectedEvent:  JSON.stringify(selectedEvent)} });
   }
 
   deleteEvent(event:MouseEvent, selectedEvent:any){
-    console.log('Selected Event:', selectedEvent);
     const eventIdToDelete = selectedEvent.eventId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,

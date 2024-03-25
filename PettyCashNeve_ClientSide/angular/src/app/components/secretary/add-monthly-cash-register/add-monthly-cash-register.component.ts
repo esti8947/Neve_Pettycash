@@ -37,7 +37,7 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
     ];
   
     this.months = Array.from({ length: 12 }, (_, index) => ({
-      value: index + 1, // Months are 1-based in JavaScript Date object
+      value: index + 1,
       name: monthNames[index]
     }));
   }
@@ -60,7 +60,6 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
   }
 
   async saveMonthlyRegister(){
-    // this.validForm = !this.validForm;
     const selectedMonthValue = this.formGroup.value.selectedMonth;
     if (this.validForm && selectedMonthValue != 0) {
 
@@ -74,9 +73,7 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
         refundAmount: 0,
         isActive: true
       };
-  
-      console.log("New Monthly Register:", newMonthlyRegister);
-  
+    
       try {
         const response = await this.monthlyCashRegisterService.addMonthlyRegister(newMonthlyRegister).toPromise();
         console.log('Monthly register added successfully:', response);

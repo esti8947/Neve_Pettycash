@@ -16,7 +16,7 @@ export class BudgetImformationService {
 
   getBudgetType():Observable<any>{
     const budgetTypeId = this.authService.getCurrentUser().department.currentBudgetTypeId;
-    console.log(budgetTypeId);
+
     const url = `${this.baseUrlBudgetType}/getBudgetTypeById/${budgetTypeId}`;
     return this.http.get<any>(url).pipe(
       catchError((error)=>{

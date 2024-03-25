@@ -40,9 +40,7 @@ export class HomeDepartmentComponent implements OnInit {
           if (data.success && data.data != null) {
             this.isMonthlyRegister = true;
             this.monthlyRegisters.push(...data.data);
-            console.log(data.data)
           } else {
-            // Handle the case where data is incorrect
             this.isMonthlyRegister = false;
           }
         },
@@ -52,17 +50,14 @@ export class HomeDepartmentComponent implements OnInit {
         }
       );
     } else {
-      // Call service without departmentId for non-manager
       this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId().subscribe(
         (data) => {
           if (data.success && data.data != null) {
             this.isMonthlyRegister = true;
             this.monthlyRegisters.push(data.data);
           } else {
-            // Handle the case where data is incorrect
             this.isMonthlyRegister = false;
           }
-          console.log('currentMonthlyCashRegister', this.isMonthlyRegister);
         },
         (error) => {
           console.error('Error loading currentMonthlyCashRegister', error);
@@ -73,7 +68,7 @@ export class HomeDepartmentComponent implements OnInit {
   }
 
   reloadMonthlyRegisters() {
-    this.monthlyRegisters = []; // Clear existing data
-    this.loadCurrentMonthlyCashRegister(); // Reload data
+    this.monthlyRegisters = []; 
+    this.loadCurrentMonthlyCashRegister();
   }
 }

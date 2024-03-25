@@ -16,7 +16,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { formatDate } from '@angular/common';
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
-import { ExportService } from 'src/app/services/export-service/export.service';
 import * as XLSX from 'xlsx';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
 import jsPDF from 'jspdf';
@@ -66,7 +65,6 @@ export class ExpenseReportComponent implements OnInit {
     private monthNameService: MonthNameService,
     private additionalActionsService: AdditionalActionsService,
     private departmentService: DepartmentService,
-    private exportService: ExportService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -121,7 +119,6 @@ export class ExpenseReportComponent implements OnInit {
     this.expenseReportInfoService.getExpensesReportByYearAndMonth(selectedYear, selectedMonth, departmentId).subscribe(
       (data) => {
         this.expenses = data.data || [];
-        console.log("previus expenses", this.expenses);
       },
       (error) => {
         console.log('An error occurred: ', error);
@@ -132,7 +129,6 @@ export class ExpenseReportComponent implements OnInit {
     this.expenseReportInfoService.GetUnLockedExpensesByDepartmentId(departmentId).subscribe(
       (data) => {
         this.expenses = data.data || [];
-        console.log(this.expenses);
       },
       (error) => {
         console.log('An error occurred: ', error);
@@ -165,7 +161,6 @@ export class ExpenseReportComponent implements OnInit {
       }
       this.expenseService.lockExpenses(month, year, this.currentUser.departmentId).subscribe(
         (respose) => {
-          console.log(respose);
           this.customMessageService.showSuccessMessage("expenses locked successfully")
           this.confirmExpensesDialog = false;
           this.loadExpensesByYearAndMonth(year, month);
@@ -180,13 +175,10 @@ export class ExpenseReportComponent implements OnInit {
       const currentRefundAmount = this.monthlyCashRegisterService.getCurrentMothlyRegister().refundAmount;
       if (currentRefundAmount == 0) {
         this.insertRefundAmountDialog = true;
-        // this.customMessageService.showErrorMessage('Refund amount cannot be 0');
-        // return;
       }
       else {
         this.additionalActionsService.closeMonthlyActivities(year, month).subscribe(
           (respose) => {
-            console.log(respose);
             this.customMessageService.showSuccessMessage("expenses approved successfully")
             this.monthlyCashRegisterService.deactivateMonthlyCashRegister();
             this.confirmExpensesDialog = false;
@@ -205,7 +197,7 @@ export class ExpenseReportComponent implements OnInit {
       buyerName: any; eventName: any; expense: { expenseId: any; expenseAmount: any; storeName: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; notes:any }; expenseCategoryName: any;
       expenseCategoryNameHeb: any;
     }) => {
-      // Check if eventName is 'DefaultEvent', if yes, set it to empty string
+
       const eventName = item.eventName === 'DefaultEvent' ? '' : item.eventName;
       
       return {
@@ -213,16 +205,14 @@ export class ExpenseReportComponent implements OnInit {
         'Department Name': this.selectedDepartment.departmentName,
         'Expense Amount':  `₪${item.expense.expenseAmount}`,
         'Store Name': item.expense.storeName,
-        'Event Name': eventName, // Use the modified eventName
+        'Event Name': eventName, 
         'Buyer Name': item.buyerName,
         'Expense Category Name': item.expenseCategoryName,
         'Expense Category Name Heb': item.expenseCategoryNameHeb,
         "Notes": item.expense.notes,
       };
     });
-  
-    console.log("data", data);
-  
+    
     const columns = Object.keys(data[0]);
     const worksheet = XLSX.utils.json_to_sheet(data, { header: columns });
     const workbook = XLSX.utils.book_new();
@@ -322,15 +312,11 @@ export class ExpenseReportComponent implements OnInit {
           }
         );
       },
-      reject: () => {
-        // this.customMessageService.showRejectedMessage('You have rejected');
-      }
     });
   }
 
 
   async editExpense(expense: any) {
-    console.log(expense);
     this.expense = expense;
     this.expenseDialog = true;
     await this.loadData();
@@ -345,11 +331,10 @@ export class ExpenseReportComponent implements OnInit {
       selectedExpenseCategory: selectedExpenseCategory,
       storeName: expense.expense.storeName,
       expenseAmount: expense.expense.expenseAmount,
-      expenseDate: new Date(expense.expense.expenseDate), // Assuming expenseDate is a string
+      expenseDate: new Date(expense.expense.expenseDate),
       selectedBuyer: selectedBuyer || null,
       notes: expense.expense.notes,
     });
-    console.log(this.formGroup.value)
   }
 
   async loadData() {
@@ -387,7 +372,6 @@ export class ExpenseReportComponent implements OnInit {
         invoiceScan: ""
       };
 
-      console.log("newExpenseModel", updatedExpense);
       this.expenseService.updateExpense(updatedExpense).subscribe(
         (data) => {
           console.log('expense is updated', data);
@@ -488,10 +472,7 @@ export class ExpenseReportComponent implements OnInit {
         (response) => {
           this.insertRefundAmountDialog = false;
           this.monthlyRegister.refundAmount += refundAmount;
-          // this.monthlyCashRegisterService.saveResponseToLocalStorage(this.monthlyRegister);
-          console.log('insert refund amount succeddfull: ', this.monthlyRegister);
           this.customMessageService.showSuccessMessage("insert refund amount is successfull.");
-          // this.formGroup.reset();
           this.insertRefundAmountDialog = false;
         },
         (error) => {

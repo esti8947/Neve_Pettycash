@@ -24,7 +24,6 @@ export class UsersOfDepartmentComponent implements OnInit {
   registerFormFormSubmitted = false;
   updateFormFormSubmitted = false;
 
-  // validForm: boolean = true;
   user: any;
   editUserDialog: boolean = false;
   selectedUserId: string = "";
@@ -48,7 +47,6 @@ export class UsersOfDepartmentComponent implements OnInit {
     this.additionalActionsService.getUsersOfDepartment(this.selectedDepartment.departmentId).subscribe(
       (data) => {
         this.usersList = data.data;
-        console.log(this.usersList)
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -82,6 +80,7 @@ export class UsersOfDepartmentComponent implements OnInit {
   }
 
   registerUser() {
+    this.registerFormFormSubmitted = true;
     if (this.registerUserForm.valid) {
       const formValues = this.registerUserForm.value;
       const departmentId = this.selectedDepartment.departmentId;
@@ -91,7 +90,7 @@ export class UsersOfDepartmentComponent implements OnInit {
         email: formValues.email,
         phoneNumber: formValues.phoneNumber || "",
         departmentId: departmentId,
-        isAdmin: false 
+        isAdmin: false
       };
 
       this.authService.registerUser(newUser).subscribe(
@@ -119,15 +118,15 @@ export class UsersOfDepartmentComponent implements OnInit {
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: ' p-button-sm',
       accept: () => {
-        this.authService.deactivateUser(usernameToDelete).subscribe(          
+        this.authService.deactivateUser(usernameToDelete).subscribe(
           (data) => {
-            console.error('An error occurred:', data);
-            this.customMessageService.showErrorMessage('An error occurred while deleting the user');
-          },
-          (error) => {
-            console.log('user is deleted', error);
+            console.log('user is deleted', data);
             this.customMessageService.showSuccessMessage(this.translateService.instant('messages.userDeleted'));
             this.loadUsers();
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.customMessageService.showErrorMessage('An error occurred while deleting the user');
           }
         );
       },
@@ -135,10 +134,9 @@ export class UsersOfDepartmentComponent implements OnInit {
   }
 
   editUser(user: any) {
-    console.log(user)
     this.user = user;
     this.editUserDialog = true;
-    this.selectedUserId = user.id; 
+    this.selectedUserId = user.id;
 
     this.updateUserForm.patchValue({
       userId: this.selectedUserId,
@@ -156,7 +154,7 @@ export class UsersOfDepartmentComponent implements OnInit {
         id: this.selectedUserId,
         userName: formValues.userName,
         email: formValues.email,
-        phoneNumber: formValues.phoneNumber || "", // Assuming phoneNumber is nullable
+        phoneNumber: formValues.phoneNumber || "",
       };
 
       this.authService.updateUser(updatedUser).subscribe(

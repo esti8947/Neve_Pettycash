@@ -1,4 +1,3 @@
-// register.model.ts
 export interface RegisterModel {
   userName: string;
   passwordHash: string;

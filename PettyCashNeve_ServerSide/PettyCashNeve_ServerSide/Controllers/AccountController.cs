@@ -269,7 +269,7 @@ namespace PettyCashNeve_ServerSide.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Ok("User deactivated successfully.");
+                    return Ok(new { message = "User deactivated successfully." });
                 }
                 else
                 {
