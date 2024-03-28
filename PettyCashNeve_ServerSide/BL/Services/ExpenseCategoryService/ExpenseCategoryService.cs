@@ -2,6 +2,7 @@
 using BL.Repositories.ExpenseCategoryRepository;
 using DAL.Models;
 using PettyCashNeve_ServerSide.Dto;
+using PettyCashNeve_ServerSide.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,5 +76,35 @@ namespace BL.Services.ExpenseCategoryService
             }
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<bool>> UpdateExpenseCategory(ExpenseCategoryDto updatedExpenseCategory)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var existingExpenseCategory = await _expenseCategoryRepository.GetExpenseCategoryByIdAsync(updatedExpenseCategory.ExpenseCategoryId);
+                if (existingExpenseCategory == null)
+                {
+                    throw new NotFoundException("Expense category not found or not active");
+                }
+
+                _mapper.Map(updatedExpenseCategory, existingExpenseCategory);
+                await _expenseCategoryRepository.UpdateExpenseCategory(existingExpenseCategory);
+                serviceResponse.Data = true;
+                serviceResponse.Success = true;
+            }
+            catch (NotFoundException ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
     }
 }

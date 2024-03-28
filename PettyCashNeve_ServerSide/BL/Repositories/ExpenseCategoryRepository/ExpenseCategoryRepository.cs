@@ -1,6 +1,7 @@
 ﻿using DAL.Data;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using PettyCashNeve_ServerSide.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +81,7 @@ namespace BL.Repositories.ExpenseCategoryRepository
             {
                 try
                 {
-                    _context.ExpenseCategories.Remove(expenseCategoryToDelete);
+                    expenseCategoryToDelete.IsActive = false;
                     await _context.SaveChangesAsync();
                     return true;
                 }
@@ -92,6 +93,33 @@ namespace BL.Repositories.ExpenseCategoryRepository
             }
             return false;
 
+        }
+
+        public async Task<bool> UpdateExpenseCategory(ExpenseCategory updatedExpneseCategory)
+        {
+            try
+            {
+                var existingExpenseCategory = await _context.ExpenseCategories.FindAsync(updatedExpneseCategory.ExpenseCategoryId);
+
+                if (existingExpenseCategory == null || !existingExpenseCategory.IsActive == true)
+                {
+                    throw new NotFoundException("Expense category not found or not active");
+                }
+                existingExpenseCategory.ExpenseCategoryName = updatedExpneseCategory.ExpenseCategoryName;
+                existingExpenseCategory.ExpenseCategoryNameHeb = updatedExpneseCategory.ExpenseCategoryNameHeb;
+                existingExpenseCategory.expenseCategoryType = updatedExpneseCategory.expenseCategoryType;
+                existingExpenseCategory.AccountingCode = updatedExpneseCategory.AccountingCode;
+               
+
+                await _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception if needed
+                throw;
+            }
         }
     }
 }

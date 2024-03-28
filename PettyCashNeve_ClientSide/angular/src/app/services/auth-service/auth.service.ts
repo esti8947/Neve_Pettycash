@@ -10,7 +10,6 @@ import {
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Department } from 'src/app/models/department';
-import { UserInfo } from 'src/app/models/userInfo';
 import { RegisterModel } from 'src/app/models/registerUser';
 
 @Injectable({

@@ -12,5 +12,7 @@ namespace BL.Services.ExpenseCategoryService
         Task<ServiceResponse<List<ExpenseCategoryDto>>> GetAllExpenseCategoriesAsync();
         Task<ServiceResponse<bool>> CreateExpenseCategory(ExpenseCategoryDto expenseCategoryDto);
         Task<ServiceResponse<bool>> DeleteExpenseCategory(int expenseCategoryId);
+        Task<ServiceResponse<bool>> UpdateExpenseCategory(ExpenseCategoryDto updatedExpenseCategory);
+
     }
 }

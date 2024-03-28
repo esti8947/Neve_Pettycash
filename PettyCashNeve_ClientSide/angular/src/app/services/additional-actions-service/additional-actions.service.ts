@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
-import { AnnualBudget } from 'src/app/models/annualBudget';
-import { MonthlyBudget } from 'src/app/models/monthlyBudget';
 import { NewYear } from 'src/app/models/newYear';
 
 @Injectable({

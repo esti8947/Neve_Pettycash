@@ -44,6 +44,16 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.prod.ts"
+                },
+                {
+                  "replace": "src/app/config/api.config.ts",
+                  "with": "src/app/config/api.config-prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -56,7 +66,6 @@
                   "maximumError": "10mb"
                 }
               ],
-             
               "index": {
                 "input": "src/index-prod.html",
                 "output": "index.html"
@@ -64,6 +73,16 @@
               "outputHashing": "all"
             },
             "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.prod.ts",
+                  "with": "src/environments/environments.ts"
+                },
+                {
+                  "replace": "src/app/config/api.config-prod.ts",
+                  "with": "src/app/config/api.config.ts"
+                }
+              ],
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,

@@ -78,8 +78,8 @@ export class HomeManagerComponent implements OnInit {
       departmentCode: ['', Validators.required],
       deptHeadFirstName: ['', Validators.required],
       deptHeadLastName: ['', Validators.required],
-      phonePerfix: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{7}$/)]],
+      phonePerfix: ['', [Validators.minLength(2), Validators.maxLength(3)]],
+      phoneNumber: ['', [Validators.pattern(/^\d{7}$/)]],
       descreption: [''],
     });
 
@@ -157,7 +157,59 @@ export class HomeManagerComponent implements OnInit {
     this.departmentFormSubmitted = true;
   }
 
+  populateFormWithExpenseCategory(expenseCategory: any){
+    this.expenseCategoryForm.patchValue({
+      expenseCategoryType: expenseCategory.expenseCategoryType,
+      expenseCategoryName: expenseCategory.expenseCategoryName,
+      expenseCategoryNameHeb: expenseCategory.expenseCategoryNameHeb,
+      accountingCode: expenseCategory.accountingCode
+  });
+  }
   saveExpenseCategory() {
+    if (this.expenseCategoryForm.valid) {
+        if (this.selectedExpenseCategory) {
+            // Update existing expense category
+            this.updateExpenseCategory();
+        } else {
+            // Add new expense category
+            this.addExpenseCategory();
+        }
+    } else {
+        this.expenseCategoryFormSubmitted = true;
+    }
+}
+updateExpenseCategory() {
+  if (this.selectedExpenseCategory && this.expenseCategoryForm.valid) {
+      const formValues = this.expenseCategoryForm.value;
+
+      const updatedExpenseCategory: ExpenseCategory = {
+          expenseCategoryId: this.selectedExpenseCategory.expenseCategoryId,
+          expenseCategoryType: formValues.expenseCategoryType,
+          expenseCategoryName: formValues.expenseCategoryName,
+          expenseCategoryNameHeb: formValues.expenseCategoryNameHeb,
+          accountingCode: formValues.accountingCode,
+          isActive: this.selectedExpenseCategory.isActive // Assuming you want to keep the isActive status unchanged
+      };
+
+      this.expenseCategoryService.updateExpenseCategory(updatedExpenseCategory).subscribe(
+          () => {
+              this.customMessageService.showSuccessMessage('Expense category is updated');
+              this.expenseCategoryForm.reset();
+              this.expenseCategoryFormSubmitted = false;
+              this.loadExpensesCategory();
+              this.selectedExpenseCategory = null; 
+          },
+          (error) => {
+              console.error('Error updating expense category:', error);
+              this.customMessageService.showErrorMessage('An error occurred while updating the expense category');
+          }
+      );
+  } else {
+      this.expenseCategoryFormSubmitted = true;
+  }
+}
+
+  addExpenseCategory() {
     if (this.expenseCategoryForm.valid) {
       const formValues = this.expenseCategoryForm.value;
 

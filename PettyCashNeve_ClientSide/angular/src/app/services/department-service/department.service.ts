@@ -75,7 +75,7 @@ export class DepartmentService {
   }
 
   deleteDepartment(departmentId: number): Observable<any> {
-    const url = `${this.baseUrlDepartment}/DeleteDepartmentAndAssociatedData/${departmentId}`;
+    const url = `${this.baseUrlDepartment}/deleteDepartment/${departmentId}`;
     return this.http.delete(url).pipe(
       catchError((error) => {
         console.error('Error in deleteDepartment function', error);

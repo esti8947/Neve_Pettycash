@@ -10,10 +10,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { MatIconModule } from '@angular/material/icon';
 
 import { ButtonModule } from 'primeng/button';
@@ -40,7 +38,7 @@ import { MenuModule } from 'primeng/menu';
 
 
 import { HomeManagerComponent } from './components/manager/home-manager/home-manager/home-manager.component';
-import { HomeDepartmentComponent } from './components/secretary/home-department/home-department.component';
+import { HomeDepartmentComponent } from './components/shared/home-department/home-department.component';
 import { ChooseLanguageComponent } from './components/shared/choose-language/choose-language.component';
 import { ExpenseReportComponent } from './components/shared/expense-report/expense-report.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -48,9 +46,7 @@ import { MonthlyCashRegisterComponent } from './components/shared/monthly-cash-r
 import { BudgetInformationComponent } from './components/shared/budget-information/budget-information.component';
 import { AddExpenseComponent } from './components/secretary/add-expense/add-expense.component';
 import { AddEventComponent } from './components/secretary/add-event/add-event.component';
-import { CreateUpdateEventCategoryComponent } from './components/secretary/create-update-event-category/create-update-event-category.component';
 import { SignInComponent } from './components/shared/sign-in/sign-in.component';
-import { UserProfileComponent } from './components/shared/user-profile/user-profile.component';
 import { AuthService } from './services/auth-service/auth.service';
 import { AuthInterceptor } from './services/auth-service/authconfig.interceptor';
 import { PreviousExpensesComponent } from './components/shared/previous-expenses/previous-expenses.component';
@@ -60,7 +56,6 @@ import { ChooseDepartmentComponent } from './components/manager/choose-departmen
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
-import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 import { DepartmentInformationComponent } from './components/manager/department-information/department-information/department-information.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,16 +73,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     BudgetInformationComponent,
     AddExpenseComponent,
     AddEventComponent,
-    CreateUpdateEventCategoryComponent,
     SignInComponent,
-    UserProfileComponent,
     PreviousExpensesComponent,
     AddMonthlyCashRegisterComponent,
     ChooseDepartmentComponent,
     DynamicNavbarComponent,
     LockExpensesButtonComponent,
     UsersOfDepartmentComponent,
-    PhoneNumberPipe,
     DepartmentInformationComponent,
     
   ],

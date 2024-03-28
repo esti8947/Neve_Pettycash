@@ -4,7 +4,7 @@
   <div id="addMonthlyRegisterForm">
     <form [formGroup]="formGroup">
       <div class="form-group">
-        <p-dropdown formControlName="selectedMonth" [options]="months"  optionLabel="name" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+        <p-dropdown formControlName="selectedMonth" [options]="months" [placeholder] = "'Month'"  optionLabel="name" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
       </div>
       <div class="form-group">
         <input type="text" pInputText formControlName="currentYear" [placeholder]="'Current Year'|translate">

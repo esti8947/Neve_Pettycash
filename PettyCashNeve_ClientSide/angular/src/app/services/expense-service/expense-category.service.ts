@@ -24,6 +24,16 @@ export class ExpenseCategoryService {
     return this.http.delete<any>(url);
   }
 
+  updateExpenseCategory(expenseCategory:ExpenseCategory):Observable<any>{
+    const url = `${this.baseUrlExpenseCategory}/updateExpenseCategory`;
+    return this.http.put<ExpenseCategory>(url, expenseCategory).pipe(
+      catchError((error)=>{
+        console.error('Error in updateDepartment function', error);
+        return throwError(error)
+      }),
+    );
+  }
+
   addExpenseCategory(newExpenseCategory:ExpenseCategory):Observable<any>{
     const url = `${this.baseUrlExpenseCategory}/createExpenseCategory`;
     return this.http.post<ExpenseCategory>(url, newExpenseCategory).pipe(

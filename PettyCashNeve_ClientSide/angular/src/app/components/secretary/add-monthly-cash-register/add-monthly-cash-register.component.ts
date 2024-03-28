@@ -28,8 +28,6 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
   }
 
   loadMonths() {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
   
     const monthNames = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -50,7 +48,7 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
     const currentYear = currentDate.getFullYear(); 
 
     this.formGroup = this.formBuilder.group({
-      selectedMonth: new FormControl<number>(currentMonth ,Validators.required),
+      selectedMonth: new FormControl<number>(0 ,Validators.required),
       currentYear: new FormControl<number>(currentYear, Validators.required),
     });
   }
@@ -81,7 +79,6 @@ export class AddMonthlyCashRegisterComponent implements OnInit{
         this.formGroup.reset();
         this.router.navigate(['navbar']);
         this.customMessageService.showSuccessMessage('Monthly register added successfully');
-  
       } catch (error) {
         console.error('An error occurred while adding the monthly register:', error);
         this.customMessageService.showErrorMessage('An error occurred while adding the monthly register');

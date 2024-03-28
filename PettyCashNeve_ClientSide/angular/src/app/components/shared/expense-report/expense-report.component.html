@@ -10,10 +10,10 @@
   <div class="expensesReportHeaders">
     <h4>{{formatMonthYear()}}</h4>
 
-    <div class="flex" *ngIf="currentUser?.isManager && expenses && expenses.length > 0">
-      <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportToExcel()"
+    <div class="flex">
+      <button *ngIf=" expenses && expenses.length > 0" type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportToExcel()"
         class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
-      <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportToPDF()" class="p-button-warning mr-2"
+      <button *ngIf="currentUser?.isManager && expenses && expenses.length > 0" type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportToPDF()" class="p-button-warning mr-2"
         pTooltip="PDF" tooltipPosition="bottom"></button>
     </div>
   </div>

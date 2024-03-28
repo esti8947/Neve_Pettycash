@@ -224,9 +224,10 @@ export class ExpenseReportComponent implements OnInit {
   async exportToPDF() {
     const doc = new jsPDF();
 
-    doc.setFont('Tahoma');
+    doc.setFont('Arial');
     doc.setFontSize(12);
 
+    //table with expenses details not in use in pdf file.
     // const data = this.expenses.map((item) => [
     //   item.expense.expenseId,
     //   item.expense.expenseAmount,
@@ -255,7 +256,8 @@ export class ExpenseReportComponent implements OnInit {
     });
 
     const expenseCategories: number[] = [...new Set(this.expenses.map(expense => expense.expense.expenseCategoryId))];
-    let verticalPosition = doc.internal.pageSize.height - 10;
+    
+    let verticalPosition = 20;
     expenseCategories.forEach(categoryId => {
       const totalByCategory = this.calculateTotalExpensesByCategory(categoryId).toFixed(2);
       const categoryName = this.expenses.find(expense => expense.expense.expenseCategoryId === categoryId)?.expenseCategoryName || '';
@@ -263,12 +265,12 @@ export class ExpenseReportComponent implements OnInit {
       doc.text(`Category: ${categoryName} (${accountingCode})`, 14, verticalPosition);
       doc.text(`Total Expenses Amount: ${totalByCategory}`, 14, verticalPosition + 5);
 
-      verticalPosition -= 15;
+      verticalPosition += 15;
     });
   
 
     const totalExpensesAmount = this.calculateTotalExpensesAmount().toFixed(2);
-    verticalPosition -= 10;
+    verticalPosition += 10;
     doc.setFontSize(16)
     doc.text(`Total Expenses Amount ${this.month}/${this.year}: ${totalExpensesAmount}`, 14, verticalPosition);
 

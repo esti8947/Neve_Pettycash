@@ -14,5 +14,7 @@ namespace BL.Repositories.ExpenseCategoryRepository
         Task<string> GetExpenseCategoryNameByIdAsync(int id);
         Task<bool> CreateExpenseCategoryAsync(ExpenseCategory expenseCategory);
         Task<bool> DeleteExpenseCategory(int expenseCategoryId);
+        Task<bool> UpdateExpenseCategory(ExpenseCategory updatedExpneseCategory);
+
     }
 }

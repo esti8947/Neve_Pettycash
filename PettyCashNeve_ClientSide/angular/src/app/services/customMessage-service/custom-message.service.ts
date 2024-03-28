@@ -22,13 +22,6 @@ export class CustomMessageService {
       detail: message,
     });
   }
-  showErrorMessage1(message: string, errorDetail: string): void {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: `${message}: ${errorDetail}`,
-    });
-  }
   
   showRejectedMessage(message: string): void {
     this.messageService.add({

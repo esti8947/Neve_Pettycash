@@ -42,7 +42,7 @@
     </div>
     <div class="form-group">
       <label class="label" for="expenseDate" translate>addExpenseForm.Expense date</label>
-      <p-calendar [(ngModel)]="minDateValue" [defaultDate]="minDateValue" [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate"
+      <p-calendar [defaultDate]="minDateValue" [minDate]="minDateValue" [maxDate]="maxDateValue" formControlName="expenseDate"
         dateFormat="dd/mm/yy" appendTo="body" [style]="{'width':'100%'}"></p-calendar>
       <div>
         <small class="small" *ngIf="isInvalid('expenseDate')" translate>addExpenseForm.Please enter an expense date.</small>

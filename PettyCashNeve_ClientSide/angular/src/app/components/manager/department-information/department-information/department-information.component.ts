@@ -251,7 +251,7 @@ export class DepartmentInformationComponent implements OnInit {
     const departmentId = department.departmentId;
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: this.translateService.instant('messages.deleteDepartmentConfirmation'),
+      message: this.translateService.instant('messages.deactivateDepartmentConfirmation'),
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-sm',
       accept: () => {

@@ -42,5 +42,12 @@ namespace PettyCashNeve_ServerSide.Controllers
             return HandleResponse(serviceResponse);
         }
 
+        [HttpPut("updateExpenseCategory")]
+        public async Task<IActionResult> UpdateExpenseCategory([FromBody] ExpenseCategoryDto updatedExpenseCategory)
+        {
+            var serviceResponse = await _expenseCategoryService.UpdateExpenseCategory(updatedExpenseCategory);
+            return HandleResponse(serviceResponse);
+        }
+
     }
 }
