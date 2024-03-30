@@ -70,6 +70,7 @@ export class HomeManagerComponent implements OnInit {
     this.loadEventCategory();
     this.loadBuyers();
     this.initializeForms();
+
   }
 
   initializeForms() {
@@ -146,7 +147,6 @@ export class HomeManagerComponent implements OnInit {
           this.loadDepartments(); 
           // this.departmentDataService.updateDepartmentsArray(this.departments);
           // this.router.navigate(['/home-manager/department-information']);
-
         },
         (error) => {
           console.error('Error saving department:', error);
