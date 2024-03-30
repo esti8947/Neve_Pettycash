@@ -22,6 +22,12 @@ namespace PettyCashNeve_ServerSide.Controllers
             var serviceResponse = await _departmentService.GetDepartmentsAsync();
             return HandleResponse(serviceResponse);
         }
+        [HttpGet("getInactiveDepartments")]
+        public async Task<IActionResult> GetInactiveDepartments()
+        {
+            var serviceResponse = await _departmentService.GetInactiveDepartments();
+            return HandleResponse(serviceResponse);
+        }
 
         [HttpGet("getDepartmentById/{id}")]
         public async Task<IActionResult> GetDepartmentById(int id)
@@ -34,6 +40,14 @@ namespace PettyCashNeve_ServerSide.Controllers
         public async Task<IActionResult> DeleteDepartment(int id)
         {
             var serviceResponse = await _departmentService.DeleteDepartmentAsync(id);
+            return HandleResponse(serviceResponse);
+        }
+
+        [HttpGet("activateDepartment/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ActivateDepartment(int id)
+        {
+            var serviceResponse = await _departmentService.ActivateDepartment(id);
             return HandleResponse(serviceResponse);
         }
 

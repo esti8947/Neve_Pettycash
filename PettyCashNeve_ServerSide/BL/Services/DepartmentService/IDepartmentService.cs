@@ -9,9 +9,11 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
     public interface IDepartmentService
     {
         Task<ServiceResponse<List<DepartmentDto>>> GetDepartmentsAsync();
+        public Task<ServiceResponse<List<DepartmentDto>>> GetInactiveDepartments();
         Task<ServiceResponse<DepartmentDto>> GetDepartmentByIdAsync(int departmentID);
         Task<ServiceResponse<bool>> UpdateDepartmentAsync(DepartmentDto updatedDepartment);
         Task<ServiceResponse<bool>> DeleteDepartmentAsync(int departmentId);
+        public Task<ServiceResponse<bool>> ActivateDepartment(int departmentId);
         Task<ServiceResponse<bool>> DeleteDepartmentAndAssociatedDataAsync(int departmentId);
         Task<ServiceResponse<bool>> CreateDepartmentAsync(DepartmentDto departmentDto);
         Task<ServiceResponse<List<UserInfoModel>>> GetUsersByDepartmentId(int departmentId);

@@ -21,7 +21,7 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
         private readonly IEventRepository _eventRepository;
         private readonly IMonthlyCashRegisterRepository _monthlyCashRegisterRepository;
         public DepartmentRepository(PettyCashNeveDbContext context, IAnnualBudgetRepository annualBudgetRepository, IMonthlyBudgetRepository monthlyBudgetRepository, IRefundBudgetRepository refundBudgetRepository
-            ,IExpenseRepository expenseRepository, IEventRepository eventRepository, IMonthlyCashRegisterRepository monthlyCashRegisterRepository)
+            , IExpenseRepository expenseRepository, IEventRepository eventRepository, IMonthlyCashRegisterRepository monthlyCashRegisterRepository)
         {
             _context = context;
             _annualBudgetRepository = annualBudgetRepository;
@@ -37,6 +37,20 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
             try
             {
                 IQueryable<Department> departmentsQuery = _context.Departments.Where(d => d.IsCurrent == true);
+                var departmentsDB = await departmentsQuery.ToListAsync();
+                return departmentsDB;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception if needed
+                throw;
+            }
+        }
+        public async Task<List<Department>> GetInactiveDepartments()
+        {
+            try
+            {
+                IQueryable<Department> departmentsQuery = _context.Departments.Where(d => d.IsCurrent == false);
                 var departmentsDB = await departmentsQuery.ToListAsync();
                 return departmentsDB;
             }
@@ -75,6 +89,27 @@ namespace PettyCashNeve_ServerSide.Repositories.DepartmentRepository
                 }
 
                 department.IsCurrent = false;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception if needed
+                throw;
+            }
+        }
+
+        public async Task<bool> ActivateDepartment(int departmentId)
+        {
+            try
+            {
+                var department = await _context.Departments.FirstOrDefaultAsync(d => d.DepartmentId == departmentId && d.IsCurrent == false);
+                if (department == null)
+                {
+                    throw new NotFoundException("Department not found or not active");
+                }
+
+                department.IsCurrent = true;
                 await _context.SaveChangesAsync();
                 return true;
             }

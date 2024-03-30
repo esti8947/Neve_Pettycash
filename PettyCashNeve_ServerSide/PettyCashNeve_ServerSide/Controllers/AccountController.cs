@@ -1,4 +1,5 @@
-﻿using DAL.Data;
+﻿using BL.Services.EmailService;
+using DAL.Data;
 using DAL.Models;
 using Entities.Models_Dto.UserDto;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,7 @@ namespace PettyCashNeve_ServerSide.Controllers
         private SignInManager<NdbUser> _signInManager;
         private IDepartmentRepository _departmentRepository;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailService _emailService;
         PettyCashNeveDbContext _dbContext;
 
         public AccountController(UserManager<NdbUser> userManager,
@@ -31,7 +33,8 @@ namespace PettyCashNeve_ServerSide.Controllers
                                  PettyCashNeveDbContext dbContext,
                                  IConfiguration configuration,
                                  IDepartmentRepository departmentRepository,
-                                 RoleManager<IdentityRole> roleManager)
+                                 RoleManager<IdentityRole> roleManager,
+                                 IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +42,7 @@ namespace PettyCashNeve_ServerSide.Controllers
             _configuration = configuration;
             _departmentRepository = departmentRepository;
             _roleManager = roleManager;
+            _emailService = emailService;
         }
 
         [Route("Register")]
@@ -317,6 +321,48 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("restorePassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RestorePassword(RestorePasswordModel model)
+        {
+            try
+            {
+                // Verify user identity based on username and email
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user == null || user.Email != model.Email)
+                {
+                    // User not found or email does not match
+                    return BadRequest("Invalid username or email.");
+                }
+
+                // Generate a new password
+                string newPassword = GenerateRandomPassword(); // Implement this method to generate a random password
+
+                // Reset the user's password
+                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var resetResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+                if (resetResult.Succeeded)
+                {
+                    // Optionally, notify the user of the new password via email or other means
+                    // Send email notification with the new password
+                    await _emailService.SendEmailAsync(model.Email, "Password Reset", $"Your new password is: {newPassword}");
+
+                    return Ok("Password reset successfully. New password sent to your email.");
+                }
+                else
+                {
+                    // Password reset failed
+                    return BadRequest("Failed to reset password.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
         [Route("getUsersByDepartmentId/{departmentId}")]
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -407,6 +453,15 @@ namespace PettyCashNeve_ServerSide.Controllers
 
             return user;
         }
+
+        private string GenerateRandomPassword()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            return new string(Enumerable.Repeat(chars, 6)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
     }
     public static class Roles
     {
@@ -443,4 +498,11 @@ namespace PettyCashNeve_ServerSide.Controllers
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
     }
+
+    public class RestorePasswordModel
+    {
+        public string Username { get; set; }
+        public string Email { get; set; }
+    }
+
 }

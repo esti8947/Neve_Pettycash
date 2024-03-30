@@ -19,7 +19,7 @@
       <label class="label" for="selectedEventCategory" translate>addExpenseForm.Expense Category</label>
       <p-dropdown formControlName="selectedExpenseCategory" [options]="expensesCategory"
         [optionLabel]="getOptionLabel('expenseCategory')"
-        appendTo="body" [style]="{'width':'100%'}" placeholder="'">
+        appendTo="body" [style]="{'width':'100%'}" placeholder="">
       </p-dropdown>
       <div>
         <small class="small" *ngIf="isInvalid('selectedExpenseCategory')" translate>addExpenseForm.Please select an expense
@@ -51,7 +51,7 @@
     <div class="form-group">
       <label class="label" for="selectedBuyer" translate>addExpenseForm.buyer</label>
       <p-dropdown formControlName="selectedBuyer" [options]="buyers" appendTo="body"
-        placeholder="'" [optionLabel]="getOptionLabel('buyer')"
+        placeholder="" [optionLabel]="getOptionLabel('buyer')"
         [style]="{'width':'100%'}"></p-dropdown>
     </div>
     <div class="form-group">

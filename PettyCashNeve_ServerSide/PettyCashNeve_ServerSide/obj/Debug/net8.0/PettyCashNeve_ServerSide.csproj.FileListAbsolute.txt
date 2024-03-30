@@ -520,3 +520,6 @@ D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\obj\Debu
 D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\obj\Debug\net8.0\PettyCashNeve_ServerSide.pdb
 D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\obj\Debug\net8.0\PettyCashNeve_ServerSide.genruntimeconfig.cache
 D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\obj\Debug\net8.0\ref\PettyCashNeve_ServerSide.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\bin\Debug\net8.0\MailKit.dll
+D:\App\Neve_Pettycash\PettyCashNeve_ServerSide\PettyCashNeve_ServerSide\bin\Debug\net8.0\MimeKit.dll

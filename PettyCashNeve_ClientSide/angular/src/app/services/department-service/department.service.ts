@@ -45,6 +45,16 @@ export class DepartmentService {
     );
   }
 
+  getInactiveDepartments(): Observable<any> {
+    const url = `${this.baseUrlDepartment}/getInactiveDepartments`;
+    return this.http.get<any>(url).pipe(
+      catchError((error) => {
+        console.error('Error in getInactiveDepartments function', error);
+        return throwError(error);
+      }),
+    );
+  }
+
   getDepartmentById(id: number): Observable<any> {
     const url = `${this.baseUrlDepartment}/GetDepartmentById/${id}`;
     return this.http.get(url).pipe(
@@ -83,7 +93,15 @@ export class DepartmentService {
       }),
     );
   }
-
+  activateDepartment(departmentId: number): Observable<any> {
+    const url = `${this.baseUrlDepartment}/activateDepartment/${departmentId}`;
+    return this.http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error in activateDepartment function', error);
+        return throwError(error);
+      }),
+    );
+  }
   updateDepartment(updatedDepartment: Department): Observable<any> {
     const url = `${this.baseUrlDepartment}/updateDepartment`;
     return this.http.put<Department>(url, updatedDepartment).pipe(

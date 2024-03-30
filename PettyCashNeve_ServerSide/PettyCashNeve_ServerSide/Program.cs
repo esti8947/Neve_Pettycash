@@ -11,10 +11,9 @@ using BL.Repositories.ExpenseRepository;
 using BL.Repositories.MonthlyBudgetRepository;
 using BL.Repositories.RefundBudgetRepository;
 using BL.Repositories.UserRepository;
-using BL.Services.ActiveDirectoryService;
 using BL.Services.AnnualBudgetService;
-using BL.Services.AuthService;
 using BL.Services.BudgetTypeService;
+using BL.Services.EmailService;
 using BL.Services.EventCategoryService;
 using BL.Services.EventService;
 using BL.Services.ExpenseCategoryService;
@@ -24,6 +23,7 @@ using BL.Services.RefundBudgetService;
 using BL.Services.UserService;
 using DAL.Data;
 using DAL.Models;
+using Entities.Models_Dto;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -193,6 +193,9 @@ builder.Services.Configure<IISServerOptions>(options =>
     options.AutomaticAuthentication = false;
     options.AllowSynchronousIO = true;
 });
+
+builder.Services.Configure<EmailSetting>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 var app = builder.Build();
 

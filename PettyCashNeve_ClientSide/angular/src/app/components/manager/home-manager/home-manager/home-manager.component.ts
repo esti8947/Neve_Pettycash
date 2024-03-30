@@ -52,9 +52,9 @@ export class HomeManagerComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private departmentService: DepartmentService,
-    private departmentDataService: DepartmentDataService,
     private expenseCategoryService: ExpenseCategoryService,
     private eventCategoryService: EventCategoryService,
+    private departmentDataService:DepartmentDataService,
     private buyerService: BuyerService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -70,6 +70,11 @@ export class HomeManagerComponent implements OnInit {
     this.loadEventCategory();
     this.loadBuyers();
     this.initializeForms();
+
+    this.departmentDataService.departmentsArray$.subscribe(() => {
+      // Refresh departments list here
+      this.loadDepartments();
+    });
 
   }
 
@@ -121,7 +126,6 @@ export class HomeManagerComponent implements OnInit {
     return control ? (control.touched || formSubmitted) && control.invalid : false;
   }
 
-
   saveDepartment() {
     if (this.departmentForm.valid) {
       const formValues = this.departmentForm.value;
@@ -145,8 +149,6 @@ export class HomeManagerComponent implements OnInit {
           this.departmentForm.reset();
           this.departmentDialog = false;
           this.loadDepartments(); 
-          // this.departmentDataService.updateDepartmentsArray(this.departments);
-          // this.router.navigate(['/home-manager/department-information']);
         },
         (error) => {
           console.error('Error saving department:', error);
@@ -298,7 +300,7 @@ updateExpenseCategory() {
         console.error('An error occurred', error)
       }
     )
-  }
+  }  
 
   loadExpensesCategory() {
     this.expenseCategoryService.getAllExpenseCategories().subscribe(

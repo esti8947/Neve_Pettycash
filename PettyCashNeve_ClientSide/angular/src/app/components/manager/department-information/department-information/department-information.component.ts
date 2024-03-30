@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { Department } from 'src/app/models/department';
 import { DepartmentMoreInfo } from 'src/app/models/departmentMoreInfo';
-import { MonthlyCashRegister } from 'src/app/models/monthlyCashRegister';
+import { DepartmentDataService } from 'src/app/services/department-service/department-data.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { BudgetImformationService } from 'src/app/services/budget-information-service/budget-imformation.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
@@ -15,7 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DepartmentDataService } from 'src/app/services/department-service/department-data.service';
+import { error } from 'pdf-lib';
 
 @Component({
   selector: 'app-department-information',
@@ -24,22 +24,23 @@ import { DepartmentDataService } from 'src/app/services/department-service/depar
 })
 export class DepartmentInformationComponent implements OnInit {
   departmentsArray: DepartmentMoreInfo[] = [];
+  inActiveDepartmentsArray: any[] = [];
+  selectedDepartment:any;
 
   updateDepartmentDialog: boolean = false;
   departmentFormSubmitted = false;
   departmentForm!: FormGroup;
   departmentToUpdate: any;
 
-
   tableRowStyle = 'font-size: 14px; padding-left: 8px;';
 
   constructor(
     private departmentService: DepartmentService,
-    private departmentDataService:DepartmentDataService,
     private budgetInformationService: BudgetImformationService,
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private expenseService: ExpenseService,
     private authService: AuthService,
+    private departmentDataService:DepartmentDataService,
     private router: Router,
     private translateService: TranslateService,
     private monthNameService: MonthNameService,
@@ -51,10 +52,14 @@ export class DepartmentInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDepartments();
+    this.loadInactiveDepartments();
     this.initializeForm();
 
     this.departmentService.departmentAdded$.subscribe(() => {
       this.loadDepartments();
+    });
+    this.departmentDataService.departmentsArray$.subscribe(departments => {
+      this.departmentsArray = departments;
     });
   }
 
@@ -68,6 +73,16 @@ export class DepartmentInformationComponent implements OnInit {
         console.error('An error occurred:', error);
       },
     );
+  }
+  loadInactiveDepartments() {
+    this.departmentService.getInactiveDepartments().subscribe(
+      (data) => {
+        this.inActiveDepartmentsArray = data.data;
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    )
   }
 
   selectDepartment(selectedDepartment: any) {
@@ -259,6 +274,8 @@ export class DepartmentInformationComponent implements OnInit {
           (data) => {
             this.customMessageService.showSuccessMessage('department is deleted');
             this.loadDepartments();
+            this.loadInactiveDepartments();
+            this.departmentDataService.updateDepartmentsArray(this.departmentsArray);
           },
           (error) => {
             console.error('An error occurred:', error);
@@ -318,6 +335,22 @@ export class DepartmentInformationComponent implements OnInit {
       );
       this.departmentToUpdate = undefined;
     }
+  }
+
+  activateDepartment(department:any){
+    this.departmentService.activateDepartment(department.departmentId).subscribe(
+      () => {
+        this.customMessageService.showSuccessMessage('department is activate');
+        this.loadDepartments();
+        this.loadInactiveDepartments();
+        this.departmentDataService.updateDepartmentsArray(this.departmentsArray);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+        this.customMessageService.showErrorMessage('An error occurred while active the department');
+      }
+    );
+
   }
 
   initializeForm() {

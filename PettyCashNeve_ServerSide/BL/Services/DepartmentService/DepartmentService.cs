@@ -40,6 +40,27 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             }
         }
 
+        public async Task<ServiceResponse<List<DepartmentDto>>> GetInactiveDepartments()
+        {
+            var serviceResponse = new ServiceResponse<List<DepartmentDto>>();
+            try
+            {
+                var departments = await _departmentRepository.GetInactiveDepartments();
+                var departmentDtos = _mapper.Map<List<DepartmentDto>>(departments);
+                if (departmentDtos == null)
+                {
+                    serviceResponse.Message = "no departments found";
+                }
+                serviceResponse.Data = departmentDtos;
+                return serviceResponse;
+
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<List<DepartmentDto>> { Success = false, Message = ex.Message };
+            }
+        }
+
         public async Task<ServiceResponse<DepartmentDto>> GetDepartmentByIdAsync(int departmentId)
         {
             try
@@ -59,6 +80,18 @@ namespace PettyCashNeve_ServerSide.Services.DepartmentService
             try
             {
                 var result = await _departmentRepository.DeleteDepartmentAsync(departmentId);
+                return new ServiceResponse<bool> { Data = result };
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse<bool> { Success = false, Message = ex.Message };
+            }
+        }
+        public async Task<ServiceResponse<bool>> ActivateDepartment(int departmentId)
+        {
+            try
+            {
+                var result = await _departmentRepository.ActivateDepartment(departmentId);
                 return new ServiceResponse<bool> { Data = result };
             }
             catch (Exception ex)
