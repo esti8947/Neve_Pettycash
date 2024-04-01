@@ -39,6 +39,12 @@ namespace BL.Repositories.ExpenseCategoryRepository
             return expensesCategory;
         }
 
+        public async Task<List<ExpenseCategory>> GetActiveAndInactiveExpenseCategoryAsync()
+        {
+            var expensesCategory = await _context.ExpenseCategories.ToListAsync();
+            return expensesCategory;
+        }
+
         public async Task<ExpenseCategory> GetExpenseCategoryByIdAsync(int id)
         {
             try
@@ -92,8 +98,29 @@ namespace BL.Repositories.ExpenseCategoryRepository
                 }
             }
             return false;
-
         }
+
+        public async Task<bool> ActivateExpenseCategory(int expenseCategoryId)
+        {
+            var expenseCategoryToActivate = await _context.ExpenseCategories
+                .FirstOrDefaultAsync(ec => ec.ExpenseCategoryId == expenseCategoryId);
+            if (expenseCategoryToActivate != null)
+            {
+                try
+                {
+                    expenseCategoryToActivate.IsActive = true;
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return false;
+        }
+
 
         public async Task<bool> UpdateExpenseCategory(ExpenseCategory updatedExpneseCategory)
         {

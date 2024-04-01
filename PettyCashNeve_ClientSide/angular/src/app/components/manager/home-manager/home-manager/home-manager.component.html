@@ -122,11 +122,16 @@
                     <ng-template let-expenseCategory pTemplate="item">
                         <div class="items">
                             <p-confirmPopup></p-confirmPopup>
-                            <div (click)="deleteExpenseCategory($event, expenseCategory)">
-                                <i class="fa fa-trash"></i>
+                            <div class="items" *ngIf="expenseCategory.isActive">
+                                <div (click)="deleteExpenseCategory($event, expenseCategory)">
+                                    <i class="fa fa-trash"></i>
+                                </div>
+                                <div (click)="populateFormWithExpenseCategory(expenseCategory)">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
                             </div>
-                            <div (click)="populateFormWithExpenseCategory(expenseCategory)">
-                                <i class="fa fa-pencil"></i>
+                            <div *ngIf="!expenseCategory.isActive">
+                                <button class="activateButton" (click)="activateExpenseCategory(expenseCategory)" translate>departmentInformation.Activate</button>
                             </div>
                             <span>{{ expenseCategory[getExpenseCategoryOptionLabel()] }}</span>
                         </div>
@@ -205,8 +210,11 @@
                     <ng-template let-eventCategory pTemplate="item">
                         <div class="items">
                             <p-confirmPopup></p-confirmPopup>
-                            <div (click)="deleteEventCategory($event, eventCategory)">
+                            <div *ngIf="eventCategory.isActive" (click)="deleteEventCategory($event, eventCategory)">
                                 <i class="fa fa-trash"></i>
+                            </div>
+                            <div *ngIf="!eventCategory.isActive">
+                                <button class="activateButton" (click)="activateEventCategory(eventCategory)" translate>departmentInformation.Activate</button>
                             </div>
                             <span>{{ eventCategory[getEventCategoryOptionLabel()] }}</span>
                         </div>

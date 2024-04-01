@@ -40,14 +40,16 @@
     <p translate>{{getCurrentBudgetAmount()}}</p>
     <form [formGroup]="addAmountForm">
         <div class="form-group">
-            <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
+            <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS"
                 formControlName="amountToAdd"
                 [placeholder]="'insertRefundAmount.refund amount'|translate"></p-inputNumber>
-            <small class="small" *ngIf="isInvalid('amountToAdd', addAmountForm, addAmountFormSubmitted)" translate>globalForm.Please fill
+            <small class="small" *ngIf="isInvalid('amountToAdd', addAmountForm, addAmountFormSubmitted)"
+                translate>globalForm.Please fill
                 in all required fields</small>
         </div>
         <div>
-            <button class="button saveButton" pButton type="button" (click)="addingAmountToBudget()">{{ 'insertRefundAmount.insert
+            <button class="button saveButton" pButton type="button" (click)="addingAmountToBudget()">{{
+                'insertRefundAmount.insert
                 refund amount' | translate }}
             </button>
         </div>
@@ -55,13 +57,14 @@
 </p-dialog>
 <p-dialog [(visible)]="newYearDialog" [style]="{ width: '650px' }" [header]="'openNewYear.New Year' | translate"
     [modal]="true" styleClass="p-fluid">
-    <div class="warning" translate><i class="pi pi-info-circle" ></i> openNewYear.To open a new year, please ensure that all cash registers are approved and all expenses are locked</div>
+    <div class="warning" translate><i class="pi pi-info-circle"></i> openNewYear.To open a new year, please ensure that
+        all cash registers are approved and all expenses are locked</div>
     <form [formGroup]="newYearFormGroup">
         <div class="form-group">
             <label class="label" for="newYear" translate>openNewYear.New Year</label>
             <input type="text" pInputText formControlName="newYear" placeholder="YYYY-YYYY">
-            <small class="small" *ngIf="isInvalid('newYear', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback"
-                translate>
+            <small class="small" *ngIf="isInvalid('newYear', newYearFormGroup, newYearFromSubmitted)"
+                class="invalid-feedback" translate>
                 openNewYear.New Year is required and must be in the format YYYY-YYYY</small>
         </div>
         <div class="form-group">
@@ -69,8 +72,8 @@
             <p-dropdown formControlName="budgetType" [options]="budgetTypes" [optionLabel]="getOptionLabel()"
                 [placeholder]="'openNewYear.select budget type'|translate" appendTo="body" [style]="{'width':'100%'}"
                 (onChange)="onBudgetTypeChange($event.value.budgetTypeId)"></p-dropdown>
-            <small class="small" *ngIf="isInvalid('budgetType', newYearFormGroup, newYearFromSubmitted)" class="invalid-feedback"
-                translate>
+            <small class="small" *ngIf="isInvalid('budgetType', newYearFormGroup, newYearFromSubmitted)"
+                class="invalid-feedback" translate>
                 openNewYear.Budget Type is required
             </small>
         </div>
@@ -86,7 +89,8 @@
         <div *ngIf="budgetTypeId == 2" class="form-group">
             <!-- Show if Monthly Budget selected -->
             <div class="form-group">
-                <label class="label" for="monthlyBudgetAmount" translate>openNewYear.Monthly Budget Amount for first month</label>
+                <label class="label" for="monthlyBudgetAmount" translate>openNewYear.Monthly Budget Amount for first
+                    month</label>
                 <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
                     formControlName="monthlyBudgetAmount" [showButtons]="false"></p-inputNumber>
                 <small class="small" *ngIf="isInvalid('monthlyBudgetAmount', newYearFormGroup, newYearFromSubmitted)"
@@ -124,7 +128,8 @@
             <label class="label" for="monthlyBudgetAmount" translate>AddMothnlyBudgetDialog.Amount to added</label>
             <p-inputNumber inputId="currency-il" mode="currency" currency="ILS" locale="he-IL"
                 formControlName="monthlyBudgetAmount" [showButtons]="false"></p-inputNumber>
-            <small class="small" *ngIf="isInvalid('monthlyBudgetAmount', addMonthlyBudgetForm, addMonthlyBudgetSubmitted)"
+            <small class="small"
+                *ngIf="isInvalid('monthlyBudgetAmount', addMonthlyBudgetForm, addMonthlyBudgetSubmitted)"
                 class="invalid-feedback" translate>openNewYear.Monthly Budget Amount is required
             </small>
         </div>
@@ -132,7 +137,8 @@
             <label class="label" for="MonthlyBudgetMonth" translate>globalForm.Select Month</label>
             <p-dropdown formControlName="MonthlyBudgetMonth" [options]="months" [placeholder]="'Select Month'|translate"
                 optionLabel="name" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
-            <small class="small" *ngIf="isInvalid('MonthlyBudgetMonth', addMonthlyBudgetForm, addMonthlyBudgetSubmitted)"
+            <small class="small"
+                *ngIf="isInvalid('MonthlyBudgetMonth', addMonthlyBudgetForm, addMonthlyBudgetSubmitted)"
                 class="invalid-feedback" translate>openNewYear.Month is required
             </small>
         </div>

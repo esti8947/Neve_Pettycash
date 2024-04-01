@@ -9,5 +9,6 @@ namespace BL.Services.EmailService
     public interface IEmailService
     {
         Task SendEmailAsync(string email, string subject, string message);
+        void Send(string to, string subject, string html, string from = null);
     }
 }

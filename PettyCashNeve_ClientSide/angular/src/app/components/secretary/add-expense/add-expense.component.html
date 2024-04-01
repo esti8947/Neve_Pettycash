@@ -9,7 +9,7 @@
       <label class="label" for="eventName" translate>addExpenseForm.select an event</label>
       <div class="input">
         <p-dropdown formControlName="selectedEvent" [options]="events" optionLabel="eventName" appendTo="body"
-           [style]="{'width':'100%'}" placeholder="'"></p-dropdown>
+           [style]="{'width':'100%'}" [placeholder]="'addExpenseForm.select an event'|translate"></p-dropdown>
         <div>
           <small class="small" *ngIf="isInvalid('selectedEvent')" translate>addExpenseForm.Please select an event.</small>
         </div>

@@ -248,6 +248,10 @@ export class ExpenseReportComponent implements OnInit {
     //     doc.text('PAGE', dataArg.settings.margin.left, 10);
     //   }
     // });
+    
+    const title = `${this.selectedDepartment.departmentName} - ${this.formatMonthYear()}`;
+    doc.text(title, 14, 10);
+    
     await this.loadExpenseCategories();
 
     const expenseCategoryAccountingCodes: { [categoryId: number]: string } = {};

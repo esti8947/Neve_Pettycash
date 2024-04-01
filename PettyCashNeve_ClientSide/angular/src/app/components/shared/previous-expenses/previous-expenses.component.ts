@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { DepartmentService } from 'src/app/services/department-service/department.service';
 import { ExpenseService } from 'src/app/services/expense-service/expense.service';
 import { MonthNameService } from 'src/app/services/month-name/month-name.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'previous-expenses',
@@ -15,6 +16,7 @@ import { MonthNameService } from 'src/app/services/month-name/month-name.service
 export class PreviousExpensesComponent implements OnInit {
   formGroup!: FormGroup;
   currentUser: any;
+  selectedDepartment:any;
   expenses: any[] = [];
   cols: any[] = [];
   years: any[] = [];
@@ -33,9 +35,12 @@ export class PreviousExpensesComponent implements OnInit {
     private monthNameService:MonthNameService,
     private router: Router,
     private translateService: TranslateService,
+    private departmentService:DepartmentService,
   ) { }
 
   ngOnInit(): void {
+    this.selectedDepartment = this.departmentService.getSelectedDepartment();
+
     const uniqueMonth = this.getUniqueMonths();
 
     this.currentUser = this.authService.getCurrentUser();
@@ -154,6 +159,34 @@ export class PreviousExpensesComponent implements OnInit {
       }
     )
   };
+
+  exportToExcel(): void {
+    const data = this.expenses.map((item: 
+       { expenseId: any; expenseAmount: any; storeName: any; expenseCategoryId: any; eventsId: any; departmentId: any; updatedBy: any; notes:any }
+    ) => {
+
+      // const eventName = item.eventName === 'DefaultEvent' ? '' : item.eventName;
+      
+      return {
+        'Expense ID': item.expenseId,
+        'Department Name': this.selectedDepartment.departmentName,
+        'Expense Amount':  `₪${item.expenseAmount}`,
+        'Store Name': item.storeName,
+        // 'Event Name': eventName, 
+        // 'Buyer Name': item.buyerName,
+        // 'Expense Category Name': item.expenseCategoryName,
+        // 'Expense Category Name Heb': item.expenseCategoryNameHeb,
+        "Notes": item.notes,
+      };
+    });
+    
+    const columns = Object.keys(data[0]);
+    const worksheet = XLSX.utils.json_to_sheet(data, { header: columns });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, 'data.xlsx');
+  }
+  
 
   showExpensesDetails(selectedYear: number, selectedMonth: number | string) {
     let monthNumber: number;

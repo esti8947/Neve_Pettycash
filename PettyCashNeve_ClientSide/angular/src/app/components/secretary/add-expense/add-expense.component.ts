@@ -86,7 +86,8 @@ export class AddExpenseComponent implements OnInit {
   loadEvents() {
     this.eventService.getEventsByUser().subscribe(
       (data) => {
-        this.events = data.data;
+        this.events = data.data;         
+
         if (this.events?.length > 0 || this.events != null) {
           this.isEvents = true;
         }

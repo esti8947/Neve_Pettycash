@@ -18,6 +18,10 @@ export class ExpenseCategoryService {
     const url = `${this.baseUrlExpenseCategory}/getAllExpensesCategory`;
     return this.http.get<any>(url);
   }
+  getActiveAndInactiveExpenseCategoryAsync(): Observable<any> {
+    const url = `${this.baseUrlExpenseCategory}/getActiveAndInactiveExpenseCategoryAsync`;
+    return this.http.get<any>(url);
+  }
 
   deleteExpenseCategory(expenseCategoryId:number):Observable<any>{
     const url = `${this.baseUrlExpenseCategory}/deleteExpenseCategory/${expenseCategoryId}`;
@@ -40,6 +44,15 @@ export class ExpenseCategoryService {
       catchError((error)=>{
         console.error('Error in addDepartment function', error);
         return throwError(error)
+      }),
+    );
+  }
+  activateExpenseCategory(expenseCategoryId: number): Observable<any> {
+    const url = `${this.baseUrlExpenseCategory}/activateExpenseCategory/${expenseCategoryId}`;
+    return this.http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error in activateExpenseCategory function', error);
+        return throwError(error);
       }),
     );
   }

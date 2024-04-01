@@ -26,8 +26,15 @@ namespace PettyCashNeve_ServerSide.Controllers
             return HandleResponse(serviceResponse);
         }
 
+        [HttpGet("getActiveAndInactiveExpenseCategoryAsync")]
+        public async Task<IActionResult> GetActiveAndInactiveExpenseCategoryAsync()
+        {
+            var serviceResponse = await _expenseCategoryService.GetActiveAndInactiveExpenseCategoryAsync();
+            return HandleResponse(serviceResponse);
+        }
+
         [HttpPost("createExpenseCategory")]
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateExpenseCategory([FromBody] ExpenseCategoryDto expenseCategory)
         {
             var serviceResponse = await _expenseCategoryService.CreateExpenseCategory(expenseCategory);
@@ -39,6 +46,14 @@ namespace PettyCashNeve_ServerSide.Controllers
         public async Task<IActionResult> DeleteExpenseCategory(int expenseCategoryId)
         {
             var serviceResponse = await _expenseCategoryService.DeleteExpenseCategory(expenseCategoryId);
+            return HandleResponse(serviceResponse);
+        }
+
+        [HttpGet("activateExpenseCategory/{expenseCategoryId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ActivateExpenseCategory(int expenseCategoryId)
+        {
+            var serviceResponse = await _expenseCategoryService.ActivateExpenseCategory(expenseCategoryId);
             return HandleResponse(serviceResponse);
         }
 

@@ -1,16 +1,20 @@
-<!-- <div class="inActiveDepartments"> -->
-    <div class="card flex justify-content-space-between inActiveDepartments">
+    <div *ngIf="inActiveDepartments" class="inActiveDepartments">
         <p-dropdown [options]="inActiveDepartmentsArray" [(ngModel)]="selectedDepartment" optionLabel="departmentName"
-            [showClear]="true" placeholder="Inactive departments">
+            [showClear]="true" [placeholder]="'departmentInformation.Inactive Departments' | translate">
             <ng-template let-department pTemplate="item">
                 <div class="department-item">
-                    <span>{{ department.departmentName }}</span>
-                    <button pButton type="button" label="Activate" class="activateButton" (click)="activateDepartment(department)"></button>
+                    <div>
+
+                        <span>{{ department.departmentName }}</span>
+                    </div>
+                    <div>
+
+                        <button pButton type="button" [label]="'departmentInformation.Activate' | translate" class="activateButton" (click)="activateDepartment(department)"></button>
+                    </div>
                 </div>
             </ng-template>
         </p-dropdown>
     </div>
-<!-- </div> -->
 
 <div class="departmentsCard">
     <div *ngFor="let department of departmentsArray" class="card-container">

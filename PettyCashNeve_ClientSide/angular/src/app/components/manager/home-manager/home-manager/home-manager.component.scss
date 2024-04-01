@@ -128,7 +128,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.5em;
+    margin: 0.3em;
 
     .fa {
       background: $primaryColor;
@@ -141,8 +141,15 @@ nav {
       cursor: pointer;
     }
   }
+
+  .activateButton {
+    padding: 0.4em;
+    margin: 0.3em;
+    border-radius: 5px;
+  }
 }
-.flexForm{
+
+.flexForm {
   width: 400px;
   margin-right: 50px;
   margin-left: 50px;

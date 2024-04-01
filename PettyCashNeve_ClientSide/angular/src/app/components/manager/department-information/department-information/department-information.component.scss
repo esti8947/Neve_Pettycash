@@ -18,31 +18,36 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease-in-out;
         cursor: pointer;
-        .editButtons{
+
+        .editButtons {
             margin-top: 15px;
             display: flex;
             flex-direction: column;
             margin-left: 10px;
             margin-right: 10px;
         }
+
         ::ng-deep {
             .p-button {
-              color: $secondaryColor;
-              background: none;
-              border-color: $secondaryColor;
-              margin: 1px;
+                color: $secondaryColor;
+                background: none;
+                border-color: $secondaryColor;
+                margin: 1px;
             }
-          }
-        departmentCard{
+        }
+
+        departmentCard {
             display: flex;
             justify-content: space-between;
         }
-        h2{
+
+        h2 {
             font-size: 24px;
             font-weight: 300;
             color: $bluegray-600;
         }
-        h3{
+
+        h3 {
             font-size: 22px;
             font-weight: 300;
             color: $bluegray-700;
@@ -57,26 +62,37 @@
         }
     }
 }
+
 .table-row {
     font-size: 12px;
     padding-left: 8px;
 }
 
-.inActiveDepartments{
-    .activateButton{
-        background-color: darkblue;
+.inActiveDepartments {
+    justify-content: space-between;
+    margin: 20px;
+    
+    .department-item{
+        display: flex;
+        justify-content: space-between;
+    }
+    .activateButton {
+        background-color: $bluegray-900;
         size: small;
-      
+        font-size: x-small;
+        border: none;
+        padding: 4px;
     }
 }
+
 .form-group {
     margin-bottom: 30px;
-  
+
     input {
-      width: 100%;
+        width: 100%;
     }
-  }
-  
-  .inputFlex {
+}
+
+.inputFlex {
     display: flex;
-  }
+}

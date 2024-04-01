@@ -40,6 +40,26 @@ namespace BL.Services.EventCategoryService
             }
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<List<EventCategoryDto>>> GetAllEventCategories()
+        {
+            var serviceResponse = new ServiceResponse<List<EventCategoryDto>>();
+            try
+            {
+                var eventCategories = await _eventCategoryRepository.getAllEventCategories();
+                if (eventCategories != null)
+                {
+                    var eventCategoriesDtos = _mapper.Map<List<EventCategoryDto>>(eventCategories);
+                    serviceResponse.Data = eventCategoriesDtos;
+                }
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
         public async Task<ServiceResponse<string>> GetEventCategoryNameById(int eventCategoryId)
         {
             var serviceResponse = new ServiceResponse<string>();
@@ -96,6 +116,23 @@ namespace BL.Services.EventCategoryService
             try
             {
                 var result = await _eventCategoryRepository.DeleteEventCategory(eventCategoryId);
+                serviceResponse.Success = result;
+                serviceResponse.Data = result;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> ActivateEventCategory(int eventCategoryId)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _eventCategoryRepository.ActivateEventCategory(eventCategoryId);
                 serviceResponse.Success = result;
                 serviceResponse.Data = result;
             }

@@ -1,4 +1,5 @@
 # .NET Core
+BL.dll
 bin/
 obj/
 *.dll
@@ -22,3 +23,4 @@ launchSettings.json
 *.log
 npm-debug.log
 yarn-error.log
+

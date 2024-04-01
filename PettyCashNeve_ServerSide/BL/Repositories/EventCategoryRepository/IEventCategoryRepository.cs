@@ -10,10 +10,13 @@ namespace BL.Repositories.EventCategoryRepository
     public interface IEventCategoryRepository
     {
         Task<List<EventCategory>> GetEventCategoriesAsync();
+        Task<List<EventCategory>> getAllEventCategories();
         Task<EventCategory> GetEventCategoryByIdAsync(int id);
         Task<string> GetEventCategoryNameByIdAsync(int id);
         Task<bool> CreateEventCategoryAsync(EventCategory newEventCategory);
         Task<bool> DeleteEventCategory(int expenseCategoryId);
+        Task<bool> ActivateEventCategory(int eventCategoryId);
+
 
     }
 }

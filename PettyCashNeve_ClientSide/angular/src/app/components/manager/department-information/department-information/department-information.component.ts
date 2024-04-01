@@ -26,6 +26,7 @@ export class DepartmentInformationComponent implements OnInit {
   departmentsArray: DepartmentMoreInfo[] = [];
   inActiveDepartmentsArray: any[] = [];
   selectedDepartment:any;
+  inActiveDepartments:boolean = false;
 
   updateDepartmentDialog: boolean = false;
   departmentFormSubmitted = false;
@@ -75,9 +76,14 @@ export class DepartmentInformationComponent implements OnInit {
     );
   }
   loadInactiveDepartments() {
+    this.inActiveDepartmentsArray = [{ name: '' }, ...this.inActiveDepartmentsArray];
+
     this.departmentService.getInactiveDepartments().subscribe(
       (data) => {
         this.inActiveDepartmentsArray = data.data;
+        if (this.inActiveDepartmentsArray?.length > 0 && this.inActiveDepartmentsArray != null) {
+          this.inActiveDepartments = true;
+        }
       },
       (error) => {
         console.error('An error occurred:', error);

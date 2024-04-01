@@ -21,6 +21,11 @@ namespace BL.Repositories.EventCategoryRepository
 
         public async Task<List<EventCategory>> GetEventCategoriesAsync()
         {
+            var eventCategoriesList = await _context.EventCategories.Where(ec => ec.IsActive).ToListAsync();
+            return eventCategoriesList;
+        }
+        public async Task<List<EventCategory>> getAllEventCategories()
+        {
             var eventCategoriesList = await _context.EventCategories.ToListAsync();
             return eventCategoriesList;
         }
@@ -85,9 +90,9 @@ namespace BL.Repositories.EventCategoryRepository
                 .FirstOrDefaultAsync(ec => ec.EventCategoryId == eventCategoryId);
             if (eventCategoryToDelete != null)
             {
+                eventCategoryToDelete.IsActive = false;
                 try
                 {
-                    _context.EventCategories.Remove(eventCategoryToDelete);
                     await _context.SaveChangesAsync();
                     return true;
                 }
@@ -99,6 +104,28 @@ namespace BL.Repositories.EventCategoryRepository
             }
             return false;
 
+        }
+
+        public async Task<bool> ActivateEventCategory(int eventCategoryId)
+        {
+            var eventCategory = await _context.EventCategories.FirstOrDefaultAsync(ec => ec.EventCategoryId == eventCategoryId);
+
+            if (eventCategory == null)
+            {
+                throw new NotFoundException("Event category not found.");
+            }
+
+            eventCategory.IsActive = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

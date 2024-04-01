@@ -10,6 +10,10 @@
                 <th *ngFor="let col of columns">
                     {{ col.header }}
                 </th>
+                <th>
+                  <button *ngIf=" expenses && expenses.length > 0" type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportToExcel()"
+                    class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">

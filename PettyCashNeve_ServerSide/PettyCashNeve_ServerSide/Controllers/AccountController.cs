@@ -344,9 +344,9 @@ namespace PettyCashNeve_ServerSide.Controllers
                 var resetResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
                 if (resetResult.Succeeded)
                 {
-                    // Optionally, notify the user of the new password via email or other means
-                    // Send email notification with the new password
+
                     await _emailService.SendEmailAsync(model.Email, "Password Reset", $"Your new password is: {newPassword}");
+                    _emailService.Send(model.Email, "Password Reset", $"Your new password is: {newPassword}", "ester38947@gmail.com");
 
                     return Ok("Password reset successfully. New password sent to your email.");
                 }

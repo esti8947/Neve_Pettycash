@@ -78,6 +78,12 @@ h4 {
     }
   }
 }
-.confirmExpensesTytle{
+.confirmExpensesTitle{
   text-align: center;
 }
+::ng-deep {
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 2px;
+  } 
+}
+

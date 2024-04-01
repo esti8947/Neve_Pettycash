@@ -18,7 +18,11 @@ export class EventCategoryService {
       `${this.baseUrlEventCategory}/getEventCategoriesAsync`,
     );
   }
-
+  getAllEventsCategories(): Observable<any> {
+    return this.http.get<EventCategory>(
+      `${this.baseUrlEventCategory}/getAllEventCategories`,
+    );
+  }
   addEventCategory(newEventCategory:EventCategory):Observable<any>{
     const url = `${this.baseUrlEventCategory}/createEventCategory`;
     return this.http.post<EventCategory>(url, newEventCategory).pipe(
@@ -32,5 +36,15 @@ export class EventCategoryService {
   deleteEventCategory(eventCategoryId:number):Observable<any>{
     const url = `${this.baseUrlEventCategory}/deleteEventCategory/${eventCategoryId}`;
     return this.http.delete<any>(url);
+  }
+
+  activateEventCategory(eventCategoryId: number): Observable<any> {
+    const url = `${this.baseUrlEventCategory}/activateEventCategory/${eventCategoryId}`;
+    return this.http.get(url).pipe(
+      catchError((error) => {
+        console.error('Error in activateEventCategory function', error);
+        return throwError(error);
+      }),
+    );
   }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.Repositories.ExpenseCategoryRepository;
+using BL.Services;
 using DAL.Models;
 using PettyCashNeve_ServerSide.Dto;
 using PettyCashNeve_ServerSide.Exceptions;
@@ -54,7 +55,23 @@ namespace BL.Services.ExpenseCategoryService
             }
             catch (Exception ex)
             {
-                serviceResponse.Success= false;
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
+        public async Task<ServiceResponse<bool>> ActivateExpenseCategory(int expenseCategoryId)
+        {
+            var serviceResponse = new ServiceResponse<bool>();
+            try
+            {
+                var result = await _expenseCategoryRepository.ActivateExpenseCategory(expenseCategoryId);
+                serviceResponse.Success = result;
+                serviceResponse.Data = result;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
                 serviceResponse.Message = ex.Message;
             }
             return serviceResponse;
@@ -66,7 +83,7 @@ namespace BL.Services.ExpenseCategoryService
             try
             {
                 var expensesCategory = await _expenseCategoryRepository.GetAllExpenseCategoryAsync();
-                var expensesCategoryDtos =_mapper.Map<List<ExpenseCategoryDto>>(expensesCategory);
+                var expensesCategoryDtos = _mapper.Map<List<ExpenseCategoryDto>>(expensesCategory);
                 serviceResponse.Data = expensesCategoryDtos;
             }
             catch (Exception ex)
@@ -76,7 +93,24 @@ namespace BL.Services.ExpenseCategoryService
             }
             return serviceResponse;
         }
+        
 
+        public async Task<ServiceResponse<List<ExpenseCategoryDto>>> GetActiveAndInactiveExpenseCategoryAsync()
+        {
+            var serviceResponse = new ServiceResponse<List<ExpenseCategoryDto>>();
+            try
+            {
+                var expensesCategory = await _expenseCategoryRepository.GetActiveAndInactiveExpenseCategoryAsync();
+                var expensesCategoryDtos = _mapper.Map<List<ExpenseCategoryDto>>(expensesCategory);
+                serviceResponse.Data = expensesCategoryDtos;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = ex.Message;
+            }
+            return serviceResponse;
+        }
         public async Task<ServiceResponse<bool>> UpdateExpenseCategory(ExpenseCategoryDto updatedExpenseCategory)
         {
             var serviceResponse = new ServiceResponse<bool>();

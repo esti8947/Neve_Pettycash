@@ -54,7 +54,7 @@ export class HomeManagerComponent implements OnInit {
     private departmentService: DepartmentService,
     private expenseCategoryService: ExpenseCategoryService,
     private eventCategoryService: EventCategoryService,
-    private departmentDataService:DepartmentDataService,
+    private departmentDataService: DepartmentDataService,
     private buyerService: BuyerService,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -148,7 +148,7 @@ export class HomeManagerComponent implements OnInit {
           this.customMessageService.showSuccessMessage('Department is added');
           this.departmentForm.reset();
           this.departmentDialog = false;
-          this.loadDepartments(); 
+          this.loadDepartments();
         },
         (error) => {
           console.error('Error saving department:', error);
@@ -159,57 +159,57 @@ export class HomeManagerComponent implements OnInit {
     this.departmentFormSubmitted = true;
   }
 
-  populateFormWithExpenseCategory(expenseCategory: any){
+  populateFormWithExpenseCategory(expenseCategory: any) {
     this.expenseCategoryForm.patchValue({
       expenseCategoryType: expenseCategory.expenseCategoryType,
       expenseCategoryName: expenseCategory.expenseCategoryName,
       expenseCategoryNameHeb: expenseCategory.expenseCategoryNameHeb,
       accountingCode: expenseCategory.accountingCode
-  });
+    });
   }
   saveExpenseCategory() {
     if (this.expenseCategoryForm.valid) {
-        if (this.selectedExpenseCategory) {
-            // Update existing expense category
-            this.updateExpenseCategory();
-        } else {
-            // Add new expense category
-            this.addExpenseCategory();
-        }
+      if (this.selectedExpenseCategory) {
+        // Update existing expense category
+        this.updateExpenseCategory();
+      } else {
+        // Add new expense category
+        this.addExpenseCategory();
+      }
     } else {
-        this.expenseCategoryFormSubmitted = true;
+      this.expenseCategoryFormSubmitted = true;
     }
-}
-updateExpenseCategory() {
-  if (this.selectedExpenseCategory && this.expenseCategoryForm.valid) {
+  }
+  updateExpenseCategory() {
+    if (this.selectedExpenseCategory && this.expenseCategoryForm.valid) {
       const formValues = this.expenseCategoryForm.value;
 
       const updatedExpenseCategory: ExpenseCategory = {
-          expenseCategoryId: this.selectedExpenseCategory.expenseCategoryId,
-          expenseCategoryType: formValues.expenseCategoryType,
-          expenseCategoryName: formValues.expenseCategoryName,
-          expenseCategoryNameHeb: formValues.expenseCategoryNameHeb,
-          accountingCode: formValues.accountingCode,
-          isActive: this.selectedExpenseCategory.isActive // Assuming you want to keep the isActive status unchanged
+        expenseCategoryId: this.selectedExpenseCategory.expenseCategoryId,
+        expenseCategoryType: formValues.expenseCategoryType,
+        expenseCategoryName: formValues.expenseCategoryName,
+        expenseCategoryNameHeb: formValues.expenseCategoryNameHeb,
+        accountingCode: formValues.accountingCode,
+        isActive: this.selectedExpenseCategory.isActive // Assuming you want to keep the isActive status unchanged
       };
 
       this.expenseCategoryService.updateExpenseCategory(updatedExpenseCategory).subscribe(
-          () => {
-              this.customMessageService.showSuccessMessage('Expense category is updated');
-              this.expenseCategoryForm.reset();
-              this.expenseCategoryFormSubmitted = false;
-              this.loadExpensesCategory();
-              this.selectedExpenseCategory = null; 
-          },
-          (error) => {
-              console.error('Error updating expense category:', error);
-              this.customMessageService.showErrorMessage('An error occurred while updating the expense category');
-          }
+        () => {
+          this.customMessageService.showSuccessMessage('Expense category is updated');
+          this.expenseCategoryForm.reset();
+          this.expenseCategoryFormSubmitted = false;
+          this.loadExpensesCategory();
+          this.selectedExpenseCategory = null;
+        },
+        (error) => {
+          console.error('Error updating expense category:', error);
+          this.customMessageService.showErrorMessage('An error occurred while updating the expense category');
+        }
       );
-  } else {
+    } else {
       this.expenseCategoryFormSubmitted = true;
+    }
   }
-}
 
   addExpenseCategory() {
     if (this.expenseCategoryForm.valid) {
@@ -300,12 +300,21 @@ updateExpenseCategory() {
         console.error('An error occurred', error)
       }
     )
-  }  
+  }
 
   loadExpensesCategory() {
-    this.expenseCategoryService.getAllExpenseCategories().subscribe(
+    this.expenseCategoryService.getActiveAndInactiveExpenseCategoryAsync().subscribe(
       (data) => {
         this.existingExpensesCategory = data.data;
+        this.existingExpensesCategory.sort((a, b) => {
+          if (a.isActive === b.isActive) {
+            return 0;
+          } else if (a.isActive) {
+            return -1; // Active categories come before inactive ones
+          } else {
+            return 1; // Inactive categories come after active ones
+          }
+        });
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -314,9 +323,18 @@ updateExpenseCategory() {
   }
 
   loadEventCategory() {
-    this.eventCategoryService.getEventsCategories().subscribe(
+    this.eventCategoryService.getAllEventsCategories().subscribe(
       (data) => {
         this.existingEventsCategory = data.data;
+        this.existingEventsCategory.sort((a, b) => {
+          if (a.isActive === b.isActive) {
+            return 0;
+          } else if (a.isActive) {
+            return -1; // Active categories come before inactive ones
+          } else {
+            return 1; // Inactive categories come after active ones
+          }
+        });
       },
       (error) => {
         console.error("An error accurred", error);
@@ -414,7 +432,31 @@ updateExpenseCategory() {
       },
     });
   }
+  activateExpenseCategory(expenseCategory: any) {
+    this.expenseCategoryService.activateExpenseCategory(expenseCategory.expenseCategoryId).subscribe(
+      () => {
+        this.customMessageService.showSuccessMessage('expense category is activate');
+        this.loadExpensesCategory();
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+        this.customMessageService.showErrorMessage('An error occurred while active the expense category');
+      }
+    );
+  }
 
+  activateEventCategory(eventCategory: any) {
+    this.eventCategoryService.activateEventCategory(eventCategory.eventCategoryId).subscribe(
+      () => {
+        this.customMessageService.showSuccessMessage('event category status is changed');
+        this.loadEventCategory();
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+        this.customMessageService.showErrorMessage('An error occurred while change status of event category');
+      }
+    );
+  }
 
   selectDepartment(selectedDepartment: any) {
     if (selectedDepartment) {

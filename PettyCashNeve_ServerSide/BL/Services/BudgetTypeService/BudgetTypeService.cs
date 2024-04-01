@@ -135,7 +135,7 @@ namespace BL.Services.BudgetTypeService
                 var department = await _departmentRepository.GetDepartmentByIdAsync(departmentId);
                 if (department == null)
                 {
-                    serviceResponse.Success = false;
+                    serviceResponse.Success = true;
                     serviceResponse.Message = "Department not found.";
                     return serviceResponse;
                 }
@@ -156,7 +156,7 @@ namespace BL.Services.BudgetTypeService
                         var annualBudgetResponse = await _annualBudgetService.GetAnnualBudgetByDepartmentIdAndIsActiveAsync(departmentId);
                         if (!annualBudgetResponse.Success)
                         {
-                            serviceResponse.Success = false;
+                            serviceResponse.Success = true;
                             serviceResponse.Message = annualBudgetResponse.Message;
                             return serviceResponse;
                         }

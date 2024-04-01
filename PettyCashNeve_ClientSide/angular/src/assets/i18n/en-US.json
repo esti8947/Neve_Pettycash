@@ -134,7 +134,7 @@
     "The amount of expenses for this month is": "Monthly Expenses",
     "The refund amount is": "Amount in kupa",
     "Budget ceiling": "Budget ceiling",
-    "youy ar at % of the budget": "youy are at % of the budget",
+    "youy ar at % of the budget": "you are at % of the budget",
     "Add New Expense": "Add New Expense",
     "Edit Monthly Expenses": "Edit Monthly Expenses",
     "View Monthly Expenses": "View Monthly Expenses",
@@ -158,7 +158,7 @@
     "username": "*Username",
     "password": "*Password",
     "email": "*Email",
-    "phoneNumber": "PhoneNumber",
+    "phoneNumber": "Phone Number",
     "Please enter username": "Please enter username",
     "Password must be at least 6 characters long and include both letters and numbers": "Password must be at least 6 characters long and include both letters and numbers",
     "Invalid email format": "Invalid email format",
@@ -236,6 +236,8 @@
   },
   "departmentInformation": {
     "Expenses until": "Expenses until",
-    "Expenses months": "Expenses months"
+    "Expenses months": "Expenses months",
+    "Inactive Departments":"Inactive Departments",
+    "Activate":"Activate"
   }
 }

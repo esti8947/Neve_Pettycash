@@ -236,6 +236,8 @@
   },
   "departmentInformation":{
     "Expenses until":"סכום הוצאות עד",
-    "Expenses months":"סכום הוצאות לחודשים"
+    "Expenses months":"סכום הוצאות לחודשים",
+    "Inactive Departments":"מחלקות לא פעילות",
+    "Activate":"הפעל"
   }
 }
