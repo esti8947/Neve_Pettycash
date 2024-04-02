@@ -56,19 +56,6 @@ namespace PettyCashNeve_ServerSide.Controllers
             }
         }
 
-        //[HttpGet("getMonthlyCashRegistersByUserOfDepartmentId/{userOfDepartmentId}")]
-        //public async Task<IActionResult> GetMonthlyCashRegistersByUserOfDepartmentId(int userOfDepartmentId)
-        //{
-        //    var serviceResponse = await _monthlyCashRegisterService.GetMonthlyCashRegistersByUserOfDepartmentIdAsync(userOfDepartmentId);
-        //    return HandleResponse(serviceResponse);
-        //}
-
-        //[HttpGet("getMonthlyCashRegistersByDepartmentId/{departmentId}")]
-        //public async Task<IActionResult> GetMonthlyCashRegistersByDepartmentId(int departmentId)
-        //{
-        //    var serviceResponse = await _monthlyCashRegisterService.GetMonthlyCashRegistersByDepartmentIdAsync(departmentId);
-        //    return HandleResponse(serviceResponse);
-        //}
 
         [HttpPost("createNewMonthlyCashRegister")]
         public async Task<IActionResult> CreateNewMonthlyCashRegister([FromBody] MonthlyCashRegisterDto newMonthlyCashRegister)

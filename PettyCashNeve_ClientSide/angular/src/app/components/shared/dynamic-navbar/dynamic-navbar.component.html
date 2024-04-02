@@ -37,7 +37,7 @@
 </div>
 <p-dialog [(visible)]="addingAmountDialog" [style]="{ width: '450px' }"
     [header]="'insertRefundAmount.insert refund amount' | translate" [modal]="true" styleClass="p-fluid">
-    <p translate>{{getCurrentBudgetAmount()}}</p>
+    <p translate>Current Budget<span> ₪{{budgetAmount}}</span></p>
     <form [formGroup]="addAmountForm">
         <div class="form-group">
             <p-inputNumber inputId="integeronly" inputId="currency-il" mode="currency" currency="ILS"

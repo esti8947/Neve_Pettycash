@@ -8,6 +8,7 @@ namespace Entities.Models_Dto
 {
     public class MonthlyCashRegisterDepartmentDto
     {
+        public int monthlyCashRegisterId { get; set; }
         public int DepartmentId { get; set; }
         public int MonthlyCashRegisterMonth { get; set; }
         public int MonthlyCashRegisterYear { get; set; }

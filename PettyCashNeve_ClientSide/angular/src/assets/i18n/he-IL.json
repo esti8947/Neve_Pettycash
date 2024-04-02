@@ -7,6 +7,7 @@
   "password": "סיסמא",
   "Kupa":"קופה",
   "Year":"שנה",
+  "Current Budget":"תקציב נוכחי",
   "expenseDtails": {
     "confirm": "אשר הוצאות לחודש זה",
     "Category": "קטגוריה",

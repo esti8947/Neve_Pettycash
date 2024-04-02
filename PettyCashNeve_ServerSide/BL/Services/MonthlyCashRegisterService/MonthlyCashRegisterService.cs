@@ -49,6 +49,8 @@ namespace PettyCashNeve_ServerSide.Services.MonthlyCashRegisterService
                     var groupedMonthlyRegisters = monthlyRegistersList
                         .GroupBy(m => m.MonthlyCashRegisterMonth);
 
+                    int monthlyRegisterDepartmentIdCounter = 1;
+
                     foreach (var group in groupedMonthlyRegisters)
                     {
                         decimal totalAmount = group.Sum(m => m.AmountInCashRegister);
@@ -56,6 +58,7 @@ namespace PettyCashNeve_ServerSide.Services.MonthlyCashRegisterService
 
                         var monthlyRegisterDepartment = new MonthlyCashRegisterDepartmentDto
                         {
+                            monthlyCashRegisterId = monthlyRegisterDepartmentIdCounter++,
                             DepartmentId = departmentId,
                             MonthlyCashRegisterMonth = group.Key,
                             MonthlyCashRegisterYear = group.First().MonthlyCashRegisterYear, // Assuming all items in the group have the same year

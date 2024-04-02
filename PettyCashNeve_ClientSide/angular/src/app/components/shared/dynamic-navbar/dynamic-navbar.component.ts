@@ -9,6 +9,7 @@ import { NewYear } from 'src/app/models/newYear';
 import { RefundBudget } from 'src/app/models/refundBudget';
 import { AdditionalActionsService } from 'src/app/services/additional-actions-service/additional-actions.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { BudgetImformationService } from 'src/app/services/budget-information-service/budget-imformation.service';
 import { BudgetTypeService } from 'src/app/services/budgetType-service/budget-type.service';
 import { CustomMessageService } from 'src/app/services/customMessage-service/custom-message.service';
 import { DepartmentService } from 'src/app/services/department-service/department.service';
@@ -29,6 +30,7 @@ export class DynamicNavbarComponent implements OnInit {
   months: any[] = [];
   currentUser: any;
   selectedDepartment: any;
+  budgetAmount: number | null = null;
 
   addAmountForm!: FormGroup;
   newYearFormGroup!: FormGroup;
@@ -42,6 +44,7 @@ export class DynamicNavbarComponent implements OnInit {
   addMonthlyBudgetSubmitted: boolean = false;
 
   budgetTypeId: number = 0;
+  budgetInformation: any;
 
   constructor(
     private authService: AuthService,
@@ -53,7 +56,7 @@ export class DynamicNavbarComponent implements OnInit {
     private additionalActionsService: AdditionalActionsService,
     private customMessageService: CustomMessageService,
     private translateService: TranslateService,
-
+    private budgetInformationService: BudgetImformationService,
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +65,7 @@ export class DynamicNavbarComponent implements OnInit {
     this.initializeNavbarItems();
     this.initializeForms();
     this.loadMonths();
+    this.getBudgetInformation();
   }
 
   initializeNavbarItems() {
@@ -101,10 +105,10 @@ export class DynamicNavbarComponent implements OnInit {
     });
 
     this.newYearFormGroup = this.formBuilder.group({
-      newYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]), 
+      newYear: new FormControl<number | null>(null, [Validators.required, Validators.pattern(/^\d{4}-\d{4}$/)]),
       budgetType: new FormControl<number | null>(null, Validators.required),
-      annualBudgetAmount: new FormControl<number | null>(0), 
-      monthlyBudgetAmount: new FormControl<number | null>(0), 
+      annualBudgetAmount: new FormControl<number | null>(0),
+      monthlyBudgetAmount: new FormControl<number | null>(0),
       MonthlyBudgetMonth: new FormControl<number | null>(9)
     });
 
@@ -130,7 +134,7 @@ export class DynamicNavbarComponent implements OnInit {
     ];
 
     this.months = Array.from({ length: 12 }, (_, index) => ({
-      value: index + 1, 
+      value: index + 1,
       name: monthNames[index]
     }));
   }
@@ -143,22 +147,24 @@ export class DynamicNavbarComponent implements OnInit {
     this.AddMothnlyBudgetDialog = true;
   }
 
-  getCurrentBudgetAmount() {
-    if (this.selectedDepartment && this.selectedDepartment.budgetInformation) {
-      let budgetAmount = 0;
-      if (this.selectedDepartment.budgetInformation.budgetType.budgetTypeId === 1) {
-        budgetAmount = this.selectedDepartment.budgetInformation.annualBudget.annualBudgetCeiling
-      } else if (this.selectedDepartment.budgetInformation.budgetType.budgetTypeId === 2) {
-        // If budget type is Monthly Budget
-        budgetAmount = this.selectedDepartment.budgetInformation.monthlyBudget.monthlyBudgetCeiling
-      }
-      return this.translateService.currentLang === 'en-US' ?
-        `Current budget ₪${budgetAmount}` :
-        `תקציב נוכחי ₪${budgetAmount}`;
-    }
-    return 'No budget information available';
+  getBudgetInformation() {
+    this.budgetInformationService.getBudgetInformation(this.selectedDepartment.departmentId).subscribe(
+      (data) => {
+        this.budgetInformation = data.data;
+        if (this.budgetInformation.annualBudget != null) {
+          this.budgetAmount = this.budgetInformation.annualBudget.annualBudgetCeiling;
+        }
+        else if (this.budgetInformation.monthlyBudget != null) {
+          this.budgetAmount = this.budgetInformation.monthlyBudget.monthlyBudgetCeiling;
+        } else {
+          console.log('Budget information is not available.');
+        }
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      },
+    );
   }
-
 
   addingAmountToBudget() {
     this.addAmountFormSubmitted = true;
@@ -174,15 +180,16 @@ export class DynamicNavbarComponent implements OnInit {
           this.addingAmountDialog = false;
           this.router.navigate(['navbar']);
           this.customMessageService.showSuccessMessage("add amount to budget is successfull.");
+          this.getBudgetInformation();
         },
         (error) => {
           console.error('An error occurred while add amount to budget: ', error);
           this.customMessageService.showErrorMessage("'An error occurred while add amount");
         }
       )
+
     }
   }
-
   getOptionLabel() {
     return this.translateService.currentLang === 'en-US' ? 'budgetTypeName' : 'budgetTypeNameHeb';
   }

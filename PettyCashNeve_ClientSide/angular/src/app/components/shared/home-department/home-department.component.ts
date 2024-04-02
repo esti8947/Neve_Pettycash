@@ -39,7 +39,11 @@ export class HomeDepartmentComponent implements OnInit {
         (data) => {
           if (data.success && data.data != null) {
             this.isMonthlyRegister = true;
-            this.monthlyRegisters.push(...data.data);
+            data.data.forEach((monthlyRegister: MonthlyCashRegister) => {
+              if (!this.isDuplicateMonthlyRegister(monthlyRegister.monthlyCashRegisterId)) {
+                this.monthlyRegisters.push(monthlyRegister);
+              }
+            });
           } else {
             this.isMonthlyRegister = false;
           }
@@ -54,7 +58,9 @@ export class HomeDepartmentComponent implements OnInit {
         (data) => {
           if (data.success && data.data != null) {
             this.isMonthlyRegister = true;
-            this.monthlyRegisters.push(data.data);
+            if (!this.isDuplicateMonthlyRegister(data.data.monthlyCashRegisterId)) {
+              this.monthlyRegisters.push(data.data);
+            }
           } else {
             this.isMonthlyRegister = false;
           }
@@ -65,8 +71,13 @@ export class HomeDepartmentComponent implements OnInit {
         }
       );
     }
+    console.log(this.monthlyRegisters)
   }
-
+  
+  isDuplicateMonthlyRegister(monthlyCashRegisterId: number|undefined): boolean {
+    return this.monthlyRegisters.some(register => register.monthlyCashRegisterId === monthlyCashRegisterId);
+  }
+  
   reloadMonthlyRegisters() {
     this.monthlyRegisters = []; 
     this.loadCurrentMonthlyCashRegister();

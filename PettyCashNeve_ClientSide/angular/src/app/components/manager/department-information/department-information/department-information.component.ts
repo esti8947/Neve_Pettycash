@@ -25,8 +25,8 @@ import { error } from 'pdf-lib';
 export class DepartmentInformationComponent implements OnInit {
   departmentsArray: DepartmentMoreInfo[] = [];
   inActiveDepartmentsArray: any[] = [];
-  selectedDepartment:any;
-  inActiveDepartments:boolean = false;
+  selectedDepartment: any;
+  inActiveDepartments: boolean = false;
 
   updateDepartmentDialog: boolean = false;
   departmentFormSubmitted = false;
@@ -41,7 +41,7 @@ export class DepartmentInformationComponent implements OnInit {
     private monthlyCashRegisterService: MontlyCashRegisterService,
     private expenseService: ExpenseService,
     private authService: AuthService,
-    private departmentDataService:DepartmentDataService,
+    private departmentDataService: DepartmentDataService,
     private router: Router,
     private translateService: TranslateService,
     private monthNameService: MonthNameService,
@@ -105,19 +105,19 @@ export class DepartmentInformationComponent implements OnInit {
       this.budgetInformationService.getBudgetInformation(department.departmentId).subscribe(
         (data) => {
           department.budgetInformation = data.data;
-          if (department.budgetInformation.annualBudget != null) {
-            department.budgetType = "annualBudget";
-          } else {
-            if (department.budgetInformation.monthlyBudget != null) {
-              department.budgetType = "monthlyBudget";
-            } else {
-              department.budgetType = "refundBudget"
+          if (department.budgetInformation != null) {
+            if (department.budgetInformation.annualBudget != null) {
+              department.budgetType = "annualBudget";
+            } else if (department.budgetInformation.monthlyBudget != null) {
+                department.budgetType = "monthlyBudget";
+              } else {
+                department.budgetType = "refundBudget"
+              }
             }
+          },
+          (error) => {
+            console.error('An error occurred while fetching budget information:', error);
           }
-        },
-        (error) => {
-          console.error('An error occurred while fetching budget information:', error);
-        }
       );
 
       this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId(department.departmentId).subscribe(
@@ -179,7 +179,6 @@ export class DepartmentInformationComponent implements OnInit {
           this.expenseService.getExpensesAmountOfDepartmentByYearandMonth(month - 1, year, departmentId),
         ]).subscribe(
           ([result1, result2, result3, result4]) => {
-            console.log(result1, result2, result3, result4);
             if (month % 2 === 0) {
               department.monthlyAmountForCalculatingPercentages = result1.data + result2.data;
 
@@ -343,7 +342,7 @@ export class DepartmentInformationComponent implements OnInit {
     }
   }
 
-  activateDepartment(department:any){
+  activateDepartment(department: any) {
     this.departmentService.activateDepartment(department.departmentId).subscribe(
       () => {
         this.customMessageService.showSuccessMessage('department is activate');
