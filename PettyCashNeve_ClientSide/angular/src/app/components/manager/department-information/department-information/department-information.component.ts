@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+import { EMPTY, catchError, forkJoin, map } from 'rxjs';
 import { Department } from 'src/app/models/department';
 import { DepartmentMoreInfo } from 'src/app/models/departmentMoreInfo';
 import { DepartmentDataService } from 'src/app/services/department-service/department-data.service';
@@ -27,6 +27,8 @@ export class DepartmentInformationComponent implements OnInit {
   inActiveDepartmentsArray: any[] = [];
   selectedDepartment: any;
   inActiveDepartments: boolean = false;
+  departmentsLoaded: boolean = false;
+
 
   updateDepartmentDialog: boolean = false;
   departmentFormSubmitted = false;
@@ -64,11 +66,62 @@ export class DepartmentInformationComponent implements OnInit {
     });
   }
 
+  // Inside your component class
+
+  getBudgetAndCashRegisterDetails() {
+    const observables = this.departmentsArray.map(department => {
+      const budgetInfo$ = this.budgetInformationService.getBudgetInformation(department.departmentId).pipe(
+        catchError(error => {
+          console.error('An error occurred while fetching budget information:', error);
+          return EMPTY; // Return empty observable to continue with forkJoin
+        })
+      );
+
+      const monthlyCashRegister$ = this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId(department.departmentId).pipe(
+        catchError(error => {
+          console.error('An error occurred while fetching monthly cash register details:', error);
+          return EMPTY; // Return empty observable to continue with forkJoin
+        })
+      );
+
+      return forkJoin([budgetInfo$, monthlyCashRegister$]).pipe(
+        map(([budgetInfo, monthlyCashRegister]) => {
+          department.budgetInformation = budgetInfo.data;
+          if (department.budgetInformation) {
+            department.budgetType = department.budgetInformation.annualBudget ? "annualBudget" :
+              department.budgetInformation.monthlyBudget ? "monthlyBudget" : "refundBudget";
+          }
+
+          department.monthlyCashRegister = monthlyCashRegister.data[0];
+          if (department.monthlyCashRegister) {
+            const { monthlyCashRegisterMonth, monthlyCashRegisterYear } = department.monthlyCashRegister;
+            this.expenseService.getExpensesAmountOfDepartmentByYearandMonth(monthlyCashRegisterMonth, monthlyCashRegisterYear, department.departmentId).subscribe(
+              (data) => {
+                department.totalExpensesAmount = data.data;
+                this.calculateExpensePercentageLastYear(department.monthlyCashRegister, department.departmentId, department.budgetInformation);
+              },
+              (error) => {
+                console.error('An error occurred in getExpensesAmountOfDepartmentByYearandMonth function', error);
+              }
+            );
+          }
+        })
+      );
+    });
+
+    forkJoin(observables).subscribe(() => {
+      console.log('All departments processed successfully');
+      // Any additional processing after all departments are processed
+    });
+  }
+
+
   loadDepartments() {
     this.departmentService.getAllDepartments().subscribe(
       (data) => {
         this.departmentsArray = data.data;
         this.getBudgetAndCashRegisterDetails();
+        this.departmentsLoaded = true;
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -100,48 +153,48 @@ export class DepartmentInformationComponent implements OnInit {
     }
   }
 
-  getBudgetAndCashRegisterDetails() {
-    this.departmentsArray.forEach(department => {
-      this.budgetInformationService.getBudgetInformation(department.departmentId).subscribe(
-        (data) => {
-          department.budgetInformation = data.data;
-          if (department.budgetInformation != null) {
-            if (department.budgetInformation.annualBudget != null) {
-              department.budgetType = "annualBudget";
-            } else if (department.budgetInformation.monthlyBudget != null) {
-                department.budgetType = "monthlyBudget";
-              } else {
-                department.budgetType = "refundBudget"
-              }
-            }
-          },
-          (error) => {
-            console.error('An error occurred while fetching budget information:', error);
-          }
-      );
+  // getBudgetAndCashRegisterDetails() {
+  //   this.departmentsArray.forEach(department => {
+  //     this.budgetInformationService.getBudgetInformation(department.departmentId).subscribe(
+  //       (data) => {
+  //         department.budgetInformation = data.data;
+  //         if (department.budgetInformation != null) {
+  //           if (department.budgetInformation.annualBudget != null) {
+  //             department.budgetType = "annualBudget";
+  //           } else if (department.budgetInformation.monthlyBudget != null) {
+  //             department.budgetType = "monthlyBudget";
+  //           } else {
+  //             department.budgetType = "refundBudget"
+  //           }
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error('An error occurred while fetching budget information:', error);
+  //       }
+  //     );
 
-      this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId(department.departmentId).subscribe(
-        (data) => {
-          department.monthlyCashRegister = data.data[0];
+  //     this.monthlyCashRegisterService.getCurrentMontlyCashRegisterByUserId(department.departmentId).subscribe(
+  //       (data) => {
+  //         department.monthlyCashRegister = data.data[0];
 
-          if (department.monthlyCashRegister != undefined) {
-            this.expenseService.getExpensesAmountOfDepartmentByYearandMonth(department.monthlyCashRegister.monthlyCashRegisterMonth, department.monthlyCashRegister.monthlyCashRegisterYear, department.departmentId).subscribe(
-              (data) => {
-                department.totalExpensesAmount = data.data;
-                this.calculateExpensePercentageLastYear(department.monthlyCashRegister, department.departmentId, department.budgetInformation);
-              },
-              (error) => {
-                console.error('An error occurred in getExpensesAmountOfDepartmentByYearandMonth function', error);
-              }
-            )
-          }
-        },
-        (error) => {
-          console.error('An error occurred while fetching monthly cash register details:', error);
-        }
-      );
-    });
-  }
+  //         if (department.monthlyCashRegister != undefined) {
+  //           this.expenseService.getExpensesAmountOfDepartmentByYearandMonth(department.monthlyCashRegister.monthlyCashRegisterMonth, department.monthlyCashRegister.monthlyCashRegisterYear, department.departmentId).subscribe(
+  //             (data) => {
+  //               department.totalExpensesAmount = data.data;
+  //               this.calculateExpensePercentageLastYear(department.monthlyCashRegister, department.departmentId, department.budgetInformation);
+  //             },
+  //             (error) => {
+  //               console.error('An error occurred in getExpensesAmountOfDepartmentByYearandMonth function', error);
+  //             }
+  //           )
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error('An error occurred while fetching monthly cash register details:', error);
+  //       }
+  //     );
+  //   });
+  // }
 
   calculateExpensePercentageLastYear(monthlyCashRegister: any, departmentId: number, budgetInformation: any) {
     const department = this.departmentsArray.find(dep => dep.departmentId === departmentId);

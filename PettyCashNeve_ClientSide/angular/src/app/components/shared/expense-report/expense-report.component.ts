@@ -452,7 +452,15 @@ export class ExpenseReportComponent implements OnInit {
     }
     return '';
   }
-
+  getBuyerName(expenseId: number): string {
+    const selectedExpense = this.expenses.find(expense => expense.expense.expenseId === expenseId);
+    console.log(selectedExpense)
+    if (selectedExpense && selectedExpense.buyerName) {
+      return this.translateService.currentLang === 'en-US' ? selectedExpense.buyerName
+        : selectedExpense.buyerNameHeb;
+    }
+    return '';
+  }
 
   isInvalid(controlName: string): boolean {
     const control: AbstractControl | null = this.formGroup.get(controlName);

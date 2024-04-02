@@ -26,8 +26,8 @@ namespace BL.Services.ExpenseService
         private readonly IEventRepository _eventRepository;
         private readonly IMapper _mapper;
 
-        public ExpenseMoreInfoService(IExpenseRepository expenseRepository,IBuyerRepository buyerRepository, IEventCategoryRepository eventCategoryRepository, 
-            IEventRepository eventRepository,IExpenseCategoryRepository expenseCategory, IMapper mapper)
+        public ExpenseMoreInfoService(IExpenseRepository expenseRepository, IBuyerRepository buyerRepository, IEventCategoryRepository eventCategoryRepository,
+            IEventRepository eventRepository, IExpenseCategoryRepository expenseCategory, IMapper mapper)
         {
             _expenseRepository = expenseRepository;
             _expenseCategory = expenseCategory;
@@ -73,7 +73,7 @@ namespace BL.Services.ExpenseService
                     ExpenseCategoryNameHeb = expenseCategory.ExpenseCategoryNameHeb,
                     EventName = await _eventRepository.GetEventNameById(expense.EventsId),
                     BuyerName = await _buyerRepository.GetBuyerNameByIdAsync(expense.BuyerId ?? 0),
-                    // Add more properties as needed
+                    BuyerNameHeb = await _buyerRepository.GetBuyerNameHebByIdAsync(expense.BuyerId ?? 0)
                 };
 
                 expenseMoreInfoDtos.Add(expenseMoreInfoDto);
@@ -123,7 +123,7 @@ namespace BL.Services.ExpenseService
         }
 
         public async Task<ServiceResponse<List<ExpenseReportInfoDto>>> GetExpensesReportOfDepartment(int departmentId)
-        { 
+        {
             var serviceResponse = new ServiceResponse<List<ExpenseReportInfoDto>>();
             try
             {

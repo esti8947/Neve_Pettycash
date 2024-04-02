@@ -14,5 +14,6 @@ namespace Entities.Models_Dto.ExpenseDto
         public string? EventCategoryName { get; set; }
         public string? EventName { get; set; }
         public string? BuyerName { get; set; }
+        public string? BuyerNameHeb { get; set; }
     }
 }

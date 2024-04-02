@@ -15,6 +15,8 @@ namespace BL.Repositories.BuyerRepository
         Task<bool> CreateBuyerAsync(Buyer buyer);
         Task<bool> DeleteBuyerAsync(int buyerId);
         Task<string> GetBuyerNameByIdAsync(int id);
+        Task<string> GetBuyerNameHebByIdAsync(int id);
+
 
     }
 }

@@ -105,5 +105,28 @@ namespace PettyCashNeve_ServerSide.Repositories
                 throw;
             }
         }
+
+        public async Task<string> GetBuyerNameHebByIdAsync(int id)
+        {
+            try
+            {
+                var buyerName = await _context.Buyers
+                    .Where(b => b.BuyerId == id)
+                    .Select(b => b.BuyerNameHeb)
+                    .FirstOrDefaultAsync();
+
+                if (buyerName == null)
+                {
+                    return null;
+                }
+
+                return buyerName;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception if needed
+                throw;
+            }
+        }
     }
 }

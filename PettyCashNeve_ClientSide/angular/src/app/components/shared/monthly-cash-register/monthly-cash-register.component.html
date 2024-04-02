@@ -4,7 +4,7 @@
     <h3><span translate>monthlyCashRegister.The monthly cash register for the month of </span>{{ getMonthName(MonthlyRegisterValue.monthlyCashRegisterMonth)}} {{MonthlyRegisterValue.monthlyCashRegisterYear}}</h3>
     <h4><span translate>monthlyCashRegister.The amount of expenses for this month is</span> &#8362;{{MonthlyRegisterValue.amountInCashRegister | number}}</h4>
 
-    <ng-container *ngIf="budgetType === 'annualBudget'">
+    <!-- <ng-container *ngIf="budgetType === 'annualBudget'">
       <h5 [ngClass]="{
         'orange-text': getSpentPercentage(amountWastedForCalculatingPercentages?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 80 && getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) <= 90,
         'red-text': getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) > 90
@@ -12,10 +12,7 @@
         {{ 'monthlyCashRegister.Percentage of Expenses Compared to Last Year' | translate }} 
         {{ getSpentPercentage(amountWastedForCalculatingPercentages ?? 0, monthlyAmountForCalculatingPercentages ?? 0) | number: '1.0-2' }}%
       </h5>
-    </ng-container>
-    <ng-container *ngIf="budgetType === 'monthlyBudget'">
-
-    </ng-container>
+    </ng-container> -->
 
     <h5><span translate>monthlyCashRegister.The refund amount is</span> &#8362;{{MonthlyRegisterValue.refundAmount}}</h5>
     <ng-template pTemplate="footer">

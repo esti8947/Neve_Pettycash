@@ -57,7 +57,7 @@
           <td>{{expense.expense.storeName}}</td>
           <td>{{expense.expense.expenseAmount}}<i class="fa-solid fa-shekel-sign fa-2xs"></i></td>
           <td>{{expense.expense.expenseDate | date: 'mediumDate'}}</td>
-          <td>{{expense.buyerName}}</td>
+          <td>{{getBuyerName(expense.expense.expenseId)}}</td>
           <td>{{expense.expense.notes}}</td>
           <td *ngIf="(currentUser.isManager && expense.expense.
           isApproved && !expense.expense.isLocked) || (!currentUser.isManager && !expense.expense.isApproved)">

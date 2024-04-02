@@ -71,7 +71,6 @@ export class HomeDepartmentComponent implements OnInit {
         }
       );
     }
-    console.log(this.monthlyRegisters)
   }
   
   isDuplicateMonthlyRegister(monthlyCashRegisterId: number|undefined): boolean {

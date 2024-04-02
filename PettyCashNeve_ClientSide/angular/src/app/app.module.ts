@@ -52,7 +52,6 @@ import { AuthInterceptor } from './services/auth-service/authconfig.interceptor'
 import { PreviousExpensesComponent } from './components/shared/previous-expenses/previous-expenses.component';
 import { CustomMessageService } from './services/customMessage-service/custom-message.service';
 import { AddMonthlyCashRegisterComponent } from './components/secretary/add-monthly-cash-register/add-monthly-cash-register.component';
-import { ChooseDepartmentComponent } from './components/manager/choose-department/choose-department/choose-department.component';
 import { DynamicNavbarComponent } from './components/shared/dynamic-navbar/dynamic-navbar.component';
 import { LockExpensesButtonComponent } from './components/manager/lock-expenses-button/lock-expenses-button.component';
 import { UsersOfDepartmentComponent } from './components/manager/users-of-department/users-of-department.component';
@@ -76,7 +75,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SignInComponent,
     PreviousExpensesComponent,
     AddMonthlyCashRegisterComponent,
-    ChooseDepartmentComponent,
     DynamicNavbarComponent,
     LockExpensesButtonComponent,
     UsersOfDepartmentComponent,

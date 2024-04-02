@@ -16,7 +16,7 @@
         </p-dropdown>
     </div>
 
-<div class="departmentsCard">
+<div class="departmentsCard" *ngIf="departmentsLoaded">
     <div *ngFor="let department of departmentsArray" class="card-container">
         <div class="editButtons">
             <p-button icon="pi pi-pencil" rounded="true" text="true" pTooltip="Update"
@@ -64,6 +64,10 @@
         </div>
     </div>
 </div>
+<div *ngIf="!departmentsLoaded">
+    <!-- Loading indicator or message -->
+    <p>Loading departments...</p>
+  </div>
 <p-dialog [header]="'addDepartment.Department Details'|translate" [(visible)]="updateDepartmentDialog"
     [style]="{width:'600px'}" [modal]="true" styleClass="p-fluid">
     <form [formGroup]="departmentForm">
